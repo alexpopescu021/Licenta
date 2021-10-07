@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+<style>
+    .responsive-stacked-table td {
+        border-top: none;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        text-align: center;
+    }
+</style>
+
+
+<div class="container-fluid">
+    <h1 class="display-5" style="text-align:center">Welcome</h1>
+    @if (SignInManager.IsSignedIn(User))
+    {
+
+<div class="table-responsive" style="border:none">
+    <table class="mx-auto w-auto" >
+        <tbody>
+            <tr>
+                <td style="padding:30px">
+                    <button class="btn btn-sml btn-primary" style=" font-size: 30px;" type="button">Order</button>
+                </td>
+                <td style="padding:30px">
+                    <button class="btn btn-sml btn-primary" style="font-size:30px" type="button">Tracking</button>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:30px">
+                    <button class="btn btn-sml btn-primary" style="font-size:30px" type="button" onclick="location.href='@Url.Action("Index", "Profile")'">Profile</button>
+                </td>
+                <td style="padding:30px">
+
+                    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"><button class="btn btn-sml btn-primary" style="font-size:30px" type="submit">Log Out/ Alta idee</button></form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    }
+    else {
+<table class="table center">
+    <tbody style="text-align:center">
+        <tr>
+            <td>
+                 
+                <a class="btn btn-sml btn-primary" style="font-size: 2vw;line-height:8vw; margin: 0 auto; text-align: center;" type="text" asp-area="Identity" asp-page="/Account/Login">Login</a>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a class="btn btn-sml btn-primary" style="font-size: 2vw;line-height:8vw; margin: 0 auto; text-align: center;" type="text" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            </td>
+        </tr>
+        </tbody>
+</table>
+    }
+</div>
