@@ -1,4 +1,4 @@
-﻿using Licenta.Models;
+﻿using Licenta.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;

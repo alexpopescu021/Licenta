@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Licenta", "Licenta\Licenta.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApplicationLogic", "ApplicationLogic", "{162BBC9F-B0CF-49CF-AE7C-7A82320E7424}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Licenta.Model", "Licenta.Model\Licenta.Model.csproj", "{41DB808E-5DB3-4A1B-9A0A-51B15CBF3E71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Licenta.Model", "Licenta.Model\Licenta.Model.csproj", "{41DB808E-5DB3-4A1B-9A0A-51B15CBF3E71}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

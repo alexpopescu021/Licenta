@@ -4,6 +4,7 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+
 <style>
     .responsive-stacked-table td {
         border-top: none;
@@ -15,50 +16,236 @@
 
 
 <div class="container-fluid">
-    <h1 class="display-5" style="text-align:center">Welcome</h1>
     @if (SignInManager.IsSignedIn(User))
     {
+        <div class="page-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card-service wow fadeInDown">
+                            <div class="header">
+                                <img src="~/img/services/tracking.svg" alt="" width="100" height="100">
+                            </div>
+                            <div class="body">
+                                <h5 class="text-secondary">Order Tracking</h5>
+                                <p>Login to see your current and past orders and to track them via google maps</p>
+                                <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Tracking</a>
+                            </div>
+                        </div>
+                    </div>
 
-<div class="table-responsive" style="border:none">
-    <table class="mx-auto w-auto" >
-        <tbody>
-            <tr>
-                <td style="padding:30px">
-                    <button class="btn btn-sml btn-primary" style=" font-size: 30px;" type="button">Order</button>
-                </td>
-                <td style="padding:30px">
-                    <button class="btn btn-sml btn-primary" style="font-size:30px" type="button">Tracking</button>
-                </td>
-            </tr>
-            <tr>
-                <td style="padding:30px">
-                    <button class="btn btn-sml btn-primary" style="font-size:30px" type="button" onclick="location.href='@Url.Action("Index", "Profile")'">Profile</button>
-                </td>
-                <td style="padding:30px">
+                    <div class="col-lg-6">
+                        <div class="card-service wow fadeInDown">
+                            <div class="header">
+                                <img src="~/img/services/package.svg" alt="" width="100" height="100">
+                            </div>
+                            <div class="body">
+                                <h5 class="text-secondary">Create Order</h5>
+                                <p>Login to see your current and past orders and to track them via google maps</p>
+                                <a class="btn btn-primary" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
+                            </div>
+                        </div>
+                    </div>
 
-                    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"><button class="btn btn-sml btn-primary" style="font-size:30px" type="submit">Log Out/ Alta idee</button></form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+                    <div class="col-lg-6">
+                        <div class="card-service wow fadeInUp">
+                            <div class="header">
+                                <img src="~/img/services/profile.svg" alt="" width="100" height="100">
+                            </div>
+                            <div class="body">
+                                <h5 class="text-secondary">Profile</h5>
+                                <p>Edit your profile so that your information and shipping adress are up to date</p>
+                                <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Manage/Index">Profile</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="card-service wow fadeInUp">
+                            <div class="header">
+                                <img src="~/img/services/estimae.svg" alt="" width="100" height="100">
+                            </div>
+                            <div class="body">
+                                <h5 class="text-secondary">Cost Estimate</h5>
+                                <p>Packages that are bigger than our standard requirments need to be handled differently</p>
+                                <a href="service.html" class="btn btn-primary">Read More</a>
+                                <a href="#cost" class="btn btn-primary">Calculate</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div> <!-- .container -->
+        </div> <!-- .page-section -->
+
+
     }
-    else {
-<table class="table center">
-    <tbody style="text-align:center">
-        <tr>
-            <td>
-                 
-                <a class="btn btn-sml btn-primary" style="font-size: 2vw;line-height:8vw; margin: 0 auto; text-align: center;" type="text" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    else
+    {
+        <div class="page-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card-service wow fadeInUp">
+                            <div class="header">
+                                <img src="~/img/services/tracking.svg" alt="" width="100" height="100">
+                            </div>
+                            <div class="body">
+                                <h5 class="text-secondary">Order Tracking</h5>
+                                <p>Login to see your current and past orders and to track them via google maps</p>
+                                <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                            </div>
+                        </div>
+                    </div>
 
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <a class="btn btn-sml btn-primary" style="font-size: 2vw;line-height:8vw; margin: 0 auto; text-align: center;" type="text" asp-area="Identity" asp-page="/Account/Register">Register</a>
-            </td>
-        </tr>
-        </tbody>
-</table>
+                    <div class="col-lg-6">
+                        <div class="card-service wow fadeInUp">
+                            <div class="header">
+                                <img src="~/img/services/estimae.svg" alt="" width="100" height="100">
+                            </div>
+                            <div class="body">
+                                <h5 class="text-secondary">Cost Estimate</h5>
+                                <p>Packages that are bigger than our standard requirments need to be handled differently</p>
+                                <a href="service.html" class="btn btn-primary">Read More</a>
+                                <a href="#cost" class="btn btn-primary">Calculate</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div> <!-- .container -->
+        </div> <!-- .page-section -->
     }
+    @*<a href="#about" class="btn-scroll" data-role="smoothscroll"><span class="mai-arrow-down"></span></a>*@
+
+
+
+
+
+    <div class="page-section center" id="about">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 py-3 wow fadeInUp">
+                    <span class="subhead">About us</span>
+                    <h2 class="title-section">The number #1 Transport Service Company</h2>
+                    <div class="divider"></div>
+
+                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+                    <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren.</p>
+
+                </div>
+                <div class="col-lg-6 py-3 wow fadeInRight">
+                    <div class="img-fluid py-3 text-center">
+                        <img src="~/img/Maps_Tracking.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- .container -->
+    </div> <!-- .page-section -->
+
+    <a id="cost"/>
+    <div class="container text-light mt-5">
+        <div class="row justify-content-md-center">
+            <div class="col-md-5 bg-dark p-3">
+                <h1 class="text-center">Cost Estimate</h1>
+                <form id="form">
+                    <div class="form-group">
+                        <label for="totalCost">Declared Value:</label>
+                        <input type="text" class="form-control" id="totalCost" placeholder="Total">
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Aprox. Dimensions</label>
+                        <select class="form-control" id="service">
+                            <option value="0.05"> Can be carried on a bike</option>
+                            <option value="0.1">It needs a car</option>
+                            <option value="0.2"> It probably needs a small truck</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="peopleamt">Kilometers</label>
+                        <input type="text" class="form-control" id="people" placeholder="People">
+                    </div>
+                    <br />
+                    <button type="button" value="Submit" id="tipCalc" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- End layout -->
+    <!--
+      Bootstrap Modal
+    -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>The cost will be: </p><span id="tip"></span><span> lei</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal end-->
+
+    <script type="text/javascript">
+
+document.getElementById("tipCalc").onclick = function() {
+  calculateTip();
+
+};
+
+function calculateTip() {
+  var totalCost = document.getElementById("totalCost").value;
+  var transport = document.getElementById("service").value;
+  var Km = document.getElementById("people").value;
+
+  //validate input
+    if (totalCost === "" || transport == 0) {
+    alert("Please enter tip total cost");
+    return;
+  }
+
+  //Calculate the tip
+    var total = (totalCost * transport) / (Km * 0.2);
+  //round to two decimal places
+  total = Math.round(total * 100) / 100;
+  //two digits after decimal point
+  total = total.toFixed(1);
+  //Display the tip
+  document.getElementById("tip").innerHTML = total;
+  $('#exampleModal').modal('toggle')
+
+}
+
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <br />
+    <br />
+
+    <div class="page-section bg-light">
+        <div class="container">
+            <div class="text-center wow fadeInUp">
+                <div class="subhead">Our services</div>
+                <h2 class="title-section">Contact us!</h2>
+                012081208
+                <div class="divider mx-auto"></div>
+            </div>
+        </div>
+    </div>
 </div>
+
