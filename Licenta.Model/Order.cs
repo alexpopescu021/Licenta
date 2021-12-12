@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TransportLogistics.Model
+namespace Licenta.Model
 {
     public enum OrderStatus { Created, Assigned, PickedUp, Delivering, Delivered, Canceled };
 

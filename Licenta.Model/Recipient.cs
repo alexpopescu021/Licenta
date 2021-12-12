@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TransportLogistics.Model
+namespace Licenta.Model
 {
     public class Recipient : DataEntity
     {

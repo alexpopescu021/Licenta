@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-//using TransportLogistics.Model;
-//using TransportLogistics.ViewModels.Customers;
+using Licenta.Model;
+
 
 namespace Licenta.ViewModels.Orders
 {
@@ -25,8 +25,9 @@ namespace Licenta.ViewModels.Orders
         [Display(Name = "Delivery Address:")]
         public string DeliveryLocationId { get; set; }
 
-       // [Required]
-       // public NewLocationViewModel NewLocation {get; set; }
+
+       [Required]
+       public LocationAddress NewLocation {get; set; }
 
         [Required(ErrorMessage = "Recipient required.")]
         [Display(Name = "Recipient Name")]

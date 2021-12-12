@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 
 
-namespace TransportLogistics.Model
+namespace Licenta.Model
 {
     public class Customer : DataEntity {
         public string Name { get; protected set; }
@@ -46,6 +46,19 @@ namespace TransportLogistics.Model
             ContactDetails = contact;
 
             return this;
+        }
+
+        public static Customer Create(string id, string name, string phoneNo, string email)
+        {
+            var createdCustomer = new Customer()
+            {
+                Id = Guid.Parse(id),
+                Name = name,
+                ContactDetails = Contact.Create(phoneNo, email),
+                LocationAddresses = new List<LocationAddress>()
+            };
+
+            return createdCustomer;
         }
     }
 }

@@ -29,6 +29,65 @@
     <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
     <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
     <None Include="wwwroot\lib\bootstrap\LICENSE" />
+    <None Include="wwwroot\lib\datatables\DataTables-1.10.20\js\dataTables.bootstrap.js" />
+    <None Include="wwwroot\lib\datatables\DataTables-1.10.20\js\dataTables.bootstrap.min.js" />
+    <None Include="wwwroot\lib\datatables\DataTables-1.10.20\js\dataTables.bootstrap4.js" />
+    <None Include="wwwroot\lib\datatables\DataTables-1.10.20\js\dataTables.bootstrap4.min.js" />
+    <None Include="wwwroot\lib\datatables\DataTables-1.10.20\js\dataTables.foundation.js" />
+    <None Include="wwwroot\lib\datatables\DataTables-1.10.20\js\dataTables.foundation.min.js" />
+    <None Include="wwwroot\lib\datatables\DataTables-1.10.20\js\dataTables.jqueryui.js" />
+    <None Include="wwwroot\lib\datatables\DataTables-1.10.20\js\dataTables.jqueryui.min.js" />
+    <None Include="wwwroot\lib\datatables\DataTables-1.10.20\js\dataTables.semanticui.js" />
+    <None Include="wwwroot\lib\datatables\DataTables-1.10.20\js\dataTables.semanticui.min.js" />
+    <None Include="wwwroot\lib\datatables\DataTables-1.10.20\js\jquery.dataTables.js" />
+    <None Include="wwwroot\lib\datatables\DataTables-1.10.20\js\jquery.dataTables.min.js" />
+    <None Include="wwwroot\lib\datatables\datatables.js" />
+    <None Include="wwwroot\lib\datatables\datatables.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.bootstrap.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.bootstrap.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.bootstrap4.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.bootstrap4.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.dataTables.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.dataTables.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.foundation.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.foundation.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.jqueryui.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.jqueryui.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.material.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.material.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.semanticui.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.semanticui.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.uikit.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.uikit.min.js" />
+    <None Include="wwwroot\lib\datatables\js\jquery.dataTables.js" />
+    <None Include="wwwroot\lib\datatables\js\jquery.dataTables.min.js" />
+    <None Include="wwwroot\lib\datatables\Responsive-2.2.3\js\dataTables.responsive.js" />
+    <None Include="wwwroot\lib\datatables\Responsive-2.2.3\js\dataTables.responsive.min.js" />
+    <None Include="wwwroot\lib\datatables\Responsive-2.2.3\js\responsive.bootstrap.js" />
+    <None Include="wwwroot\lib\datatables\Responsive-2.2.3\js\responsive.bootstrap.min.js" />
+    <None Include="wwwroot\lib\datatables\Responsive-2.2.3\js\responsive.bootstrap4.js" />
+    <None Include="wwwroot\lib\datatables\Responsive-2.2.3\js\responsive.bootstrap4.min.js" />
+    <None Include="wwwroot\lib\datatables\Responsive-2.2.3\js\responsive.foundation.js" />
+    <None Include="wwwroot\lib\datatables\Responsive-2.2.3\js\responsive.foundation.min.js" />
+    <None Include="wwwroot\lib\datatables\Responsive-2.2.3\js\responsive.jqueryui.js" />
+    <None Include="wwwroot\lib\datatables\Responsive-2.2.3\js\responsive.jqueryui.min.js" />
+    <None Include="wwwroot\lib\datatables\Responsive-2.2.3\js\responsive.semanticui.js" />
+    <None Include="wwwroot\lib\datatables\Responsive-2.2.3\js\responsive.semanticui.min.js" />
+    <None Include="wwwroot\lib\datatables\SearchPanes-1.0.1\js\dataTables.searchPanes.js" />
+    <None Include="wwwroot\lib\datatables\SearchPanes-1.0.1\js\dataTables.searchPanes.min.js" />
+    <None Include="wwwroot\lib\datatables\SearchPanes-1.0.1\js\searchPanes.bootstrap.js" />
+    <None Include="wwwroot\lib\datatables\SearchPanes-1.0.1\js\searchPanes.bootstrap.min.js" />
+    <None Include="wwwroot\lib\datatables\SearchPanes-1.0.1\js\searchPanes.bootstrap4.js" />
+    <None Include="wwwroot\lib\datatables\SearchPanes-1.0.1\js\searchPanes.bootstrap4.min.js" />
+    <None Include="wwwroot\lib\datatables\SearchPanes-1.0.1\js\searchPanes.dataTables.js" />
+    <None Include="wwwroot\lib\datatables\SearchPanes-1.0.1\js\searchPanes.dataTables.min.js" />
+    <None Include="wwwroot\lib\datatables\SearchPanes-1.0.1\js\searchPanes.foundation.js" />
+    <None Include="wwwroot\lib\datatables\SearchPanes-1.0.1\js\searchPanes.foundation.min.js" />
+    <None Include="wwwroot\lib\datatables\SearchPanes-1.0.1\js\searchPanes.jqueryui.js" />
+    <None Include="wwwroot\lib\datatables\SearchPanes-1.0.1\js\searchPanes.jqueryui.min.js" />
+    <None Include="wwwroot\lib\datatables\SearchPanes-1.0.1\js\searchPanes.semanicui.js" />
+    <None Include="wwwroot\lib\datatables\SearchPanes-1.0.1\js\searchPanes.semanticui.js" />
+    <None Include="wwwroot\lib\datatables\SearchPanes-1.0.1\js\searchPanes.semanticui.min.js" />
     <None Include="wwwroot\lib\fontawesome\js\all.js" />
     <None Include="wwwroot\lib\fontawesome\js\all.min.js" />
     <None Include="wwwroot\lib\fontawesome\js\brands.js" />
@@ -1686,7 +1745,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.20" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.20" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.20" />
@@ -1696,6 +1757,12 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.12" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Licenta.Applogic\Licenta.AppLogic.csproj" />
+    <ProjectReference Include="..\Licenta.DataAccess\Licenta.DataAccess.csproj" />
+    <ProjectReference Include="..\Licenta.Model\Licenta.Model.csproj" />
   </ItemGroup>
 
   <ItemGroup>

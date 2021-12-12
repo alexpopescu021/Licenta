@@ -46,6 +46,15 @@ $(function() {
   }
   
 });
+function closeModal(modal) {
+    $('#' + modal).modal('hide');
+}
+function loadServerPartialView(container, baseUrl) {
+    return $.get(baseUrl, function (responseData) {
+        $(container).html(responseData);
+
+    });
+}
 
 $('document').ready(function() {
   var nav_height = 70;

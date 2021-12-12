@@ -1,4 +1,8 @@
+using Licenta.ApplicationLogic.Services;
 using Licenta.Data;
+using Licenta.DataAccess;
+using Licenta.DataAccess.Abstractions;
+using Licenta.DataAccess.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TransportLogistics.DataAccess.Repositories;
 
 namespace Licenta
 {
@@ -29,11 +34,17 @@ namespace Licenta
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("LicentaContextConnection")));
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
-       
+
+            services.AddMvc();
+            services.AddScoped<IPersistenceContext, EFPersistanceContext>();
+            services.AddScoped<ICustomerRepository, EFCustomerRepository>();
+            services.AddScoped<CustomerService>();
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 

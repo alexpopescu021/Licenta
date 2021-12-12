@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 
 
-namespace TransportLogistics.Model
+namespace Licenta.Model
 {
     public class LocationAddress : DataEntity
     {

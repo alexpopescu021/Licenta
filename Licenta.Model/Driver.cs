@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TransportLogistics.Model
+namespace Licenta.Model
 {
     public enum DriverStatus {Free, Driving }
     public class Driver: DataEntity

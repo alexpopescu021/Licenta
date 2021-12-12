@@ -2,3 +2,13 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+function loadServerPartialView(container, baseUrl) {
+    return $.get(baseUrl, function (responseData) {
+        $(container).html(responseData);
+
+    });
+}
+
+function closeModal(modal) {
+    $('#' + modal).modal('hide');
+}

@@ -116,7 +116,20 @@
         function modalFormComplete(modalName) {
             $(modalName).modal("hide");
             loadTable();
-        }
+    }
+
+    function LoadDropdown(customerControl, locationControl, bonusLocationControl, locationType) {
+
+            $('#newOrderDialog').removeClass("modal-custom-lg").addClass("modal-custom");
+            var customerId = $(customerControl).val();
+            var locationId = $(locationControl).val();
+            var bonusLocationId = $(bonusLocationControl).val();
+
+            loadServerPartialView("#newOrderBody", '@Url.Action("NewOrder", "Orders")' + "/"
+                + customerId + ';' + locationId + ';' + bonusLocationId + ';' + locationType);
+    }
+
+  
 
 </script>
 }

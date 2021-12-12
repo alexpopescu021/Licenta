@@ -1,0 +1,108 @@
+﻿@page
+
+@{
+    ViewData["Title"] = "Pickup Locations";
+    ViewData["ActivePage"] = ManageNavPages.PickupLocations;
+}
+
+
+@using Licenta.ViewModels.Customer
+<button class="btn-primary" onclick="LoadAddLocationView()" data-toggle="modal" data-target="#locationModal">Add Location <i class="fa fa-address-book"></i></button>
+<br />
+<br />
+<div id="addressTableContainer"></div>
+<form method="post" asp-controller="Customer" asp-action="AddLocation"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-complete="modalFormComplete('#locationModal')"
+      data-ajax-mode="replace"
+      data-ajax-update="#locationBody">
+
+    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="addLocationTitle" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center">
+            <div class="modal-content" style="max-width: 70%">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addLocationTitle">Add a new location</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="locationBody">
+                    <partial name="_AddLocationPartial" model="new NewLocationViewModel()" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Add Location</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<form method="post" asp-controller="Customer" asp-action="EditLocation"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-complete="modalFormComplete('#editLocationModal')"
+      data-ajax-mode="replace"
+      data-ajax-update="#editLocationBody">
+
+    <div class="modal fade" id="editLocationModal" tabindex="-1" aria-labelledby="editLocationTitle" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center">
+            <div class="modal-content" style="max-width: 70%">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editLocationTitle">Edit location</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="editLocationBody">
+                    <partial name="_EditLocationPartial" model="new EditLocationViewModel()" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+@section Scripts {
+    <script type="text/javascript" src="/js/site.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+    <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            loadTable();
+        });
+
+
+        function loadTable() {
+            loadServerPartialView("#addressTableContainer", "/Customer/AddressTable").done(function () {
+                $('#addressTable').DataTable({ responsive: true, "bLengthChange": false, "paging": false, "searching": false });
+            });
+        }
+
+
+        function LoadAddLocationView(Id) {
+            loadServerPartialView("#locationBody", '@Url.Action("AddLocation", "Customer")' );
+        }
+
+
+
+        function LoadEditLocationView(Id) {
+            loadServerPartialView("#editLocationBody", '@Url.Action("EditLocation", "Customer")' + "/" + Id);
+        }
+
+        function modalFormComplete(modalName) {
+            $(modalName).modal("hide");
+            loadTable();
+        }
+    </script>
+}
