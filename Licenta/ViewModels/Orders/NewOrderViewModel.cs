@@ -17,7 +17,9 @@ namespace Licenta.ViewModels.Orders
             Pickup
         }
 
-       
+        [Required(ErrorMessage = "Sender required")]
+        [Display(Name = "Sender:")]
+        public string SenderId { get; set; }
 
         [Display(Name = "Pickup Address:")]
         public string PickupLocationId { get; set; }
@@ -25,9 +27,11 @@ namespace Licenta.ViewModels.Orders
         [Display(Name = "Delivery Address:")]
         public string DeliveryLocationId { get; set; }
 
-
-       [Required]
-       public LocationAddress NewLocation {get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
+        public int StreetNumber { get; set; }
+        public string PostalCode { get; set; }
 
         [Required(ErrorMessage = "Recipient required.")]
         [Display(Name = "Recipient Name")]

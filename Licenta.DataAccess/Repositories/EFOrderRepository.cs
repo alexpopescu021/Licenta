@@ -8,9 +8,9 @@ using System.Linq;
 using Licenta.DataAccess.Repositories;
 using Licenta.DataAccess;
 
-namespace TransportLogistics.DataAccess.Repositories
+namespace Licenta.DataAccess.Repositories
 {
-    class EFOrderRepository : EFBaseRepository<Order>, IOrderRepository
+    public class EFOrderRepository : EFBaseRepository<Order>, IOrderRepository
     {
         public EFOrderRepository(ApplicationDbContext context) : base(context)
         {

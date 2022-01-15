@@ -39,6 +39,23 @@
     </div>
 </form>
 
+<form method="post" asp-controller="Customer" asp-action="Remove"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-complete="modalFormComplete('#removeModal')"
+      data-ajax-mode="replace"
+      data-ajax-update="#removeBody">
+
+    <div class="modal fade" style="margin-top:9rem;" id="removeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center">
+            <div class="modal-content" style="max-width: 60%">
+                <div class="modal-body" id="removeBody">
+                    <partial name="_RemoveAddressPartial" model="new RemoveAddressViewModel()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 <form method="post" asp-controller="Customer" asp-action="EditLocation"
       data-ajax="true"
@@ -88,7 +105,7 @@
             loadServerPartialView("#locationBody", '@Url.Action("AddLocation", "Customer")' + "/" + Id);
         }
 
-        function LoadRemoveCustomerView(Id) {
+        function LoadRemoveAddressView(Id) {
             loadServerPartialView("#removeBody", '@Url.Action("Remove", "Customer")' + "/" + Id);
         }
 

@@ -1,6 +1,7 @@
 ﻿@using Licenta.ViewModels.Orders
+@model NewOrderViewModel
 <!DOCTYPE html>
-<html lang="en">
+
 <head>
 
     <link rel="stylesheet" href="~/css/maicons.css">
@@ -15,47 +16,51 @@
 
 </head>
 
-<body>
-    <br />
-    <br />
-    <div class=" d-flex justify-content-between mt-3 mb-3 mr-auto">
-        <h1>Orders</h1>
-        <button class="btn-primary" onclick="LoadNewOrderView()" data-toggle="modal" data-target="#newOrderModal">New Order <i class="fa fa-box"></i></button>
-    </div>
+<div class=" d-flex justify-content-between mt-3 mb-3 mr-auto">
+    <h1>Orders</h1>
+    <button class="btn-primary" onclick="LoadNewOrderView()" data-toggle="modal" data-target="#newOrderModal">New Order <i class="fa fa-box"></i></button>
+</div>
 
-    <div class="page-section">
-        <div class="container">
+<div id="ordersTableContainer"></div>
+
+@*<body>
+        <br />
+        <br />
+        
+
+        <div class="page-section">
+            <div class="container">
 
 
-            <div class="row my-5">
-                @for (int i = 1; i <= 5; i++)
-                {
-                    <div class="col-lg-4 py-3">
-                        <div class="card-blog">
-                            <div class="header">
+                <div class="row my-5">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        <div class="col-lg-4 py-3">
+                            <div class="card-blog">
+                                <div class="header">
 
-                                <div class="post-thumb middle-div" style="text-align:center; ">
-                                    Status and Details
+                                    <div class="post-thumb middle-div" style="text-align:center; ">
+                                        Status and Details
+                                    </div>
+                                </div>
+                                <div class="body">
+                                    <h5 class="post-title"><a href="blog-details.html">Order @i</a></h5>
+                                    <div class="post-date">Posted on <a href="#">27 Jan 2020</a></div>
                                 </div>
                             </div>
-                            <div class="body">
-                                <h5 class="post-title"><a href="blog-details.html">Order @i</a></h5>
-                                <div class="post-date">Posted on <a href="#">27 Jan 2020</a></div>
-                            </div>
                         </div>
-                    </div>
 
-                }
-
+                    }
 
 
 
+
+                </div>
             </div>
         </div>
-    </div>
 
-</body>
-</html>
+    </body>*@
+
 <style>
     div.middle-div {
         position: relative;
@@ -95,30 +100,25 @@
 </form>
 
 @section Scripts {
-<script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
-<script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        loadTable();
-    });
-    function loadTable() {
-        loadServerPartialView("#ordersTableContainer", "/Orders/OrdersTable").done(function () {
-            $('#ordersTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
+    <script type="text/javascript">
+        $(document).ready(function () {
+            loadTable();
         });
-    }
 
-    function LoadNewOrderView() {
-            $('#newOrderDialog').removeClass("modal-custom-lg").addClass("modal-custom");
-            loadServerPartialView("#newOrderBody", '@Url.Action("NewOrder", "Orders")');
+        function LoadEditOrderView(Id) {
+            loadServerPartialView("#editOrderBody", '@Url.Action("Update", "Orders")' + "/" + Id);
         }
 
-        function modalFormComplete(modalName) {
-            $(modalName).modal("hide");
-            loadTable();
-    }
+        function loadTable() {
+            loadServerPartialView("#ordersTableContainer", "/Orders/OrdersTable").done(function () {
+                $('#ordersTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
+            });
+        }
 
-    function LoadDropdown(customerControl, locationControl, bonusLocationControl, locationType) {
+        function LoadDropdown(customerControl, locationControl, bonusLocationControl, locationType) {
 
             $('#newOrderDialog').removeClass("modal-custom-lg").addClass("modal-custom");
             var customerId = $(customerControl).val();
@@ -127,9 +127,56 @@
 
             loadServerPartialView("#newOrderBody", '@Url.Action("NewOrder", "Orders")' + "/"
                 + customerId + ';' + locationId + ';' + bonusLocationId + ';' + locationType);
-    }
+        }
 
-  
+        function LoadNewOrderView(id) {
+            $('#newOrderDialog').removeClass("modal-custom-lg").addClass("modal-custom");
+            loadServerPartialView("#newOrderBody", '@Url.Action("NewOrder", "Orders")');
+        }
 
-</script>
+        function modalFormComplete(modalName) {
+            $(modalName).modal("hide");
+            loadTable();
+        }
+
+        function goToRoutes() {
+            document.location = '@Url.Action("Index", "Routes")';
+        }
+
+         function LoadRemoveOrderView(Id) {
+             loadServerPartialView("#removeOrderBody",'@Url.Action("Remove", "Orders")' + "/" + Id);
+        }
+
+        function addBonusPickupLocation() {
+
+            $('#bonusLocation').toggle();
+
+            if ($('#pickupSelector select').val() == null) {
+                $('#pickupSelector select').children()[0].selected = true;
+            } else {
+                $('#pickupSelector select').val(null);
+            }
+
+            $('#addDeliveryButton').toggleDisabled();
+            $('#newOrderDialog').toggleClass("modal-custom").toggleClass("modal-custom-lg");
+            $('#addPickupButton').toggleClass("btn btn-add-blue ml-4").toggleClass("btn btn-outline-danger ml-4");
+            $('#addPickupButton span').toggleClass("fa fa-plus").toggleClass("fa fa-minus");
+        }
+
+        function addBonusDeliveryLocation() {
+
+            $('#bonusLocation').toggle();
+
+            if ($('#deliverySelector select').val() == null) {
+                $('#deliverySelector select').children()[0].selected = true;
+            } else {
+                $('#deliverySelector select').val(null);
+            }
+
+            $('#addPickupButton').toggleDisabled();
+            $('#newOrderDialog').toggleClass("modal-custom").toggleClass("modal-custom-lg");
+            $('#addDeliveryButton').toggleClass("btn btn-add-blue ml-4").toggleClass("btn btn-outline-danger ml-4");
+            $('#addDeliveryButton span').toggleClass("fa fa-plus").toggleClass("fa fa-minus");
+        }
+    </script>
 }

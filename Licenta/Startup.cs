@@ -16,7 +16,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TransportLogistics.DataAccess.Repositories;
 
 namespace Licenta
 {
@@ -33,7 +32,7 @@ namespace Licenta
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
+                options.UseLazyLoadingProxies().UseSqlServer(
                     Configuration.GetConnectionString("LicentaContextConnection")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -44,7 +43,9 @@ namespace Licenta
             services.AddMvc();
             services.AddScoped<IPersistenceContext, EFPersistanceContext>();
             services.AddScoped<ICustomerRepository, EFCustomerRepository>();
+            services.AddScoped<IOrderRepository, EFOrderRepository>();
             services.AddScoped<CustomerService>();
+            services.AddScoped<OrderService>();
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Transactions;
-using TransportLogistics.DataAccess.Repositories;
+using Licenta.DataAccess.Repositories;
 
 namespace Licenta.DataAccess.Repositories
 {
@@ -17,14 +17,16 @@ namespace Licenta.DataAccess.Repositories
             this.dbContext = context;
 
             CustomerRepository = new EFCustomerRepository(context);
+            OrderRepository = new EFOrderRepository(context);
+            RecipientRepository = new EFRecipientRepository(context);
 
-          
         }
 
 
         public ICustomerRepository CustomerRepository { get; private set; }
 
         public IOrderRepository OrderRepository { get; private set; }
+        public IRecipientRepository RecipientRepository { get; private set; }
 
         public TransactionScope BeginTransaction()
         {

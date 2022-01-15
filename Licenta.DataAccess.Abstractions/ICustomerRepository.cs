@@ -14,6 +14,9 @@ namespace Licenta.DataAccess.Abstractions
         new IEnumerable<Customer> GetAll();
         bool RemoveCustomer(Guid customerId);
         void AddLocationToCustomer(Guid customerId, LocationAddress address);
+        public void AddLocation(LocationAddress locationAddress);
+        void RemoveLocation(Guid locationId);
+        IEnumerable<LocationAddress> GetLocations(Guid customerId);
         LocationAddress GetLocationAddress(Guid locationId);
     }
 }

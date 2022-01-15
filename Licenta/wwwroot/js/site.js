@@ -12,3 +12,35 @@ function loadServerPartialView(container, baseUrl) {
 function closeModal(modal) {
     $('#' + modal).modal('hide');
 }
+
+function Validate() {
+    var correctForm = true;
+
+    if (document.getElementById("Name").value == "") {
+
+        correctForm = false;
+    }
+
+
+    if (document.getElementById("Email").value == "") {
+
+        correctForm = false;
+    }
+
+
+    if (document.getElementById("PhoneNumber").value == "") {
+
+        correctForm = false;
+    }
+
+    if (correctForm == false) {
+
+        $("#EditBtn").prop('disabled', true);
+
+
+    }
+    else {
+        $("#EditBtn").prop('disabled', false);
+
+    }
+}

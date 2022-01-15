@@ -80,6 +80,11 @@ namespace Licenta.ApplicationLogic.Services
             customerRepository.AddLocationToCustomer(customerId, locationAddress); 
         }
 
+        public void AddLocation(LocationAddress locationAddress)
+        {
+            customerRepository.AddLocation(locationAddress);
+        }
+
         public bool RemoveCustomerById(string customerId)
         {
             var customer = GetCustomerById(customerId);
@@ -137,6 +142,12 @@ namespace Licenta.ApplicationLogic.Services
             }
 
             return false;
+        }
+
+        public void RemoveLocation(string locationId)
+        {
+            Guid.TryParse(locationId, out Guid locationGuid);
+            customerRepository.RemoveLocation(locationGuid);
         }
 
     }

@@ -11,14 +11,16 @@ namespace Licenta.ApplicationLogic.Services
         private readonly IPersistenceContext PersistenceContext;
         private readonly IOrderRepository OrderRepository;
         private readonly ICustomerRepository customerRepository;
-       
+        private readonly IRecipientRepository recipientRepository;
+
 
         public OrderService(IPersistenceContext persistenceContext)
         {
             PersistenceContext = persistenceContext;
             OrderRepository = persistenceContext.OrderRepository;
             customerRepository = persistenceContext.CustomerRepository;
-            
+            recipientRepository = persistenceContext.RecipientRepository;
+
         }
 
         public void ChangeOrderStatus(Guid orderId, OrderStatus status)
@@ -38,7 +40,7 @@ namespace Licenta.ApplicationLogic.Services
             PersistenceContext.SaveChanges();
         }
 
-        public Order CreateOrder(Recipient recipient, Customer sender, 
+        public Order CreateOrder(Recipient ?recipient, Customer sender, 
             LocationAddress deliveryAddress, LocationAddress pickUpAddress, decimal price)
         {
             var order = Order.Create(recipient, sender, pickUpAddress, deliveryAddress, price);
@@ -101,6 +103,14 @@ namespace Licenta.ApplicationLogic.Services
             order.Update(pickupLocation, deliveryLocation, price);
             PersistenceContext.SaveChanges();
             return order;
+        }
+
+        public Recipient CreateNewRecipient(string name, string phoneNo, string email)
+        {
+            var recipient = Recipient.Create(name, phoneNo, email);
+            recipient = recipientRepository.Add(recipient);
+            PersistenceContext.SaveChanges();
+            return recipient;
         }
     }
 }

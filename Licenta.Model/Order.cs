@@ -6,10 +6,10 @@ namespace Licenta.Model
 
     public class Order : DataEntity
     {
-        public LocationAddress PickUpAddress { get; private set; }
-        public LocationAddress DeliveryAddress { get; private set; }
-        public Recipient Recipient { get; private set; }
-        public Customer Sender { get; private set; }
+        public virtual LocationAddress PickUpAddress { get; private set; }
+        public virtual LocationAddress DeliveryAddress { get; private set; }
+        public virtual Recipient Recipient { get; private set; }
+        public virtual Customer Sender { get; private set; }
         public OrderStatus Status { get; private set; }
         public decimal Price { get; private set; }
         public DateTime CreationTime { get; private set; }

@@ -146,39 +146,27 @@ namespace Licenta.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult Remove([FromRoute] string Id)
+        {
 
-        //[HttpGet]
-        //public IActionResult Remove([FromRoute] string Id)
-        //{
+            RemoveAddressViewModel removeViewModel = new RemoveAddressViewModel()
+            {
+                Id = Id
+            };
 
-        //    RemoveCustomerViewModel removeViewModel = new RemoveCustomerViewModel()
-        //    {
-        //        Id = Id
-        //    };
+            return PartialView("_RemoveAddressPartial", removeViewModel);
+        }
 
-        //    return PartialView("_RemoveCustomerPartial", removeViewModel);
-        //}
+        [HttpPost]
+        public IActionResult Remove( RemoveAddressViewModel removeData)
+        {
+           
+                customerService.RemoveLocation(removeData.Id);
 
-        //[HttpPost]
-        //public IActionResult Remove(RemoveCustomerViewModel removeData)
-        //{
-        //    try
-        //    {
-        //        customerService.RemoveCustomerById(removeData.Id);
-        //    }
-        //    catch (CustomerNotFoundException notFound)
-        //    {
-        //        logger.LogError("Failed to find the customer entity {@Exception}", notFound.Message);
-        //        logger.LogDebug("Failed to find the customer entity {@ExceptionMessage}", notFound);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        logger.LogError("Failed to remove the customer entity {@Exception}", e.Message);
-        //        logger.LogDebug("Failed to remove customer entity {@ExceptionMessage}", e);
-        //    }
 
-        //    return PartialView("_RemoveCustomerPartial", removeData);
-        //}
+            return RedirectToPage("/Account/Manage/PickupLocations", new { area = "Identity" });
+        }
     }
 
 }

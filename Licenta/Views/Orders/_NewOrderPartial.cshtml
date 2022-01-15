@@ -1,5 +1,5 @@
 ﻿@using Licenta.ViewModels.Orders
-@model  NewOrderViewModel
+@model NewOrderViewModel
 @{
     ViewData["Title"] = "Test";
 }
@@ -7,54 +7,68 @@
     <div class="column ml-4 mr-4">
 
         <div class="form-group text-center">
+            <label asp-for="SenderId"></label>
+            <div class="row ml-2 mr-2 d-flex justify-content-center modal-select-width">
+
+                <select class="select-custom form-control" asp-for="SenderId" asp-items="@Model.CustomerList"
+                        onchange="LoadDropdown('#SenderId')">
+                </select>
+            </div>
+            <span asp-validation-for="SenderId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group text-center">
             <label asp-for="PickupLocationId"></label>
 
             <div id="pickupSelector" class="row ml-2 mr-2 d-flex justify-content-between modal-select-width">
 
-                <select class="form-control select-width" asp-for="PickupLocationId" asp-items="@Model.PickupLocations" 
-                                onchange="LoadDropdown('#SenderId', '#PickupLocationId',
+                <select class="form-control select-width" asp-for="PickupLocationId" asp-items="@Model.PickupLocations"
+                        onchange="LoadDropdown('#SenderId', '#PickupLocationId',
                                         '#DeliveryLocationId', '@NewOrderViewModel.LocationType.Pickup')">
                 </select>
 
-                
+                @*<button type="button" id="addPickupButton" onclick="addBonusPickupLocation()" class="btn btn-add-blue ml-4">
+                    <span class="fa fa-plus"></span>
+                </button>*@
             </div>
             <span asp-validation-for="PickupLocationId" class="text-danger"></span>
         </div>
 
 
-    <div class="column mr-3 ml-3">
-        <div class="form-group">
-            <label asp-for="NewLocation.Country"></label>
-            <input asp-for="NewLocation.Country" type="text" class="form-control" />
-            <span asp-validation-for="NewLocation.Country" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="NewLocation.City"></label>
-            <input asp-for="NewLocation.City" type="text" class="form-control" />
-            <span asp-validation-for="NewLocation.City" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="NewLocation.Street"></label>
-            <input asp-for="NewLocation.Street" type="text" class="form-control" />
-            <span asp-validation-for="NewLocation.Street" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="NewLocation.StreetNumber"></label>
-            <input asp-for="NewLocation.StreetNumber" type="number" class="form-control" />
-            <span asp-validation-for="NewLocation.StreetNumber" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="NewLocation.PostalCode"></label>
-            <input asp-for="NewLocation.PostalCode" type="text" class="form-control" />
-            <span asp-validation-for="NewLocation.PostalCode" class="text-danger"></span>
-        </div>
     </div>
 
-    <div class="column mr-3 ml-3">
+    <div class="column mr-3 ml-3" >
+        
+        <div class="form-group">
+            <label asp-for="Country"></label>
+            <input asp-for="Country" type="text" class="form-control" />
+            <span asp-validation-for="Country" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="City"></label>
+            <input asp-for="City" type="text" class="form-control" />
+            <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Street"></label>
+            <input asp-for="Street" type="text" class="form-control" />
+            <span asp-validation-for="Street" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="StreetNumber"></label>
+            <input asp-for="StreetNumber" type="number" class="form-control" />
+            <span asp-validation-for="StreetNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PostalCode"></label>
+            <input asp-for="PostalCode" type="text" class="form-control" />
+            <span asp-validation-for="PostalCode" class="text-danger"></span>
+        </div>
+
         <div class="form-group">
             <label asp-for="RecipientName"></label>
             <input asp-for="RecipientName" type="text" class="form-control" />

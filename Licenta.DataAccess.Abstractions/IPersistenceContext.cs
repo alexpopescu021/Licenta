@@ -11,7 +11,9 @@ namespace Licenta.DataAccess.Abstractions
         ICustomerRepository CustomerRepository { get; }
 
         IOrderRepository OrderRepository { get; }
-       
+        IRecipientRepository RecipientRepository { get; }
+
+
         TransactionScope BeginTransaction();
         void SaveChanges();
     }

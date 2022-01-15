@@ -8,7 +8,7 @@ using Licenta.Model;
 using Licenta.DataAccess.Repositories;
 using Licenta.DataAccess;
 
-namespace TransportLogistics.DataAccess.Repositories
+namespace Licenta.DataAccess.Repositories
 {
     public class EFCustomerRepository : EFBaseRepository<Customer>, ICustomerRepository
     {
@@ -69,6 +69,12 @@ namespace TransportLogistics.DataAccess.Repositories
             dbContext.SaveChanges();
         }
 
+        public void AddLocation(LocationAddress locationAddress)
+        {
+            dbContext.LocationAddresses.Add(locationAddress);
+            dbContext.SaveChanges();
+        }
+
         public bool RemoveCustomer(Guid customerId)
         {
             var entityToRemove = GetById(customerId);
@@ -99,5 +105,20 @@ namespace TransportLogistics.DataAccess.Repositories
                             .FirstOrDefault();
         }
 
+        public void RemoveLocation(Guid locationId)
+        {
+            var address = dbContext.LocationAddresses.Where(a => a.Id == locationId).FirstOrDefault();
+
+                dbContext.Remove(address);
+                dbContext.SaveChanges();
+
+
+        }
+
+
+        public IEnumerable<LocationAddress> GetLocations(Guid customerId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
