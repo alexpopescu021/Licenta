@@ -11,12 +11,12 @@ namespace Licenta.Model
         public string Country { get; protected set; }
         public string City { get; protected set; }
         public string Street { get; protected set; }
-        public int StreetNumber { get; protected set; }
+        public string StreetNumber { get; protected set; }
         public string PostalCode { get; protected set; }
 
         protected LocationAddress() { }
 
-        public static LocationAddress Create(string country, string city, string street, int streetNumber, string postalCode)
+        public static LocationAddress Create(string country, string city, string street, string streetNumber, string postalCode)
         {
             var createdLocation = new LocationAddress()
             {
@@ -43,12 +43,12 @@ namespace Licenta.Model
         {
             Street = street;
         }
-        public void SetStreetNumber(int streetNumber)
+        public void SetStreetNumber(string streetNumber)
         {
             StreetNumber = streetNumber;
 
         }
-        public LocationAddress Update(string country, string city, string street, int streetNumber, string postalCode)
+        public LocationAddress Update(string country, string city, string street, string streetNumber, string postalCode)
         {
             Country = country;
             City = city;

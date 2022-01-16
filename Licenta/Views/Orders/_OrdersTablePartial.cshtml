@@ -9,12 +9,15 @@
             <th>Recipient</th>
             <th>Status</th>
             <th>Price</th>
+            <th>Action</th>
         </tr>
     </thead>
-
+    @{ int i = 0;}
     <tbody>
         @foreach (var order in Model.Orders)
         {
+
+
             <tr>
 
                 <td class="dropdown text-center">
@@ -59,8 +62,135 @@
 
                 <td>@order.Status</td>
                 <td>@order.Price</td>
+                <td>
+                    <a href="#my_modal" data-toggle="modal" data-pickup="@order.PickUpAddress.Country @order.PickUpAddress.City @order.PickUpAddress.Street @order.PickUpAddress.StreetNumber @order.PickUpAddress.PostalCode"
+                       data-delivery="@order.DeliveryAddress.Country @order.DeliveryAddress.City @order.DeliveryAddress.Street @order.DeliveryAddress.StreetNumber @order.DeliveryAddress.PostalCode">Open Modal</a>
+                    @*<button class="btn btn-outline-dark mr-1 ml-1" title="Maps" data-toggle="modal"
+                            data-target="#editOrderModal" onclick="sendValueToController('@i')">
 
+                        <i class="material-icons fa fa-map"></i>
+                    </button>*@
+                </td>
             </tr>
+            i++;
         }
     </tbody>
 </table>
+
+
+
+<div class="modal" id="my_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Modal header</h4>
+            </div>
+            <div class="modal-body">
+                <div id='myMap' style='width: 50vw; height: 50vh; text-align:center'></div>
+
+                <input type="text" name="PickUp" value="" />
+                <input type="text" name="Delivery" value="" />
+
+                <script>
+                    function loadMapScenario(pickup, delivery) {
+
+                        var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+                            /* No need to set credentials if already passed in URL */
+                            zoom: 12
+                        });
+                        Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function test(index) {
+
+                            var directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+                            // Set Route Mode to driving
+                            directionsManager.setRequestOptions({ routeMode: Microsoft.Maps.Directions.RouteMode.driving });
+                            var waypoint1 = new Microsoft.Maps.Directions.Waypoint({
+                                address: pickup
+                            });
+                            var waypoint2 = new Microsoft.Maps.Directions.Waypoint({
+                                address: delivery
+                            });
+                            directionsManager.addWaypoint(waypoint1);
+                            directionsManager.addWaypoint(waypoint2);
+                            // Set the element in which the itinerary will be rendered
+                            directionsManager.setRenderOptions({ itineraryContainer: document.getElementById('printoutPanel') });
+                            directionsManager.calculateDirections();
+                        });
+                    }
+                </script>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script defer type='text/javascript'>
+
+    $('#my_modal').on('show.bs.modal', function (e) {
+        var PickUp = $(e.relatedTarget).data('pickup');
+        var Delivery = $(e.relatedTarget).data('delivery');
+        loadMapScenario(PickUp, Delivery);
+        $(e.currentTarget).find('input[name="PickUp"]').val(PickUp);
+        $(e.currentTarget).find('input[name="Delivery"]').val(Delivery);
+
+    });
+
+    function sendValueToController(value) {
+
+
+        $.ajax({
+            url: '/Orders/ActionName/',
+            data: { YourValue: value },
+            cache: false,
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
+                alert('Successfully called');
+                alert(result);
+                if (result.Success) { // this sets the value from the response
+                    loadMapScenario(result);
+                } else {
+                    alert("failed");
+                }
+            }
+        });
+    }
+
+    
+
+</script>
+
+<script defer type='text/javascript'>
+    @*function loadMapScenario() {
+        var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+            /* No need to set credentials if already passed in URL */
+            zoom: 12
+        });
+
+
+         Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function test(index) {
+
+            var directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+            // Set Route Mode to driving
+            directionsManager.setRequestOptions({ routeMode: Microsoft.Maps.Directions.RouteMode.driving });
+            var waypoint1 = new Microsoft.Maps.Directions.Waypoint({
+                address: '@Model.Orders.ElementAt(Model.selectedOrder).PickUpAddress.Country , @Model.Orders.ElementAt(Model.selectedOrder).PickUpAddress.City ,@Model.Orders.ElementAt(Model.selectedOrder).PickUpAddress.Street , @Model.Orders.ElementAt(Model.selectedOrder).PickUpAddress.StreetNumber' });
+            var waypoint2 = new Microsoft.Maps.Directions.Waypoint({
+                address: '@Model.Orders.ElementAt(Model.selectedOrder).DeliveryAddress.Country , @Model.Orders.ElementAt(Model.selectedOrder).DeliveryAddress.City ,@Model.Orders.ElementAt(Model.selectedOrder).DeliveryAddress.Street , @Model.Orders.ElementAt(Model.selectedOrder).DeliveryAddress.StreetNumber'
+            });
+            directionsManager.addWaypoint(waypoint1);
+            directionsManager.addWaypoint(waypoint2);
+            // Set the element in which the itinerary will be rendered
+            directionsManager.setRenderOptions({ itineraryContainer: document.getElementById('printoutPanel') });
+            directionsManager.calculateDirections();
+        });
+    }*@
+</script>
+<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=Atq9al1eZ_dVfCM891ShPaSWtruHU1Rfnci9qUrSaj5aOpzGCmggHaVuuj_5t7wY&callback=loadMapScenario' async defer></script>
+

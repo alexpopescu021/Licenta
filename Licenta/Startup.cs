@@ -21,8 +21,10 @@ namespace Licenta
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
+
             Configuration = configuration;
         }
 
@@ -38,7 +40,7 @@ namespace Licenta
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson();
 
             services.AddMvc();
             services.AddScoped<IPersistenceContext, EFPersistanceContext>();
@@ -47,6 +49,8 @@ namespace Licenta
             services.AddScoped<CustomerService>();
             services.AddScoped<OrderService>();
             services.AddRazorPages().AddRazorRuntimeCompilation();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

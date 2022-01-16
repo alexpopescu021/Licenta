@@ -9,5 +9,7 @@ namespace Licenta.ViewModels.Orders
     public class OrderViewModel
     {
         public IEnumerable<Order> Orders {get; set;}
+
+        public int selectedOrder { get; set; }
     }
 }

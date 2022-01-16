@@ -1,9 +1,9 @@
 ﻿@using Licenta.ViewModels.Orders
-@model NewOrderViewModel
+@model OrderViewModel
 <!DOCTYPE html>
 
 <head>
-
+    <link rel="stylesheet" href="https://js.arcgis.com/4.22/esri/themes/light/main.css">
     <link rel="stylesheet" href="~/css/maicons.css">
 
     <link rel="stylesheet" href="~/css/bootstrap.min.css">
@@ -23,43 +23,25 @@
 
 <div id="ordersTableContainer"></div>
 
-@*<body>
-        <br />
-        <br />
-        
 
-        <div class="page-section">
-            <div class="container">
-
-
-                <div class="row my-5">
-                    @for (int i = 1; i <= 5; i++)
-                    {
-                        <div class="col-lg-4 py-3">
-                            <div class="card-blog">
-                                <div class="header">
-
-                                    <div class="post-thumb middle-div" style="text-align:center; ">
-                                        Status and Details
-                                    </div>
-                                </div>
-                                <div class="body">
-                                    <h5 class="post-title"><a href="blog-details.html">Order @i</a></h5>
-                                    <div class="post-date">Posted on <a href="#">27 Jan 2020</a></div>
-                                </div>
-                            </div>
-                        </div>
-
-                    }
+<style type="text/css">
+    /* Set the size of the div element that contains the map */
+    #map {
+        height: 400px;
+        /* The height is 400 pixels */
+        width: 100%;
+        /* The width is the width of the web page */
+    }
+</style>
 
 
 
 
-                </div>
-            </div>
-        </div>
+@*<div id="viewDiv"></div>*@
 
-    </body>*@
+@*<div id="map"></div>*@
+
+
 
 <style>
     div.middle-div {
@@ -99,14 +81,18 @@
     </div>
 </form>
 
+
 @section Scripts {
+
     <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
+   
 
     <script type="text/javascript">
         $(document).ready(function () {
             loadTable();
         });
+
 
         function LoadEditOrderView(Id) {
             loadServerPartialView("#editOrderBody", '@Url.Action("Update", "Orders")' + "/" + Id);
@@ -174,7 +160,7 @@
             }
 
             $('#addPickupButton').toggleDisabled();
-            $('#newOrderDialog').toggleClass("modal-custom").toggleClass("modal-custom-lg");
+            $('#newOrderDialog').toggleClass("modal-custom").toggleClass("modal-custom-OrdToStringersDeliveryCityAddresslElementAtgOrdersrders");
             $('#addDeliveryButton').toggleClass("btn btn-add-blue ml-4").toggleClass("btn btn-outline-danger ml-4");
             $('#addDeliveryButton span').toggleClass("fa fa-plus").toggleClass("fa fa-minus");
         }

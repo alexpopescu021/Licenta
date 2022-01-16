@@ -24,7 +24,7 @@ namespace Licenta.ViewModels.Customer
 
         [Required]
         [Display(Name = "Street number")]
-        public int StreetNumber { get; set; }
+        public string StreetNumber { get; set; }
 
         [Required(ErrorMessage = "Postal Code required")]
         [Display(Name = "Postal Code")]

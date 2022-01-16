@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 using Licenta.Model;
 using System.Security.Claims;
 using Microsoft.AspNet.Identity;
+using System.Web.Mvc;
 
 namespace Licenta.Controllers
 {
-    public class OrdersController : Controller
+    public class OrdersController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly OrderService orderService;
         private readonly CustomerService customerService;
@@ -37,31 +38,31 @@ namespace Licenta.Controllers
             return PartialView("_OrdersTablePartial", ordersView);
         }
 
-        private SelectListItem CreateListItem(LocationAddress location)
+        private Microsoft.AspNetCore.Mvc.Rendering.SelectListItem CreateListItem(LocationAddress location)
         {
             string dropdownText = $"{ location.PostalCode }, { location.Street}";
-            SelectListItem selectLocation = new SelectListItem(dropdownText, location.Id.ToString());
+            Microsoft.AspNetCore.Mvc.Rendering.SelectListItem selectLocation = new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(dropdownText, location.Id.ToString());
             return selectLocation;
         }
 
-        private List<SelectListItem> GetCustomerList()
+        private List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> GetCustomerList()
         {
             var customers = customerService.GetAllCustomers();
-            List<SelectListItem> customerNames = new List<SelectListItem>();
+            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> customerNames = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
 
             foreach (var customer in customers)
             {
                 if (customer.LocationAddresses.Count > 0)
                 {
-                    customerNames.Add(new SelectListItem(customer.Name, customer.Id.ToString()));
+                    customerNames.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(customer.Name, customer.Id.ToString()));
                 }
             }
             return customerNames;
         }
 
-        private List<SelectListItem> GetLocationsList(string customerId)
+        private List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> GetLocationsList(string customerId)
         {
-            List<SelectListItem> locationsList = new List<SelectListItem>();
+            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> locationsList = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
             var locations = customerService.GetCustomerAddresses(customerId);
             foreach (var location in locations)
             {
@@ -71,16 +72,16 @@ namespace Licenta.Controllers
             return locationsList;
         }
 
-        [HttpGet]
+        [Microsoft.AspNetCore.Mvc.HttpGet]
         public IActionResult NewOrder(string id)
         {
-            List<SelectListItem> pickupLocations = new List<SelectListItem>();
-            List<SelectListItem> deliveryLocations = new List<SelectListItem>();
-            List<SelectListItem> unchosenLocations = new List<SelectListItem>();
+            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> pickupLocations = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
+            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> deliveryLocations = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
+            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> unchosenLocations = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
             string senderId = null;
             string pickupId = null;
             string deliveryId = null;
-
+            
             try
             {
                 if (id != null)
@@ -162,7 +163,7 @@ namespace Licenta.Controllers
             }
         }
 
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public IActionResult NewOrder([FromForm] NewOrderViewModel orderData)
         {
             try
@@ -211,6 +212,13 @@ namespace Licenta.Controllers
             {
                 return BadRequest(e.Message);
             }
+        }
+
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        public Microsoft.AspNetCore.Mvc.JsonResult ActionName(string YourValue)
+        {
+           
+            return Json(new { success = true, result = YourValue }, JsonRequestBehavior.AllowGet);
         }
     }
 }
