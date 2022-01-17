@@ -79,19 +79,22 @@
 
 
 
-<div class="modal" id="my_modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
+<div class="modal " id="my_modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content modal-lg">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Modal header</h4>
+                <h4 class="modal-title">Order Maps</h4>
             </div>
-            <div class="modal-body">
-                <div id='myMap' style='width: 50vw; height: 50vh; text-align:center'></div>
-
-                <input type="text" name="PickUp" value="" />
-                <input type="text" name="Delivery" value="" />
-
+            <div class="modal-body modal-lg" style="width:100px!important">
+                <div id='myMap' style='width: 40vw; height: 50vh; text-align:center'></div>
+                <br />
+                <div class="container " style="text-align: center">
+                    <div class="align-content-center">
+                        <input type="text" name="PickUp" value="" readonly="readonly" style="width:320px" />
+                        <input type="text" name="Delivery" value="" readonly="readonly" style="width:320px" />
+                    </div>
+                </div>
                 <script>
                     function loadMapScenario(pickup, delivery) {
 
