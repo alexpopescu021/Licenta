@@ -29,7 +29,7 @@
 body {
   font-family: "Work Sans", sans-serif;
   line-height: 1.5;
-  color: #2D2B3A;
+  color: antiquewhite;
 }
 
 a {
@@ -162,7 +162,7 @@ a.text-accent:hover, a.text-accent:focus {
 }
 
 .text-secondary {
-  color: #645F88 !important;
+  color: antiquewhite !important;
 }
 
 a.text-secondary:hover, a.text-secondary:focus {
@@ -1464,14 +1464,15 @@ a.text-dark:hover, a.text-dark:focus {
 
 
 .card-service {
-  display: block;
-  margin: 16px auto;
-  padding: 32px 20px;
-  max-width: 300px;
-  text-align: center;
-  color: #898798;
-  border-radius: 8px;
-  box-shadow: 0 3px 12px rgba(95, 92, 120, 0.12);
+    display: block;
+    margin: 16px auto;
+    padding: 32px 20px;
+    max-width: 440px;
+    text-align: center;
+    color: #35373b;
+    border-radius: 8px;
+    box-shadow: 0 3px 12px rgb(63 73 102);
+    background-color: #50505030;
 }
 
 .card-service .header {
@@ -1509,7 +1510,6 @@ a.text-dark:hover, a.text-dark:focus {
   background-color: #fff;
   color: #6C55F9;
   font-size: 24px;
-  box-shadow: 0 2px 4px rgba(95, 92, 120, 0.16);
 }
 
 .features h5 {
@@ -1560,7 +1560,6 @@ a.text-dark:hover, a.text-dark:focus {
   color: #2D2B3A;
   text-align: center;
   border-radius: 4px;
-  box-shadow: 0 4px 16px rgba(100, 95, 136, 0.16);
 }
 
 .card-pricing .header {
@@ -1621,7 +1620,6 @@ a.text-dark:hover, a.text-dark:focus {
 .card-pricing.marked {
   background-color: #6C55F9;
   color: #fff;
-  box-shadow: 0 4px 16px rgba(107, 85, 249, 0.5);
 }
 
 .card-pricing.marked .header h5 {
@@ -1667,7 +1665,6 @@ a.text-dark:hover, a.text-dark:focus {
   margin: 0 auto;
   max-width: 280px;
   border-radius: 4px;
-  box-shadow: 0 2px 6px rgba(100, 95, 136, 0.16);
   overflow: hidden;
 }
 
@@ -1797,7 +1794,6 @@ a.text-dark:hover, a.text-dark:focus {
   margin-bottom: 32px;
   background-color: #fff;
   border-radius: 6px;
-  box-shadow: 0 2px 12px rgba(100, 95, 136, 0.2);
   overflow: hidden;
 }
 
@@ -1830,7 +1826,6 @@ a.text-dark:hover, a.text-dark:focus {
   border: 4px solid #fff;
   background-color: #fff;
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(137, 135, 152, 0.4);
   transform: translateY(10px);
 }
 
@@ -1910,7 +1905,6 @@ a.text-dark:hover, a.text-dark:focus {
   margin-bottom: 32px;
   border-radius: 6px;
   border: 1px solid #EDECF5;
-  box-shadow: 0 3px 9px rgba(100, 95, 136, 0.15);
 }
 
 .widget-title {
