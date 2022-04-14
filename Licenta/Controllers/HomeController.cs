@@ -8,7 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Licenta.ApplicationLogic.Services;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Licenta.Controllers
 {
@@ -16,34 +17,36 @@ namespace Licenta.Controllers
     {
         private readonly ILogger<HomeController> logger;
         private readonly CustomerService customerService;
-
-        public HomeController(ILogger<HomeController> _logger, CustomerService _customerService)
+        private readonly UserManager<IdentityUser> userManager;
+        public HomeController(ILogger<HomeController> _logger, CustomerService _customerService, UserManager<IdentityUser> _userManager)
         {
             logger = _logger;
             customerService = _customerService;
+            userManager = _userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             if(User?.Identity.IsAuthenticated == true)
             { 
-                if (!User.IsInRole("Admin"))
+                if (!User.IsInRole("Admin") && !User.IsInRole("Driver") && !User.IsInRole("Dispatcher"))
                 {
                     bool ok = true;
-                    var user = User.Identity.GetUserId();
-                    if(user.Length != 0)
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    var user = await userManager.FindByIdAsync(userId.ToString());
+                    if (userId.Length != 0)
                     { 
                         var list = customerService.GetAllCustomers();
                         foreach(var customer in list)
                         {
-                            if(customer.Id.ToString() == user)
+                            if(customer.Id.ToString() == userId)
                             {
                                 ok = false;
                             }
                         }
                         if(ok)
                         {
-                            customerService.CreateNewCustomerFromIdentity(user,null,null,null);
+                            customerService.CreateNewCustomerFromIdentity(userId, null,null,user.Email);
                         }
                     }
 

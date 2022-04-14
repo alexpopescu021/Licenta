@@ -2049,7 +2049,9 @@
   font-weight: 400; }
 
 .fa.fa-drivers-license:before {
-  content: "\f2c2"; }
+  content: "\f2c2";
+  color:antiquewhite;
+}
 
 .fa.fa-id-card-o {
   font-family: 'Font Awesome 5 Free';

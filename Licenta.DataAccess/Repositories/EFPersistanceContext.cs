@@ -15,19 +15,27 @@ namespace Licenta.DataAccess.Repositories
         public EFPersistanceContext(ApplicationDbContext context)
         {
             this.dbContext = context;
-
+            VehicleRepository = new EFVehicleRepository(context);
             CustomerRepository = new EFCustomerRepository(context);
             OrderRepository = new EFOrderRepository(context);
             RecipientRepository = new EFRecipientRepository(context);
-
+            RouteRepository = new EFRouteRepository(context);
+            DispatcherRepository = new EFDispatcherRepository(context);
+            SupervisorRepository = new EFSupervisorRepository(context);
+            EmployeeRepository = new EFEmployeeRepository(context);
+            DriverRepository = new EFDriverRepository(context);
         }
 
 
         public ICustomerRepository CustomerRepository { get; private set; }
-
+        public IVehicleRepository VehicleRepository { get; private set; }
         public IOrderRepository OrderRepository { get; private set; }
         public IRecipientRepository RecipientRepository { get; private set; }
-
+        public IDispatcherRepository DispatcherRepository { get; private set; }
+        public ISupervisorRepository SupervisorRepository { get; private set; }
+        public IDriverRepository DriverRepository { get; private set; }
+        public IRouteRepository RouteRepository { get; private set; }
+        public IEmployeeRepository EmployeeRepository { get; private set; }
         public TransactionScope BeginTransaction()
         {
             if (currentTransactionScope != null)

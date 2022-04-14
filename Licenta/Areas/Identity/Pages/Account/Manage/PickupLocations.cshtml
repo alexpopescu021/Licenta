@@ -6,12 +6,12 @@
 }
 
 
-@using Licenta.ViewModels.Customer
+@using Licenta.ViewModels.Customers
 <button class="btn-primary" onclick="LoadAddLocationView()" data-toggle="modal" data-target="#locationModal">Add Location <i class="fa fa-address-book"></i></button>
 <br />
 <br />
 <div id="addressTableContainer"></div>
-<form method="post" asp-controller="Customer" asp-action="AddLocation"
+<form method="post" asp-controller="Customers" asp-action="AddLocation"
       data-ajax="true"
       data-ajax-method="POST"
       data-ajax-complete="modalFormComplete('#locationModal')"
@@ -39,7 +39,7 @@
     </div>
 </form>
 
-<form method="post" asp-controller="Customer" asp-action="Remove"
+<form method="post" asp-controller="Customers" asp-action="Remove"
       data-ajax="true"
       data-ajax-method="POST"
       data-ajax-complete="modalFormComplete('#removeModal')"
@@ -57,7 +57,7 @@
     </div>
 </form>
 
-<form method="post" asp-controller="Customer" asp-action="EditLocation"
+<form method="post" asp-controller="Customers" asp-action="EditLocation"
       data-ajax="true"
       data-ajax-method="POST"
       data-ajax-complete="modalFormComplete('#editLocationModal')"
@@ -101,22 +101,22 @@
 
 
         function loadTable() {
-            loadServerPartialView("#addressTableContainer", "/Customer/AddressTable").done(function () {
+            loadServerPartialView("#addressTableContainer", "/Customers/AddressTable").done(function () {
                 $('#addressTable').DataTable({ responsive: true, "bLengthChange": false, "paging": false, "searching": false });
             });
         }
 
 
         function LoadAddLocationView(Id) {
-            loadServerPartialView("#locationBody", '@Url.Action("AddLocation", "Customer")' );
+            loadServerPartialView("#locationBody", '@Url.Action("AddLocation", "Customers")' );
         }
 
         function LoadRemoveAddressView(Id) {
-            loadServerPartialView("#removeBody", '@Url.Action("Remove", "Customer")' + "/" + Id);
+            loadServerPartialView("#removeBody", '@Url.Action("Remove", "Customers")' + "/" + Id);
         }
 
         function LoadEditLocationView(Id) {
-            loadServerPartialView("#editLocationBody", '@Url.Action("EditLocation", "Customer")' + "/" + Id);
+            loadServerPartialView("#editLocationBody", '@Url.Action("EditLocation", "Customers")' + "/" + Id);
         }
 
         function modalFormComplete(modalName) {

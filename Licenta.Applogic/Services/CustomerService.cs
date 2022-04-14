@@ -14,11 +14,11 @@ namespace Licenta.ApplicationLogic.Services
         private readonly ICustomerRepository customerRepository;
         private readonly IOrderRepository orderRepository;
 
-        public CustomerService(ICustomerRepository customerRepository, IPersistenceContext persistenceContext)
+        public CustomerService(ICustomerRepository customerRepository, IPersistenceContext persistenceContext, IOrderRepository orderRepository)
         {
             this.persistenceContext = persistenceContext;
             this.customerRepository = customerRepository;
-           
+            this.orderRepository = orderRepository;
         }
 
         public Customer GetCustomerById(string customerId)
@@ -92,7 +92,7 @@ namespace Licenta.ApplicationLogic.Services
             if (customer == null)
                 return false;
 
-            orderRepository.RemoveOrdersFromCustomer(customer.Id);   //not Dan yet
+            orderRepository.RemoveOrdersFromCustomer(customer.Id);
             customerRepository.RemoveCustomer(customer.Id);
             persistenceContext.SaveChanges();
 

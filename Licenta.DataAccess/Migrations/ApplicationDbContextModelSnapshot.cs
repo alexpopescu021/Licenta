@@ -15,7 +15,7 @@ namespace Licenta.DataAccess.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.20")
+                .HasAnnotation("ProductVersion", "3.1.21")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -53,6 +53,59 @@ namespace Licenta.DataAccess.Migrations
                     b.HasIndex("ContactDetailsId");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("Licenta.Model.Dispatcher", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Dispatchers");
+                });
+
+            modelBuilder.Entity("Licenta.Model.Driver", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CurrentRouteId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("RoutesHistoricId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrentRouteId");
+
+                    b.HasIndex("RoutesHistoricId");
+
+                    b.ToTable("Drivers");
                 });
 
             modelBuilder.Entity("Licenta.Model.LocationAddress", b =>
@@ -149,6 +202,146 @@ namespace Licenta.DataAccess.Migrations
                     b.HasIndex("ContactDetailsId");
 
                     b.ToTable("Recipient");
+                });
+
+            modelBuilder.Entity("Licenta.Model.Route", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("FinishTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("RoutesHistoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("VehicleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoutesHistoryId");
+
+                    b.HasIndex("VehicleId");
+
+                    b.ToTable("Routes");
+                });
+
+            modelBuilder.Entity("Licenta.Model.RouteEntry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("OrderType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("RouteId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("RouteId");
+
+                    b.ToTable("RouteEntries");
+                });
+
+            modelBuilder.Entity("Licenta.Model.RoutesHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoutesHistories");
+                });
+
+            modelBuilder.Entity("Licenta.Model.Supervisor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Supervisors");
+                });
+
+            modelBuilder.Entity("Licenta.Model.Vehicle", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DriverId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("MaximCarryWeightKg")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegistrationNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VIN")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DriverId");
+
+                    b.ToTable("Vehicles");
+                });
+
+            modelBuilder.Entity("Licenta.Model.VehicleDriver", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DriverId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("VehicleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DriverId");
+
+                    b.HasIndex("VehicleId");
+
+                    b.ToTable("VehicleDrivers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -358,6 +551,17 @@ namespace Licenta.DataAccess.Migrations
                         .HasForeignKey("ContactDetailsId");
                 });
 
+            modelBuilder.Entity("Licenta.Model.Driver", b =>
+                {
+                    b.HasOne("Licenta.Model.Route", "CurrentRoute")
+                        .WithMany()
+                        .HasForeignKey("CurrentRouteId");
+
+                    b.HasOne("Licenta.Model.RoutesHistory", "RoutesHistoric")
+                        .WithMany()
+                        .HasForeignKey("RoutesHistoricId");
+                });
+
             modelBuilder.Entity("Licenta.Model.LocationAddress", b =>
                 {
                     b.HasOne("Licenta.Model.Customer", null)
@@ -389,6 +593,46 @@ namespace Licenta.DataAccess.Migrations
                     b.HasOne("Licenta.Model.Contact", "ContactDetails")
                         .WithMany()
                         .HasForeignKey("ContactDetailsId");
+                });
+
+            modelBuilder.Entity("Licenta.Model.Route", b =>
+                {
+                    b.HasOne("Licenta.Model.RoutesHistory", null)
+                        .WithMany("Routes")
+                        .HasForeignKey("RoutesHistoryId");
+
+                    b.HasOne("Licenta.Model.Vehicle", "Vehicle")
+                        .WithMany()
+                        .HasForeignKey("VehicleId");
+                });
+
+            modelBuilder.Entity("Licenta.Model.RouteEntry", b =>
+                {
+                    b.HasOne("Licenta.Model.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("Licenta.Model.Route", null)
+                        .WithMany("RouteEntries")
+                        .HasForeignKey("RouteId");
+                });
+
+            modelBuilder.Entity("Licenta.Model.Vehicle", b =>
+                {
+                    b.HasOne("Licenta.Model.Driver", null)
+                        .WithMany("VehicleHistory")
+                        .HasForeignKey("DriverId");
+                });
+
+            modelBuilder.Entity("Licenta.Model.VehicleDriver", b =>
+                {
+                    b.HasOne("Licenta.Model.Driver", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId");
+
+                    b.HasOne("Licenta.Model.Vehicle", "Vehicle")
+                        .WithMany()
+                        .HasForeignKey("VehicleId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

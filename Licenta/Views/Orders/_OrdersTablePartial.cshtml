@@ -7,6 +7,10 @@
             <th>Pickup Address</th>
             <th>Delivery Address</th>
             <th>Recipient</th>
+            @if(User.IsInRole("Dispatcher"))
+            {
+                <th>User</th>
+            }
             <th>Status</th>
             <th>Price</th>
             <th>Action</th>
@@ -18,66 +22,73 @@
         {
 
 
-            <tr>
+        <tr>
 
-                <td class="dropdown text-center">
+            <td class="dropdown text-center">
 
-                    <button class="btn btn-blue dropdown-toggle location-column" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @order.PickUpAddress.City, @order.PickUpAddress.Street
-                    </button>
+                <button class="btn btn-blue dropdown-toggle location-column" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @order.PickUpAddress.City, @order.PickUpAddress.Street
+                </button>
 
-                    <div class="dropdown-menu dropdown-menu-style">
-                        <div>Country: @order.PickUpAddress.Country</div>
-                        <div>City: @order.PickUpAddress.City</div>
-                        <div>Street: @order.PickUpAddress.Street</div>
-                        <div>Street number: @order.PickUpAddress.StreetNumber</div>
-                        <div>Postal Code: @order.PickUpAddress.PostalCode</div>
-                    </div>
-                </td>
+                <div class="dropdown-menu dropdown-menu-style">
+                    <div>Country: @order.PickUpAddress.Country</div>
+                    <div>City: @order.PickUpAddress.City</div>
+                    <div>Street: @order.PickUpAddress.Street</div>
+                    <div>Street number: @order.PickUpAddress.StreetNumber</div>
+                    <div>Postal Code: @order.PickUpAddress.PostalCode</div>
+                </div>
+            </td>
 
-                <td class="dropdown text-center">
-                    <button class="btn btn-blue dropdown-toggle location-column" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <td class="dropdown text-center">
+                <button class="btn btn-blue dropdown-toggle location-column" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                        @order.DeliveryAddress.City, @order.DeliveryAddress.Street
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-style">
-                        <div>Country: @order.DeliveryAddress.Country</div>
-                        <div>City: @order.DeliveryAddress.City</div>
-                        <div>Street: @order.DeliveryAddress.Street</div>
-                        <div>Street number: @order.DeliveryAddress.StreetNumber</div>
-                        <div>Postal Code: @order.DeliveryAddress.PostalCode</div>
-                    </div>
-                </td>
+                    @order.DeliveryAddress.City, @order.DeliveryAddress.Street
+                </button>
+                <div class="dropdown-menu dropdown-menu-style">
+                    <div>Country: @order.DeliveryAddress.Country</div>
+                    <div>City: @order.DeliveryAddress.City</div>
+                    <div>Street: @order.DeliveryAddress.Street</div>
+                    <div>Street number: @order.DeliveryAddress.StreetNumber</div>
+                    <div>Postal Code: @order.DeliveryAddress.PostalCode</div>
+                </div>
+            </td>
 
+            <td class="dropdown text-center">
+                <button class="btn btn-blue dropdown-toggle customer-column" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @order.Recipient.Name
+                </button>
+                <div class="dropdown-menu dropdown-menu-style">
+                    <div>Name: @order.Recipient.Name</div>
+                    <div>Email: @order.Recipient.ContactDetails.Email</div>
+                    <div>Phone number: @order.Recipient.ContactDetails.PhoneNo</div>
+                </div>
+            </td>
+            @if (User.IsInRole("Dispatcher"))
+            {
                 <td class="dropdown text-center">
                     <button class="btn btn-blue dropdown-toggle customer-column" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @order.Recipient.Name
+                        @order.Sender.Name
                     </button>
                     <div class="dropdown-menu dropdown-menu-style">
-                        <div>Name: @order.Recipient.Name</div>
-                        <div>Email: @order.Recipient.ContactDetails.Email</div>
-                        <div>Phone number: @order.Recipient.ContactDetails.PhoneNo</div>
+                        <div>Name: @order.Sender.Name</div>
+                        <div>Email: @order.Sender.ContactDetails.Email</div>
+                        <div>Phone number: @order.Sender.ContactDetails.PhoneNo</div>
                     </div>
                 </td>
+            }
 
-                <td>@order.Status</td>
-                <td>@order.Price</td>
-                <td>
-                    <a href="#my_modal" data-toggle="modal" data-pickup="@order.PickUpAddress.Country @order.PickUpAddress.City @order.PickUpAddress.Street @order.PickUpAddress.StreetNumber @order.PickUpAddress.PostalCode"
-                       data-delivery="@order.DeliveryAddress.Country @order.DeliveryAddress.City @order.DeliveryAddress.Street @order.DeliveryAddress.StreetNumber @order.DeliveryAddress.PostalCode">Open Modal</a>
-                    @*<button class="btn btn-outline-dark mr-1 ml-1" title="Maps" data-toggle="modal"
-                            data-target="#editOrderModal" onclick="sendValueToController('@i')">
+            <td>@order.Status</td>
+            <td>@order.Price</td>
+            <td>
+                <a href="#my_modal" data-toggle="modal" data-pickup="@order.PickUpAddress.Country @order.PickUpAddress.City @order.PickUpAddress.Street @order.PickUpAddress.StreetNumber @order.PickUpAddress.PostalCode"
+        data-delivery="@order.DeliveryAddress.Country @order.DeliveryAddress.City @order.DeliveryAddress.Street @order.DeliveryAddress.StreetNumber @order.DeliveryAddress.PostalCode">Open Modal</a>
 
-                        <i class="material-icons fa fa-map"></i>
-                    </button>*@
-                </td>
-            </tr>
+            </td>
+        </tr>
             i++;
         }
     </tbody>
 </table>
-
-
 
 <div class="modal " id="my_modal">
     <div class="modal-dialog modal-lg">
@@ -85,38 +96,49 @@
             <div class="modal-header">
                 <h4 class="modal-title">Order Maps</h4>
             </div>
-            <div class="modal-body modal-lg" style="width:100px!important">
-                <div id='myMap' style='width: 40vw; height: 50vh; text-align:center'></div>
+            <div class="modal-body modal-lg" style="max-width:1000px!important">
+                <div id='map' style='width: 40vw; height: 50vh; text-align:center'></div>
                 <br />
-                <div class="container " style="text-align: center">
+                <div class="container" style="text-align: center">
                     <div class="align-content-center">
                         <input type="text" name="PickUp" value="" readonly="readonly" style="width:320px" />
                         <input type="text" name="Delivery" value="" readonly="readonly" style="width:320px" />
                     </div>
                 </div>
                 <script>
-                    function loadMapScenario(pickup, delivery) {
-
-                        var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
-                            /* No need to set credentials if already passed in URL */
-                            zoom: 12
+                    function initMap(pickup, delivery) {
+                        var directionsService = new google.maps.DirectionsService;
+                        var directionsDisplay = new google.maps.DirectionsRenderer;
+                        var wayPoints = [];
+                        
+                        var pickupInfo = pickup.split(' ');
+                        var deliveryInfo = delivery.split(' ');
+                        var wp1 = {
+                            location: pickupInfo[3] + " " + pickupInfo[2] + "," + pickupInfo[1],
+                            stopover: true
+                        }
+                        var wp2 = {
+                            location: deliveryInfo[3] + " " + deliveryInfo[2] + "," + deliveryInfo[1],
+                            stopover: true
+                        }
+                        wayPoints.push(wp1);
+                        wayPoints.push(wp2);
+                        var map = new google.maps.Map(document.getElementById('map'), {
+                            zoom: 15,
+                            center: { lat: 41.85, lng: -87.65 }
                         });
-                        Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function test(index) {
-
-                            var directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
-                            // Set Route Mode to driving
-                            directionsManager.setRequestOptions({ routeMode: Microsoft.Maps.Directions.RouteMode.driving });
-                            var waypoint1 = new Microsoft.Maps.Directions.Waypoint({
-                                address: pickup
-                            });
-                            var waypoint2 = new Microsoft.Maps.Directions.Waypoint({
-                                address: delivery
-                            });
-                            directionsManager.addWaypoint(waypoint1);
-                            directionsManager.addWaypoint(waypoint2);
-                            // Set the element in which the itinerary will be rendered
-                            directionsManager.setRenderOptions({ itineraryContainer: document.getElementById('printoutPanel') });
-                            directionsManager.calculateDirections();
+                        directionsDisplay.setMap(map);
+                        directionsService.route({
+                            origin: pickupInfo[2] + " " + pickupInfo[3] + "," + pickupInfo[1],
+                            destination: deliveryInfo[2] + " " + deliveryInfo[3] + "," + deliveryInfo[1],
+                            waypoints: wayPoints,
+                            travelMode: 'DRIVING'
+                        }, function (response, status) {
+                            if (status === 'OK') {
+                                directionsDisplay.setDirections(response);
+                            } else {
+                                window.alert('Directions request failed due to ' + status);
+                            }
                         });
                     }
                 </script>
@@ -127,16 +149,20 @@
         </div>
     </div>
 </div>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATACiagMRa_E-mO09VLV4_TwssE6XqIAQ&callback=initMap">
+</script>
 
 
 
 
 <script defer type='text/javascript'>
-
+    var PickUp = null;
+    var Delivery = null;
     $('#my_modal').on('show.bs.modal', function (e) {
-        var PickUp = $(e.relatedTarget).data('pickup');
-        var Delivery = $(e.relatedTarget).data('delivery');
-        loadMapScenario(PickUp, Delivery);
+        PickUp = $(e.relatedTarget).data('pickup');
+        Delivery = $(e.relatedTarget).data('delivery');
+        initMap(PickUp, Delivery);
         $(e.currentTarget).find('input[name="PickUp"]').val(PickUp);
         $(e.currentTarget).find('input[name="Delivery"]').val(Delivery);
 
@@ -169,30 +195,7 @@
 </script>
 
 <script defer type='text/javascript'>
-    @*function loadMapScenario() {
-        var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
-            /* No need to set credentials if already passed in URL */
-            zoom: 12
-        });
 
-
-         Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function test(index) {
-
-            var directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
-            // Set Route Mode to driving
-            directionsManager.setRequestOptions({ routeMode: Microsoft.Maps.Directions.RouteMode.driving });
-            var waypoint1 = new Microsoft.Maps.Directions.Waypoint({
-                address: '@Model.Orders.ElementAt(Model.selectedOrder).PickUpAddress.Country , @Model.Orders.ElementAt(Model.selectedOrder).PickUpAddress.City ,@Model.Orders.ElementAt(Model.selectedOrder).PickUpAddress.Street , @Model.Orders.ElementAt(Model.selectedOrder).PickUpAddress.StreetNumber' });
-            var waypoint2 = new Microsoft.Maps.Directions.Waypoint({
-                address: '@Model.Orders.ElementAt(Model.selectedOrder).DeliveryAddress.Country , @Model.Orders.ElementAt(Model.selectedOrder).DeliveryAddress.City ,@Model.Orders.ElementAt(Model.selectedOrder).DeliveryAddress.Street , @Model.Orders.ElementAt(Model.selectedOrder).DeliveryAddress.StreetNumber'
-            });
-            directionsManager.addWaypoint(waypoint1);
-            directionsManager.addWaypoint(waypoint2);
-            // Set the element in which the itinerary will be rendered
-            directionsManager.setRenderOptions({ itineraryContainer: document.getElementById('printoutPanel') });
-            directionsManager.calculateDirections();
-        });
-    }*@
 </script>
 <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=Atq9al1eZ_dVfCM891ShPaSWtruHU1Rfnci9qUrSaj5aOpzGCmggHaVuuj_5t7wY&callback=loadMapScenario' async defer></script>
 

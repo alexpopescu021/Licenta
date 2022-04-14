@@ -12,6 +12,38 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Administrators\Index.cshtml" />
+    <None Include="Views\Administrators\_EditUserAccount.cshtml" />
+    <None Include="Views\Administrators\_NewUserPartial.cshtml" />
+    <None Include="Views\Administrators\_TablePartial.cshtml" />
+    <None Include="Views\Dispatchers\Index.cshtml" />
+    <None Include="Views\Dispatchers\_AssignRoutePartial.cshtml" />
+    <None Include="Views\Dispatchers\_DriversTablePartial.cshtml" />
+    <None Include="Views\Drivers\AvailableVehicles.cshtml" />
+    <None Include="Views\Drivers\DriverInfo.cshtml" />
+    <None Include="Views\Drivers\DriversTable.cshtml" />
+    <None Include="Views\Drivers\Index.cshtml" />
+    <None Include="Views\Drivers\Map.cshtml" />
+    <None Include="Views\Drivers\Route.cshtml" />
+    <None Include="Views\Drivers\RouteMap.cshtml" />
+    <None Include="Views\Drivers\RoutesHistory.cshtml" />
+    <None Include="Views\Drivers\_OrdersTablePartial.cshtml" />
+    <None Include="Views\Routes\Index.cshtml" />
+    <None Include="Views\Routes\Map.cshtml" />
+    <None Include="Views\Routes\RouteMap.cshtml" />
+    <None Include="Views\Routes\_AddOrderPartial.cshtml" />
+    <None Include="Views\Routes\_ChangeVehiclePartial.cshtml" />
+    <None Include="Views\Routes\_NewRoutePartial.cshtml" />
+    <None Include="Views\Routes\_RemoveOrderPartial.cshtml" />
+    <None Include="Views\Routes\_RemoveRoutePartial.cshtml" />
+    <None Include="Views\Routes\_RouteEntryPartial.cshtml" />
+    <None Include="Views\Routes\_RoutesTablePartial.cshtml" />
+    <None Include="Views\Vehicles\History.cshtml" />
+    <None Include="Views\Vehicles\Index.cshtml" />
+    <None Include="Views\Vehicles\RouteDetails.cshtml" />
+    <None Include="Views\Vehicles\_Create.cshtml" />
+    <None Include="Views\Vehicles\_Update.cshtml" />
+    <None Include="Views\Vehicles\_VehiclesTable.cshtml" />
     <None Include="wwwroot\css\bootstrap.css.map" />
     <None Include="wwwroot\css\bootstrap.min.css.map" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
@@ -1763,7 +1795,7 @@
     <PackageReference Include="jQuery" Version="3.5.1" />
     <PackageReference Include="jQuery.Validation" Version="1.19.1" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
-    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.12" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.21" />
@@ -1771,11 +1803,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.21" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.21">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.12" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="3.1.21" />
     <PackageReference Include="Microsoft.jQuery.Unobtrusive.Validation" Version="3.2.11" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
   </ItemGroup>

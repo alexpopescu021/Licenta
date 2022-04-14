@@ -16,7 +16,10 @@
 
 
 <div class="container-fluid">
-    @if (SignInManager.IsSignedIn(User))
+   
+    @if (SignInManager.IsSignedIn(User) && !User.IsInRole("Admin")
+                               && !User.IsInRole("Driver")
+                               && !User.IsInRole("Dispatcher"))
     {
         <div class="page-section">
             <div class="container">
@@ -80,7 +83,9 @@
 
 
     }
-    else
+    else if(!User.IsInRole("Admin")
+         && !User.IsInRole("Driver")
+         && !User.IsInRole("Dispatcher"))
     {
         <div class="page-section">
             <div class="container">
@@ -107,7 +112,7 @@
                             <div class="body">
                                 <h5 class="text-secondary">Cost Estimate</h5>
                                 <p>Packages that are bigger than our standard requirments need to be handled differently</p>
-                                <a href="service.html" class="btn btn-primary">Read More</a>
+                                <a href="service.html" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Read More</a>
                                 <a href="#cost" class="btn btn-primary">Calculate</a>
                             </div>
                         </div>
@@ -120,7 +125,28 @@
     @*<a href="#about" class="btn-scroll" data-role="smoothscroll"><span class="mai-arrow-down"></span></a>*@
 
 
-
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Our calculator</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h4>
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                    </h4>
+                    <h4> At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren.</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <div class="page-section center" id="about">
@@ -144,7 +170,7 @@
         </div> <!-- .container -->
     </div> <!-- .page-section -->
 
-    <a id="cost"/>
+    <a id="cost" />
     <div class="container text-light mt-5">
         <div class="row justify-content-md-center">
             <div class="col-md-5 bg-dark p-3">
@@ -172,7 +198,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- End layout -->
     <!--
       Bootstrap Modal
@@ -191,7 +217,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                    
+
                 </div>
             </div>
         </div>
@@ -200,33 +226,33 @@
 
     <script type="text/javascript">
 
-document.getElementById("tipCalc").onclick = function() {
-  calculateTip();
+        document.getElementById("tipCalc").onclick = function () {
+            calculateTip();
 
-};
+        };
 
-function calculateTip() {
-  var totalCost = document.getElementById("totalCost").value;
-  var transport = document.getElementById("service").value;
-  var Km = document.getElementById("people").value;
+        function calculateTip() {
+            var totalCost = document.getElementById("totalCost").value;
+            var transport = document.getElementById("service").value;
+            var Km = document.getElementById("people").value;
 
-  //validate input
-    if (totalCost === "" || transport == 0) {
-    alert("Please enter tip total cost");
-    return;
-  }
+            //validate input
+            if (totalCost === "" || transport == 0) {
+                alert("Please enter tip total cost");
+                return;
+            }
 
-  //Calculate the tip
-    var total = (totalCost * transport) / (Km * 0.2);
-  //round to two decimal places
-  total = Math.round(total * 100) / 100;
-  //two digits after decimal point
-  total = total.toFixed(1);
-  //Display the tip
-  document.getElementById("tip").innerHTML = total;
-  $('#exampleModal').modal('toggle')
+            //Calculate the tip
+            var total = (totalCost * transport) / (Km * 0.2);
+            //round to two decimal places
+            total = Math.round(total * 100) / 100;
+            //two digits after decimal point
+            total = total.toFixed(1);
+            //Display the tip
+            document.getElementById("tip").innerHTML = total;
+            $('#exampleModal').modal('toggle')
 
-}
+        }
 
 
     </script>

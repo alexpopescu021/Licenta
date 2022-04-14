@@ -34,7 +34,7 @@ namespace Licenta
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseLazyLoadingProxies().UseSqlServer(
+                options/*.UseLazyLoadingProxies()*/.UseSqlServer(
                     Configuration.GetConnectionString("LicentaContextConnection")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -48,6 +48,12 @@ namespace Licenta
             services.AddScoped<IOrderRepository, EFOrderRepository>();
             services.AddScoped<CustomerService>();
             services.AddScoped<OrderService>();
+            services.AddScoped<EmployeeServices>();
+            services.AddScoped<DriverService>();
+            services.AddScoped<VehicleService>();
+            services.AddScoped<DispatcherService>();
+            services.AddScoped<RouteService>();
+
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
 
