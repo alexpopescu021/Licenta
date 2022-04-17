@@ -1,15 +1,6 @@
 ﻿@using Licenta.ViewModels.Customers
 @model AddressViewModel
-<style>
-    .fa-edit
-    {
-        color:white;
-    }
-    .fa-trash
-    {
-        color:white;
-    }
-</style>
+
 <table id="addressTable" class="table table-borderless table-bordered" style="width:100%">
     <thead class="dropdown text-center">
         <tr>
@@ -36,13 +27,13 @@
 
                 <td class="d-flex justify-content-around">
 
-                    <button class="btn btn-outline-dark "  title="Edit" data-toggle="modal"
+                    <button class="btn btn-outline-dark mr-1 ml-1"  title="Edit" data-toggle="modal"
                             data-target="#editLocationModal" onclick="LoadEditLocationView('@address.Id')">
 
                         <i class="material-icons fa fa-edit"></i>
                     </button>
 
-                    <button class="btn btn-outline-danger " title="Remove" data-toggle="modal"
+                    <button class="btn btn-outline-danger mr-1 ml-1" title="Remove" data-toggle="modal"
                             onclick="LoadRemoveAddressView('@address.Id');" data-target="#removeModal">
 
                         <i class="material-icons fa fa-trash"></i>

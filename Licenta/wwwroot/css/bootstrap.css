@@ -318,7 +318,7 @@ th {
 tbody, td, tfoot, th, thead, tr {
     border-color: inherit;
     border-style: solid;
-    border-width: 0
+    border-width: 0;
 }
 
 label {
@@ -2020,7 +2020,7 @@ progress {
     }
 
     .table > tbody {
-        vertical-align: inherit
+       
     }
 
     .table > thead {
@@ -3790,7 +3790,8 @@ textarea.form-control-lg {
     padding: .5rem 0;
     margin: 0;
     font-size: 1rem;
-    color: #7b8ab8;
+    /*color: #7b8ab8;*/
+    color: black;
     text-align: left;
     list-style: none;
     background-color: rgba(240,245,250,.8);
@@ -4340,7 +4341,7 @@ textarea.form-control-lg {
     padding-top: .3125rem;
     padding-bottom: .3125rem;
     margin-right: 1rem;
-    font-size: 1.25rem;
+    font-size: 20px;
     text-decoration: none;
     white-space: nowrap
 }
@@ -12476,7 +12477,6 @@ textarea.form-control-lg {
     }
 
 .btn-outline-danger {
-    background-color: #e52527;
     box-shadow: 5px 5px 10px rgba(0,0,0,.2),-5px -5px 10px rgba(255,255,255,.1);
     border: none;
     color: #fff
@@ -12518,7 +12518,6 @@ textarea.form-control-lg {
     }
 
 .btn-outline-dark {
-    background-color: #212529;
     box-shadow: 5px 5px 10px rgba(0,0,0,.2),-5px -5px 10px rgba(255,255,255,.1);
     border: none;
     color: #fff

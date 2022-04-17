@@ -54,12 +54,12 @@
 
                 <td style="width: 35%">
                     <div class="d-flex justify-content-around">
-                        <button class="btn btn-add-blue mr-3 ml-3" title="Add Order" data-toggle="modal" id="@route.Id"
+                        <button class="btn btn-outline-info mr-3 ml-3" title="Add Order" data-toggle="modal" id="@route.Id"
                                 onclick="LoadAddOrderView('@route.Id')" data-target="#addOrderModal">
                             <i class="material-icons fa fa-plus"></i>
                         </button>
 
-                        <a class="btn btn-add-blue" asp-route-id="@route.Id" asp-action="Map" asp-controller="Routes" title="Show orders on map"><i class="fas fa-map-marked-alt"></i></a>
+                        <a class="btn btn-outline-dark mr-3 ml-3" asp-route-id="@route.Id" asp-action="Map" asp-controller="Routes" title="Show orders on map"><i class="fas fa-map-marked-alt"></i></a>
 
                         <button class="btn btn-outline-dark mr-3 ml-3" title="Edit" data-toggle="modal"
                                 onclick="LoadVehicleEdit('@route.Id');" data-target="#changeVehicleModal">
@@ -67,7 +67,7 @@
                         </button>
                         <button class="btn btn-outline-danger remove-route-button" title="Remove Order" data-toggle="modal"
                                 onclick="LoadRemoveOrder('@route.Id');" data-target="#removeOrderModal">
-                            <div class="row d-flex justify-content-around">
+                            <div class="col d-flex justify-content-around">
                                 <i class="material-icons fa fa-trash"></i>
                                 <i class="material-icons fa fa-box"></i>
                             </div>
@@ -75,7 +75,7 @@
 
                         <button class="btn btn-outline-danger remove-route-button ml-3 mr-3" title="Remove Route" data-toggle="modal"
                                 onclick="LoadRemoveRouteView('@route.Id');" data-target="#removeModal">
-                            <div class="row d-flex justify-content-around">
+                            <div class="col d-flex justify-content-around">
                                 <i class="material-icons fa fa-trash"></i>
                                 <i class="material-icons fa fa-route"></i>
                             </div>
