@@ -220,5 +220,11 @@ namespace Licenta.Controllers
            
             return Json(new { success = true, result = YourValue }, JsonRequestBehavior.AllowGet);
         }
+
+        public IActionResult GetAWB(string YourValue)
+        {
+
+            return Json(new { success = true, result = YourValue }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
