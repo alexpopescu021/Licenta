@@ -21,7 +21,6 @@ namespace Licenta.DataAccess.Repositories
             RecipientRepository = new EFRecipientRepository(context);
             RouteRepository = new EFRouteRepository(context);
             DispatcherRepository = new EFDispatcherRepository(context);
-            SupervisorRepository = new EFSupervisorRepository(context);
             EmployeeRepository = new EFEmployeeRepository(context);
             DriverRepository = new EFDriverRepository(context);
         }
@@ -32,7 +31,6 @@ namespace Licenta.DataAccess.Repositories
         public IOrderRepository OrderRepository { get; private set; }
         public IRecipientRepository RecipientRepository { get; private set; }
         public IDispatcherRepository DispatcherRepository { get; private set; }
-        public ISupervisorRepository SupervisorRepository { get; private set; }
         public IDriverRepository DriverRepository { get; private set; }
         public IRouteRepository RouteRepository { get; private set; }
         public IEmployeeRepository EmployeeRepository { get; private set; }

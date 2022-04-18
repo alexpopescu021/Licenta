@@ -23,12 +23,6 @@ namespace Licenta.DataAccess.Repositories
                var driver = Driver.Create(userId, name, email);
                 DbContext.Drivers.Add(driver);
             }
-            else if(role == "Supervisor")
-            {
-                var supervisor = Supervisor.Create(userId, name, email);
-                DbContext.Supervisors.Add(supervisor);
-                
-            }
             else if(role == "Dispatcher")
             {
                 var dispatcher = Dispatcher.Create(userId, name, email);

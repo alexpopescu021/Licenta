@@ -26,9 +26,27 @@
             <input type="hidden" value="@Model.UserId" name="userId"/>
             <label asp-for="@Model.Role"></label>
             <select class="form-control" name="Role" asp-for="@Model.Role" style="width:450px">
+                <option>None</option>
                 <option>Dispatcher</option>
-                <option>Administrator</option>
+                <option value="Admin">Administrator</option>
                 <option>Driver</option>
                 <option>Supervisor</option>
             </select>
+
+            <script>
+            $(document).ready(function () {
+                 @if(Model.Role == "Admin")
+                    {
+                        @:$('.Admin').append('selected');
+                    }
+                    else if(Model.Role == "Dispatcher")
+                    {
+                        @:$('.Dispatcher').append('selected');
+                    }
+                    else if(Model.Role == "Driver")
+                    {
+                        @:$('.Driver').append('selected');
+                    }
+    });
+            </script>
 

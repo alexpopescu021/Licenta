@@ -12,14 +12,12 @@ namespace Licenta.ApplicationLogic.Services
         private readonly IPersistenceContext PersistenceContext;
         private readonly IDriverRepository DriverRepository;
         private readonly IDispatcherRepository DispatcherRepository;
-       private readonly ISupervisorRepository SupervisorRepository;
         public EmployeeServices(IPersistenceContext persistenceContext)
         {
             PersistenceContext = persistenceContext;
             EmployeeRepository = persistenceContext.EmployeeRepository;
             DriverRepository = persistenceContext.DriverRepository;
             DispatcherRepository = persistenceContext.DispatcherRepository;
-            SupervisorRepository = persistenceContext.SupervisorRepository;
         }
         public void AddEmployee(string userId, string name, string email, string role)
         {
@@ -30,12 +28,8 @@ namespace Licenta.ApplicationLogic.Services
             var employee = GetEmployee(userId);
 
             if (employee.Id != null && DriverRepository.Remove(employee.Id) == false)
-            {
-                if(SupervisorRepository.Remove(employee.Id) == false)
-                {
-
-                    DispatcherRepository.Remove(employee.Id);
-                }
+            {    
+                 DispatcherRepository.Remove(employee.Id);
             }
             PersistenceContext.SaveChanges();
 
@@ -47,10 +41,6 @@ namespace Licenta.ApplicationLogic.Services
             if (employee == null)
             {
                 employee = DispatcherRepository.GetByUserId(userId);
-            }
-            if (employee == null)
-            {
-                employee = SupervisorRepository.GetByUserId(userId);
             }
             return employee;
         }
@@ -65,13 +55,6 @@ namespace Licenta.ApplicationLogic.Services
                 driver.SetName(name);
                 driver.SetEmail(email);
                 DriverRepository.Update(driver);
-            }
-            else if(Role == "Supervisor")
-            {
-                var supervisor = SupervisorRepository.GetById(employee.Id);
-                supervisor.SetEmail(email);
-                supervisor.SetName(name);
-                SupervisorRepository.Update(supervisor);
             }
             else if(Role == "Dispatcher")
             {

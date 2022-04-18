@@ -13,7 +13,6 @@ namespace Licenta.DataAccess.Abstractions
         IOrderRepository OrderRepository { get; }
         IRecipientRepository RecipientRepository { get; }
         IDispatcherRepository DispatcherRepository { get; }
-        ISupervisorRepository SupervisorRepository { get; }
         IEmployeeRepository EmployeeRepository { get; }
         IVehicleRepository VehicleRepository { get; }
         IDriverRepository DriverRepository { get; }
