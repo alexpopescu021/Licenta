@@ -16,10 +16,10 @@
 
 
 <div class="container-fluid">
-
+   
     @if (SignInManager.IsSignedIn(User) && !User.IsInRole("Admin")
-                              && !User.IsInRole("Driver")
-                              && !User.IsInRole("Dispatcher"))
+                               && !User.IsInRole("Driver")
+                               && !User.IsInRole("Dispatcher"))
     {
         <div class="page-section">
             <div class="container">
@@ -31,8 +31,8 @@
                             </div>
                             <div class="body">
                                 <h5 class="text-secondary">Order Tracking</h5>
-                                <p>See your current and past orders and to track them via google maps</p>
-                                <a class="btn btn-primary" data-toggle="modal" data-target="#trackModal">Tracking</a>
+                                <p>Login to see your current and past orders and to track them via google maps</p>
+                                <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Tracking</a>
                             </div>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
 
 
     }
-    else if (!User.IsInRole("Admin")
+    else if(!User.IsInRole("Admin")
          && !User.IsInRole("Driver")
          && !User.IsInRole("Dispatcher"))
     {
@@ -147,29 +147,6 @@
         </div>
     </div>
 
-    <div class="modal fade" id="trackModal" tabindex="-1" role="dialog" aria-labelledby="trackModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="trackModalLabel">Tracking</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div style="text-align:center">
-                        <label>AWB Tracking</label>
-                        <input id="awb"/>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id="track" Submit" class="btn btn-primary">Submit</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="page-section center" id="about">
         <div class="container">
@@ -211,8 +188,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="kilometersamt">Kilometers</label>
-                        <input type="text" class="form-control" id="kilometers" placeholder="Kilometers">
+                        <label for="peopleamt">Kilometers</label>
+                        <input type="text" class="form-control" id="people" placeholder="Kilometers">
                     </div>
                     <br />
                     <button type="button" value="Submit" id="tipCalc" class="btn btn-primary">Submit</button>
@@ -252,16 +229,18 @@
             calculateTip();
 
         };
+
         function calculateTip() {
             var totalCost = document.getElementById("totalCost").value;
             var transport = document.getElementById("service").value;
-            var Km = document.getElementById("kilometers").value;
+            var Km = document.getElementById("people").value;
 
             //validate input
             if (totalCost === "" || transport == 0) {
-                alert("Please enter package total cost");
+                alert("Please enter tip total cost");
                 return;
             }
+
             //Calculate the tip
             var total = (totalCost * transport) / (Km * 0.2);
             //round to two decimal places
@@ -273,11 +252,7 @@
             $('#exampleModal').modal('toggle')
 
         }
-        document.getElementById("track").onclick = function () {
-            test = document.getElementById("awb").value;
-            var url = "@Url.Action("GetAWB", "Orders")" + "?YourValue=" + test;
 
-        };
 
     </script>
 
