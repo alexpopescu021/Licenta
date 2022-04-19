@@ -8,7 +8,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Licenta.Model;
 using System.Security.Claims;
-using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
 
 namespace Licenta.Controllers

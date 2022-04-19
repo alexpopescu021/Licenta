@@ -8,7 +8,6 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Licenta.ApplicationLogic.Services;
 using Licenta.Model;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Licenta.Controllers
@@ -147,7 +146,7 @@ namespace Licenta.Controllers
 
         public IActionResult AddressTable()
         {
-            var user = User.Identity.GetUserId();
+            var user = userManager.GetUserId(User);
             var addressView = new AddressViewModel()
             {
                 Addresses = customerService.GetCustomerAddresses(user)
