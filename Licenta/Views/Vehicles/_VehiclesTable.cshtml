@@ -27,12 +27,23 @@
                 <td style="width:15%">
                     <div class="d-flex justify-content-around">
 
-                        <button class="btn btn-outline-dark mr-1 ml-1" title="Edit" data-toggle="modal"
+                        <button class="btn btn-secondary mr-1 ml-1" title="Edit" data-toggle="modal"
                                 id="@vehicle.Id" onclick="loadVehicleInModal(this.id)" data-target="#updateVehicleModal">
                             <i class="material-icons fa fa-edit"></i>
                         </button>
+                        @*<div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Select Driver
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                @foreach (var driver in Model.Drivers)
+                                {
+                                    <a class="dropdown-item" href="#">@driver.Name</a>
+                                }
+                            </div>
+                        </div>*@
 
-                        <button id="@vehicle.Id" class="btn btn-outline-danger mr-1 ml-1" title="Delete" data-toggle="modal"
+                        <button id="@vehicle.Id" class="btn btn-danger mr-1 ml-1" title="Delete" data-toggle="modal"
                                 onclick="sendVehicleIdToModal(this.id)" data-target="#deleteVehicleModal">
                             <i class="material-icons fa fa-trash"></i>
                         </button>

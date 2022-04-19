@@ -58,7 +58,7 @@
                             <div class="body">
                                 <h5 class="text-secondary">Profile</h5>
                                 <p>Edit your profile so that your information and shipping adress are up to date</p>
-                                <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Manage/PickupLocations">Profile</a>
+                                <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Manage/Index">Profile</a>
                             </div>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                             <div class="body">
                                 <h5 class="text-secondary">Cost Estimate</h5>
                                 <p>Packages that are bigger than our standard requirments need to be handled differently</p>
-                                <a href="service.html" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Read More</a>
+                                <a href="service.html" class="btn btn-primary">Read More</a>
                                 <a href="#cost" class="btn btn-primary">Calculate</a>
                             </div>
                         </div>
@@ -142,6 +142,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -189,7 +190,7 @@
                     </div>
                     <div class="form-group">
                         <label for="peopleamt">Kilometers</label>
-                        <input type="text" class="form-control" id="people" placeholder="Kilometers">
+                        <input type="text" class="form-control" id="people" placeholder="People">
                     </div>
                     <br />
                     <button type="button" value="Submit" id="tipCalc" class="btn btn-primary">Submit</button>
