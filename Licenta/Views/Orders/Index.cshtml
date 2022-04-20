@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-<!DOCTYPE html>
+
 
 <head>
     <link rel="stylesheet" href="https://js.arcgis.com/4.22/esri/themes/light/main.css">
@@ -23,8 +23,40 @@
     <h1>Orders</h1>
     @if (SignInManager.IsSignedIn(User) && !User.IsInRole("Dispatcher"))
     {
-        <button class="btn-primary" onclick="LoadNewOrderView()" data-toggle="modal" data-target="#newOrderModal">New Order <i class="fa fa-box"></i></button>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" onclick="LoadNewOrderView()" data-toggle="modal" data-target="#exampleModal">
+            New Order <i class="fa fa-box"></i>
+        </button>
     }
+
+
+    <form method="post" asp-controller="Orders" asp-action="NewOrder"
+          data-ajax="true"
+          data-ajax-method="POST"
+          data-ajax-complete="modalFormComplete('#newOrderModal')"
+          data-ajax-mode="replace"
+          data-ajax-update="#newOrderBody">
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="newOrderBody">
+                        <partial name="_NewOrderPartial" model="new NewOrderViewModel()" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 
 <div id="ordersTableContainer"/>
@@ -59,42 +91,13 @@
         }
     </style>
 
-    <form method="post" asp-controller="Orders" asp-action="NewOrder"
-          data-ajax="true"
-          data-ajax-method="POST"
-          data-ajax-complete="modalFormComplete('#newOrderModal')"
-          data-ajax-mode="replace"
-          data-ajax-update="#newOrderBody">
+        @section Scripts {
 
-        <div class="modal fade" id="newOrderModal" tabindex="-1" aria-labelledby="newOrderTitle" aria-hidden="true">
-            <div id="newOrderDialog" class="modal-dialog d-flex modal-custom justify-content-center">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="newOrderTitle">New Order</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="newOrderBody">
-                        <partial name="_NewOrderPartial" model="new NewOrderViewModel()" />
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Create</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
+            <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+            <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
 
 
-    @section Scripts {
-
-        <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
-        <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
-
-
-        <script type="text/javascript">
+            <script type="text/javascript">
         $(document).ready(function () {
             loadTable();
         });
@@ -121,7 +124,7 @@
                 + customerId + ';' + locationId + ';' + bonusLocationId + ';' + locationType);
         }
 
-        function LoadNewOrderView(id) {
+            function LoadNewOrderView() {
             $('#newOrderDialog').removeClass("modal-custom-lg").addClass("modal-custom");
             loadServerPartialView("#newOrderBody", '@Url.Action("NewOrder", "Orders")');
         }
@@ -170,5 +173,5 @@
             $('#addDeliveryButton').toggleClass("btn btn-add-blue ml-4").toggleClass("btn btn-outline-danger ml-4");
             $('#addDeliveryButton span').toggleClass("fa fa-plus").toggleClass("fa fa-minus");
         }
-        </script>
-    }
+            </script>
+        }
