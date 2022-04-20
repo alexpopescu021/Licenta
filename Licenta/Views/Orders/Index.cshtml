@@ -18,8 +18,16 @@
     <link rel="stylesheet" href="~/lib/fontawesome/css/all.min.css">
 
 </head>
+<style>
+    .pull-left {
+        float: left !important;
+    }
 
-<div class=" d-flex justify-content-between mt-3 mb-3 mr-auto">
+    .pull-right {
+        float: right !important;
+    }
+</style>
+<div class="d-flex justify-content-between mt-3 mb-3 mr-auto">
     <h1>Orders</h1>
     @if (SignInManager.IsSignedIn(User) && !User.IsInRole("Dispatcher"))
     {
@@ -28,68 +36,35 @@
             New Order <i class="fa fa-box"></i>
         </button>
     }
-
-
-    <form method="post" asp-controller="Orders" asp-action="NewOrder"
-          data-ajax="true"
-          data-ajax-method="POST"
-          data-ajax-complete="modalFormComplete('#newOrderModal')"
-          data-ajax-mode="replace"
-          data-ajax-update="#newOrderBody">
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="newOrderBody">
-                        <partial name="_NewOrderPartial" model="new NewOrderViewModel()" />
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+</div>
+<form method="post" asp-controller="Orders" asp-action="NewOrder"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-complete="modalFormComplete('#exampleModal')"
+      data-ajax-mode="replace"
+      data-ajax-update="#newOrderBody">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="newOrderBody">
+                    <partial name="_NewOrderPartial" model="new NewOrderViewModel()" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
-    </form>
-</div>
-
+    </div>
+</form>
 <div id="ordersTableContainer"/>
-
-
-    <style type="text/css">
-    /* Set the size of the div element that contains the map */
-    #map {
-    height: 400px;
-    /* The height is 400 pixels */
-    width: 100%;
-    /* The width is the width of the web page */
-    }
-    </style>
-
-
-
-
-    @*<div id="viewDiv"></div>*@
-
-    @*<div id="map"></div>*@
-
-
-
-    <style>
-        div.middle-div {
-            position: relative;
-            top: 50%;
-            -webkit-transform: translateY(50%);
-            -ms-transform: translateY(50%);
-            transform: translateY(50%);
-        }
-    </style>
 
         @section Scripts {
 
@@ -109,7 +84,7 @@
 
         function loadTable() {
             loadServerPartialView("#ordersTableContainer", "/Orders/OrdersTable").done(function () {
-                $('#ordersTable').DataTable({ responsive: true, "lengthMenu": [5, 10, 25, 50] });
+                $('#ordersTable').DataTable({ "dom": '<"pull-right"f><"pull-left"l>tip',responsive: true, "lengthMenu": [5, 10, 25, 50] });
             });
         }
 

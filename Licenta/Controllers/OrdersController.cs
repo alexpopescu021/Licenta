@@ -205,8 +205,8 @@ namespace Licenta.Controllers
                     orderData.DeliveryLocationId,
                     orderData.Price);
 
-                return RedirectToAction("Index");
-                //return PartialView("_NewOrderPartial", orderData);
+                //return RedirectToAction("Index");
+                return PartialView("_NewOrderPartial", orderData);
             }
             catch (Exception e)
             {
