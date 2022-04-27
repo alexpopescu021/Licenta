@@ -178,7 +178,7 @@ namespace Licenta.Controllers
                 {
                     var bonusLocation = LocationAddress.Create(orderData.Country,
                         orderData.City, orderData.Street,
-                        orderData.StreetNumber, orderData.PostalCode);
+                        orderData.StreetNumber, orderData.PostalCode, null);
 
 
 

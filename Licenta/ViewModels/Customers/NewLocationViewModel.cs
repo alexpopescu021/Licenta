@@ -30,5 +30,8 @@ namespace Licenta.ViewModels.Customers
         [Display(Name = "PostalCode")]
         public string PostalCode { get; set; }
 
+        [Display(Name = "Tag")]
+        public string Tag { get; set; }
+
     }
 }

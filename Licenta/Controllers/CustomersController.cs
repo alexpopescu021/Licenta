@@ -125,7 +125,8 @@ namespace Licenta.Controllers
                             locationData.City,
                             locationData.Street,
                             locationData.StreetNumber,
-                            locationData.PostalCode);
+                            locationData.PostalCode,
+                            locationData.Tag);
 
                 customerService.AddLocationToCustomer(customer.Id, newLocation);
 
@@ -171,7 +172,8 @@ namespace Licenta.Controllers
                     City = locationToUpdate.City,
                     Street = locationToUpdate.Street,
                     StreetNumber = locationToUpdate.StreetNumber,
-                    PostalCode = locationToUpdate.PostalCode
+                    PostalCode = locationToUpdate.PostalCode,
+                    Tag = locationToUpdate.Tag
                 };
 
                 return PartialView("_EditLocationPartial", editLocationViewModel);
@@ -202,7 +204,8 @@ namespace Licenta.Controllers
                                 updatedLocation.City,
                                 updatedLocation.Street,
                                 updatedLocation.StreetNumber,
-                                updatedLocation.PostalCode);
+                                updatedLocation.PostalCode,
+                                updatedLocation.Tag);
 
                 return RedirectToPage("/Account/Manage/PickupLocations", new { area = "Identity" });
             }

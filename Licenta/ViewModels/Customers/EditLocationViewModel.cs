@@ -29,5 +29,8 @@ namespace Licenta.ViewModels.Customers
         [Required(ErrorMessage = "Postal Code required")]
         [Display(Name = "Postal Code")]
         public string PostalCode { get; set; }
+
+        [Display(Name = "Tag")]
+        public string Tag { get; set; }
     }
 }

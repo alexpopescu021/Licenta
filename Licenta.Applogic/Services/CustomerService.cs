@@ -112,11 +112,11 @@ namespace Licenta.ApplicationLogic.Services
         }
 
         public LocationAddress UpdateLocationAddress(Guid locationId, string country, string city, 
-                                                    string street, string streetNumber, string postalCode)
+                                                    string street, string streetNumber, string postalCode, string? tag)
         {
             var locationToUpdate = customerRepository.GetLocationAddress(locationId);
 
-            locationToUpdate.Update(country, city, street, streetNumber, postalCode);
+            locationToUpdate.Update(country, city, street, streetNumber, postalCode, tag);
             persistenceContext.SaveChanges();
 
             return locationToUpdate;
