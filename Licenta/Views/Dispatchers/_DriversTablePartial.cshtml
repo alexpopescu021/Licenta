@@ -69,6 +69,13 @@
                     else
                     {
                         <div class="text-center">Assigned</div>
+                        <button class="btn btn-outline-danger remove-route-button ml-3 mr-3" title="Remove Route" data-toggle="modal"
+                                onclick="LoadRemoveRouteView('@driver.CurrentRoute.Id');" data-target="#removeModal">
+                            <div class="col d-flex justify-content-around">
+                                <i class="material-icons fa fa-trash"></i>
+                                <i class="material-icons fa fa-route"></i>
+                            </div>
+                        </button>
                     }
                 </td>
             </tr>

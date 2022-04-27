@@ -99,7 +99,6 @@ namespace Licenta.ApplicationLogic.Services
 
             foreach (var driver in drivers)
             {
-                //driver.AddRouteToHistoric(driver.CurrentRoute);
                 driver.CurrentRoute.SetFinishTime();
                 driver.SetCurrentRouteNull();
                 driver.SetStatus(DriverStatus.Free);
@@ -115,6 +114,24 @@ namespace Licenta.ApplicationLogic.Services
             }
 
             return false;
+        }
+
+        public void DeselectRoute(string id)
+        {
+            Guid.TryParse(id, out Guid routeId);
+            var route = routeRepository.GetRouteById(routeId);
+
+            var drivers = driverRepository.GetDriversOnRoute(route.Id);
+
+            foreach (var driver in drivers)
+            {
+                driver.CurrentRoute.SetFinishTime();
+                driver.SetCurrentRouteNull();
+                driver.SetStatus(DriverStatus.Free);
+            }
+
+            route.Vehicle.UpdateStatus(VehicleStatus.Free);
+            persistenceContext.SaveChanges();
         }
     }
 }

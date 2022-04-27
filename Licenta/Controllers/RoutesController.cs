@@ -34,8 +34,6 @@ namespace Licenta.Controllers
             return View();
         }
 
-       
-
         private List<SelectListItem> GetVehicleList()
         {
             var vehicles = vehicleService.GetAll();

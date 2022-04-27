@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Dispatchers\_RemoveRoutePartial.cshtml" />
     <Content Remove="wwwroot\css\bootstrap.css.map" />
     <Content Remove="wwwroot\css\bootstrap.min.css.map" />
   </ItemGroup>
@@ -19,6 +20,7 @@
     <None Include="Views\Dispatchers\Index.cshtml" />
     <None Include="Views\Dispatchers\_AssignRoutePartial.cshtml" />
     <None Include="Views\Dispatchers\_DriversTablePartial.cshtml" />
+    <None Include="Views\Dispatchers\_RemoveRoutePartial.cshtml" />
     <None Include="Views\Drivers\AvailableVehicles.cshtml" />
     <None Include="Views\Drivers\DriverInfo.cshtml" />
     <None Include="Views\Drivers\DriversTable.cshtml" />

@@ -34,6 +34,15 @@ namespace Licenta.ApplicationLogic.Services
             this.routeRepository.Update(route);
             this.driverRepository.Update(driver);
             this.PersistenceContext.SaveChanges();
+        } 
+        
+        public void DisconnectDriverToRoute(Route route, Driver driver, Dispatcher dispatcher)
+        {
+            driver.SetCurrentRouteNull();
+            route.SetStatus(RouteStatus.NotAssigned);
+            this.routeRepository.Update(route);
+            this.driverRepository.Update(driver);
+            this.PersistenceContext.SaveChanges();
         }
     }
 }

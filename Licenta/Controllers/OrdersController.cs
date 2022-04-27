@@ -40,7 +40,15 @@ namespace Licenta.Controllers
 
         private Microsoft.AspNetCore.Mvc.Rendering.SelectListItem CreateListItem(LocationAddress location)
         {
-            string dropdownText = $"{ location.PostalCode }, { location.Street}";
+            string dropdownText;
+            if (location.Tag == null)
+            {
+                dropdownText = $"{ location.PostalCode }, { location.Street}";
+            }
+            else
+            {
+                dropdownText = $"{ location.Tag }";
+            }
             Microsoft.AspNetCore.Mvc.Rendering.SelectListItem selectLocation = new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(dropdownText, location.Id.ToString());
             return selectLocation;
         }

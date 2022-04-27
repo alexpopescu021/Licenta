@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Licenta.ApplicationLogic.Services;
 using Licenta.ViewModels.Dispatchers;
+using Licenta.ViewModels.Routes;
 
 namespace Licenta.Controllers
 {
@@ -83,6 +84,27 @@ namespace Licenta.Controllers
                 }
                 return PartialView("_AssignRoutePartial", data);
             
+        }
+
+        [HttpGet]
+        public IActionResult RemoveRouteFromDriver([FromRoute] string Id)
+        {
+
+            RemoveRouteViewModel removeViewModel = new RemoveRouteViewModel()
+            {
+                Id = Id
+            };
+
+            return PartialView("_RemoveRoutePartial", removeViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult RemoveRouteFromDriver(RemoveRouteViewModel removeData)
+        {
+
+            routeService.DeselectRoute(removeData.Id);
+
+            return PartialView("_RemoveRoutePartial", removeData);
         }
         private List<SelectListItem> GetRouteList()
         {
