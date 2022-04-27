@@ -15,7 +15,6 @@ namespace Licenta.DataAccess.Abstractions
 
         RouteEntry GetEntry(Guid id);
         void Remove(RouteEntry entry, Guid RouteId);
-
-
+        Order GetOrder(Guid guid);
     }
 }

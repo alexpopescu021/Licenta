@@ -121,7 +121,7 @@ namespace Licenta.Controllers
                     var order = orderService.GetById(orderData.OrderId);
                     var route = routeService.GetById(orderData.RouteId);
                     RouteEntry entry = new RouteEntry() {Id = Guid.NewGuid() };
-                    
+                    order.SetStatus(OrderStatus.Assigned);
                     entry.SetOrder(order);
                     entry.SetType(orderData.type);
                     routeService.AddEntry(route.Id.ToString(), entry);
@@ -303,7 +303,8 @@ namespace Licenta.Controllers
 
                     var routeEntry = routeService.GetEntryById(orderData.orderId);
                     var route = routeService.GetById(orderData.routeId);
-                 
+                    var order = routeService.GetOrderIdFromEntry(routeEntry.Id);
+                    order.SetStatus(OrderStatus.Created);
                     routeService.RemoveEntry(route.Id.ToString(), routeEntry);
 
 

@@ -75,6 +75,10 @@ namespace Licenta.ApplicationLogic.Services
             return routeRepository.GetEntry(guid);
         }
 
+        public Order GetOrderIdFromEntry(Guid id)
+        {
+            return routeRepository.GetOrder(id);
+        }
         public bool Remove(string id)
         {
             Guid routeId = Guid.Empty;

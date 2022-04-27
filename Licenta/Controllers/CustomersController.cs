@@ -133,17 +133,7 @@ namespace Licenta.Controllers
                 return RedirectToPage("/Account/Manage/PickupLocations", new { area = "Identity" } );
             }
             catch (Exception notFound) { return null; }
-            //{
-            //    logger.LogError("Failed to find the customer entity {@Exception}", notFound.Message);
-            //    logger.LogDebug("Failed to find the customer entity {@ExceptionMessage}", notFound);
-            //    return BadRequest("Failed to find user");
-            //}
-            //catch (Exception e)
-            //{
-            //    logger.LogError("Failed to add a new Location {@Exception}", e.Message);
-            //    logger.LogDebug("Failed to add a new Location {@ExceptionMessage}", e);
-            //    return BadRequest("Failed to create a new Location");
-            //}
+
         }
 
         public IActionResult AddressTable()

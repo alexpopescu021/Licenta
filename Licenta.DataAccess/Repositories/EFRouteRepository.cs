@@ -75,7 +75,14 @@ namespace Licenta.DataAccess.Repositories
                         .FirstOrDefault();
             return entry;
         }
-
+        public Order GetOrder(Guid guid)
+        {
+            var entry = dbContext.RouteEntries
+                .Where(e => e.Id == guid)
+                .FirstOrDefault();
+            var order = dbContext.Orders.Where(o => o.Id == entry.Order.Id).FirstOrDefault();
+            return order;
+        }
         public void Remove(RouteEntry entry, Guid routeId)
         {
             

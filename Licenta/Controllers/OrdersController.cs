@@ -148,6 +148,7 @@ namespace Licenta.Controllers
                 if (senderId == null && GetCustomerList().Count > 0)
                 {
                     senderId = GetCustomerList().ElementAt(0).Value;
+                    // change this to get the current logged in user not a default one
                     pickupLocations.AddRange(GetLocationsList(senderId));
                     deliveryLocations.AddRange(GetLocationsList(senderId));
                     deliveryLocations.RemoveAt(0);

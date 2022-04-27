@@ -46,7 +46,7 @@ namespace Licenta.Controllers
                         }
                         if(ok)
                         {
-                            customerService.CreateNewCustomerFromIdentity(userId, null,null,user.Email);
+                            customerService.CreateNewCustomerFromIdentity(userId, user.UserName, user.PhoneNumber, user.Email);
                         }
                     }
 
