@@ -1,14 +1,11 @@
 ﻿using Licenta.ApplicationLogic.Services;
+using Licenta.Model;
 using Licenta.ViewModels.Orders;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Licenta.Model;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
 using System.Web.Mvc;
 
 namespace Licenta.Controllers
@@ -31,7 +28,7 @@ namespace Licenta.Controllers
         public IActionResult OrdersTable()
         {
             var ordersView = new OrderViewModel();
-            if(User.IsInRole("Dispatcher"))
+            if (User.IsInRole("Dispatcher"))
             {
                 ordersView.Orders = orderService.GetAllOrders();
             }
@@ -96,7 +93,7 @@ namespace Licenta.Controllers
             string senderId = null;
             string pickupId = null;
             string deliveryId = null;
-            
+
             try
             {
                 if (id != null)
@@ -231,7 +228,7 @@ namespace Licenta.Controllers
         [Microsoft.AspNetCore.Mvc.HttpPost]
         public Microsoft.AspNetCore.Mvc.JsonResult ActionName(string YourValue)
         {
-           
+
             return Json(new { success = true, result = YourValue }, JsonRequestBehavior.AllowGet);
         }
     }

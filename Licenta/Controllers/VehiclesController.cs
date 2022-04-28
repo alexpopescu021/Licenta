@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Licenta.ApplicationLogic.Services;
+using Licenta.ViewModels.Vehicles;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Licenta.ApplicationLogic.Services;
-using Licenta.ViewModels.Vehicles;
+using System;
 
 namespace Licenta.Controllers
 {
@@ -69,7 +66,7 @@ namespace Licenta.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromForm]NewVehicleViewModel viewModel)
+        public IActionResult Create([FromForm] NewVehicleViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -134,7 +131,7 @@ namespace Licenta.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update([FromForm]UpdateVehicleViewModel viewModel)
+        public IActionResult Update([FromForm] UpdateVehicleViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {

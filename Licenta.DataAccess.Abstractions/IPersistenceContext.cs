@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Transactions;
-using Licenta.DataAccess.Abstractions;
+﻿using System.Transactions;
 
 namespace Licenta.DataAccess.Abstractions
 {

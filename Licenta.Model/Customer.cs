@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
-using System.Text;
 
 
 namespace Licenta.Model
 {
-    public class Customer : DataEntity {
+    public class Customer : DataEntity
+    {
         public string Name { get; protected set; }
         public virtual Contact ContactDetails { get; protected set; }
         public virtual ICollection<LocationAddress> LocationAddresses { get; protected set; }
 
         protected Customer()
         { }
-        
+
         public static Customer Create(string name, string phoneNo, string email)
         {
             var createdCustomer = new Customer()
@@ -24,7 +23,7 @@ namespace Licenta.Model
                 ContactDetails = Contact.Create(phoneNo, email),
                 LocationAddresses = new List<LocationAddress>()
             };
-         
+
             return createdCustomer;
         }
 

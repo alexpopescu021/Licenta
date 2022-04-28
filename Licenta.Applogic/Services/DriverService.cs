@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Licenta.ApplicationLogic.Services;
-using Licenta.DataAccess.Abstractions;
+﻿using Licenta.DataAccess.Abstractions;
 using Licenta.Model;
+using System;
+using System.Collections.Generic;
 
 namespace Licenta.ApplicationLogic.Services
 {
-   public class DriverService
+    public class DriverService
     {
         private readonly IDriverRepository DriverRepository;
         private readonly IPersistenceContext PersistenceContext;
         private readonly IRouteRepository RouteRepository;
         private readonly OrderService OrderService;
-        public DriverService(IPersistenceContext persistenceContext, OrderService orderService )
+        public DriverService(IPersistenceContext persistenceContext, OrderService orderService)
         {
             PersistenceContext = persistenceContext;
             DriverRepository = persistenceContext.DriverRepository;
@@ -26,8 +24,8 @@ namespace Licenta.ApplicationLogic.Services
         }
         public ICollection<RouteEntry> GetRouteEntries(Guid id)
         {
-          return DriverRepository.GetRouteEntries(id);
-          
+            return DriverRepository.GetRouteEntries(id);
+
         }
 
         public Driver EndCurrentRoute(Driver driver)
@@ -42,16 +40,16 @@ namespace Licenta.ApplicationLogic.Services
         }
 
 
-        public void SetDriverStatus(Driver driver,DriverStatus status)
+        public void SetDriverStatus(Driver driver, DriverStatus status)
         {
             driver.SetStatus(status);
             var routeEntries = GetRouteEntries(driver.Id);
             OrderService.StartRoute(routeEntries);
-            if(status == DriverStatus.Driving)
+            if (status == DriverStatus.Driving)
             {
                 driver.CurrentRoute.SetStartTime();
             }
-            
+
             DriverRepository.Update(driver);
             PersistenceContext.SaveChanges();
         }

@@ -1,14 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Licenta.DataAccess.Abstractions;
+using Licenta.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Licenta.DataAccess.Abstractions;
-using Licenta.Model;
 
 namespace Licenta.DataAccess.Repositories
 {
-    class EFRouteRepository : EFBaseRepository<Route>, IRouteRepository
+    internal class EFRouteRepository : EFBaseRepository<Route>, IRouteRepository
     {
         public EFRouteRepository(ApplicationDbContext context) : base(context)
         { }
@@ -20,11 +19,11 @@ namespace Licenta.DataAccess.Repositories
                         .AsEnumerable();
         }
 
-     
+
         public Route GetRouteById(Guid routeId)
         {
-            var route = dbContext.Routes.Include(v=> v.Vehicle).Include(o=> o.RouteEntries).Where(o => o.Id == routeId).FirstOrDefault();
-             ICollection<RouteEntry> routeEntries = new List<RouteEntry>();
+            var route = dbContext.Routes.Include(v => v.Vehicle).Include(o => o.RouteEntries).Where(o => o.Id == routeId).FirstOrDefault();
+            ICollection<RouteEntry> routeEntries = new List<RouteEntry>();
             if (route.RouteEntries != null)
             {
                 foreach (var routeEntry in route.RouteEntries)
@@ -51,15 +50,15 @@ namespace Licenta.DataAccess.Repositories
                         .AsEnumerable();
         }
 
-        public RouteEntry Add(RouteEntry entry,Guid routeId)
+        public RouteEntry Add(RouteEntry entry, Guid routeId)
         {
-            var route = dbContext.Routes.Include(r =>r.RouteEntries).Where(e => e.Id == routeId).FirstOrDefault();
+            var route = dbContext.Routes.Include(r => r.RouteEntries).Where(e => e.Id == routeId).FirstOrDefault();
             route.RouteEntries.Add(entry);
-            
+
             dbContext.RouteEntries.Add(entry);
             dbContext.SaveChanges();
             return entry;
-            
+
         }
 
         public RouteEntry GetEntry(Guid id)
@@ -85,20 +84,20 @@ namespace Licenta.DataAccess.Repositories
         }
         public void Remove(RouteEntry entry, Guid routeId)
         {
-            
+
             var route = dbContext.Routes.Include(r => r.RouteEntries).Where(e => e.Id == routeId).FirstOrDefault();
-            foreach(var dbentry in route.RouteEntries)
+            foreach (var dbentry in route.RouteEntries)
             {
-               
-                if(dbentry.Order.Id == entry.Order.Id)
+
+                if (dbentry.Order.Id == entry.Order.Id)
                 {
-                    
+
                     route.RouteEntries.Remove(dbentry);
                     dbContext.RouteEntries.Remove(dbentry);
                     dbContext.SaveChanges();
                     break;
                 }
-               
+
             }
 
         }

@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Licenta.Model
 {
-    public class RoutesHistory:DataEntity
+    public class RoutesHistory : DataEntity
     {
-        public ICollection<Route> Routes  { get; private set; }
+        public ICollection<Route> Routes { get; private set; }
         public void AddRoute(Route route)
         {
-            if(Routes == null)
+            if (Routes == null)
             {
                 Routes = new List<Route>();
             }
@@ -22,7 +21,7 @@ namespace Licenta.Model
                 Id = Guid.NewGuid(),
                 Routes = new List<Route>()
 
-         };
+            };
             return routeHistoric;
         }
 

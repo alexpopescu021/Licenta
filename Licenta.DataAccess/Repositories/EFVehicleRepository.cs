@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Licenta.DataAccess.Abstractions;
 using Licenta.Model;
-using Licenta.DataAccess.Abstractions;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Licenta.DataAccess.Repositories
 {
@@ -13,7 +12,7 @@ namespace Licenta.DataAccess.Repositories
         public EFVehicleRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
-        
+
         public override IEnumerable<Vehicle> GetAll()
         {
             return dbContext.Vehicles;

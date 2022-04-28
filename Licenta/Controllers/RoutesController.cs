@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Licenta.ApplicationLogic.Services;
+using Licenta.Model;
+using Licenta.ViewModels.Routes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
-using Licenta.ApplicationLogic.Services;
-using Licenta.Model;
-using Licenta.ViewModels.Orders;
-using Licenta.ViewModels.Routes;
+using System;
+using System.Collections.Generic;
 
 
 namespace Licenta.Controllers
@@ -37,12 +33,12 @@ namespace Licenta.Controllers
         private List<SelectListItem> GetVehicleList()
         {
             var vehicles = vehicleService.GetAll();
-            
+
             List<SelectListItem> vehicleNames = new List<SelectListItem>();
 
             foreach (var vehicle in vehicles)
             {
-                if(vehicle.Status == VehicleStatus.Free)
+                if (vehicle.Status == VehicleStatus.Free)
                 {
                     vehicleNames.Add(new SelectListItem(vehicle.Name, vehicle.Id.ToString()));
                 }
@@ -65,9 +61,9 @@ namespace Licenta.Controllers
         private List<SelectListItem> GetOrderListFromRoute(string id)
         {
             var route = routeService.GetById(id);
-            
+
             var routes = route.RouteEntries;
-           // var orders = orderService.GetAllOrders();
+            // var orders = orderService.GetAllOrders();
             List<SelectListItem> orderNames = new List<SelectListItem>();
 
             foreach (var order in routes)
@@ -103,7 +99,7 @@ namespace Licenta.Controllers
 
         private List<SelectListItem> GetOrderType()
         {
-            
+
             List<SelectListItem> orderNames = new List<SelectListItem>();
             orderNames.Add(new SelectListItem("Both", OrderType.Both.ToString()));
             orderNames.Add(new SelectListItem("Delivery", OrderType.Delivery.ToString()));
@@ -112,15 +108,15 @@ namespace Licenta.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddOrder([FromForm]AddOrderViewModel orderData)
+        public IActionResult AddOrder([FromForm] AddOrderViewModel orderData)
         {
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     var order = orderService.GetById(orderData.OrderId);
                     var route = routeService.GetById(orderData.RouteId);
-                    RouteEntry entry = new RouteEntry() {Id = Guid.NewGuid() };
+                    RouteEntry entry = new RouteEntry() { Id = Guid.NewGuid() };
                     order.SetStatus(OrderStatus.Assigned);
                     entry.SetOrder(order);
                     entry.SetType(orderData.type);
@@ -144,12 +140,12 @@ namespace Licenta.Controllers
             string[] splitId = id.Split(';');
             var orderId = splitId[0];
             string RouteId = splitId[1];
-            
+
             AddOrderViewModel model = new AddOrderViewModel()
             {
                 OrderId = orderId,
                 OrderList = GetOrderList(),
-               RouteId = RouteId
+                RouteId = RouteId
 
             };
             return PartialView("_AddOrderPartial", model);
@@ -157,7 +153,7 @@ namespace Licenta.Controllers
         }
 
         [HttpPost]
-        public IActionResult OrderList([FromForm]AddOrderViewModel data)
+        public IActionResult OrderList([FromForm] AddOrderViewModel data)
         {
             return AddOrder(data.RouteId);
 
@@ -167,7 +163,8 @@ namespace Licenta.Controllers
         [HttpGet]
         public IActionResult NewRoute(string id)
         {
-            try {
+            try
+            {
                 var vehicleId = id;
                 NewRouteViewModel newRouteViewModel = new NewRouteViewModel()
                 {
@@ -177,7 +174,7 @@ namespace Licenta.Controllers
 
                 return PartialView("_NewRoutePartial", newRouteViewModel);
             }
-            
+
             catch (Exception e)
             {
                 logger.LogError("Failed to load information for Route {@Exception}", e.Message);
@@ -187,7 +184,7 @@ namespace Licenta.Controllers
         }
 
         [HttpPost]
-        public IActionResult NewRoute([FromForm]NewRouteViewModel routeData)
+        public IActionResult NewRoute([FromForm] NewRouteViewModel routeData)
         {
 
             try
@@ -198,7 +195,7 @@ namespace Licenta.Controllers
                     var vehicle = vehicleService.GetById(routeData.VehicleId);
 
                     routeService.CreateRoute(vehicle);
-                    
+
 
                     return PartialView("_NewRoutePartial", routeData);
                 }
@@ -225,7 +222,7 @@ namespace Licenta.Controllers
 
 
         [HttpGet]
-        public IActionResult Remove([FromRoute]string Id)
+        public IActionResult Remove([FromRoute] string Id)
         {
 
             RemoveRouteViewModel removeViewModel = new RemoveRouteViewModel()
@@ -239,14 +236,14 @@ namespace Licenta.Controllers
         [HttpPost]
         public IActionResult Remove(RemoveRouteViewModel removeData)
         {
-            
+
             routeService.RemoveRoute(removeData.Id);
 
             return PartialView("_RemoveRoutePartial", removeData);
         }
 
         [HttpGet]
-        public IActionResult RemoveOrderList([FromRoute]string id)
+        public IActionResult RemoveOrderList([FromRoute] string id)
         {
             string[] splitId = id.Split(';');
             var orderId = splitId[0];
@@ -264,7 +261,7 @@ namespace Licenta.Controllers
         }
 
         [HttpPost]
-        public IActionResult RemoveOrderList([FromForm]DeleteOrderViewModel data)
+        public IActionResult RemoveOrderList([FromForm] DeleteOrderViewModel data)
         {
             return RemoveOrder(data.routeId);
 
@@ -294,7 +291,7 @@ namespace Licenta.Controllers
             }
         }
         [HttpPost]
-        public IActionResult RemoveOrder([FromForm]DeleteOrderViewModel orderData)
+        public IActionResult RemoveOrder([FromForm] DeleteOrderViewModel orderData)
         {
             try
             {
@@ -320,7 +317,7 @@ namespace Licenta.Controllers
         }
 
         [HttpGet]
-        public IActionResult ChangeVehicle([FromRoute]string id)
+        public IActionResult ChangeVehicle([FromRoute] string id)
         {
 
             string RouteId = id;
@@ -346,18 +343,18 @@ namespace Licenta.Controllers
         }
 
         [HttpPost]
-        public IActionResult ChangeVehicle([FromForm]ChangeVehicleViewModel data)
+        public IActionResult ChangeVehicle([FromForm] ChangeVehicleViewModel data)
         {
             var route = routeService.GetById(data.RouteId);
             var vehicle = vehicleService.GetById(data.VehicleId);
-            routeService.ChangeVehicle(route,vehicle);
-            
+            routeService.ChangeVehicle(route, vehicle);
+
             return PartialView("_ChangeVehiclePartial", data);
         }
 
 
         [HttpGet]
-        public IActionResult Map([FromRoute]string id)
+        public IActionResult Map([FromRoute] string id)
         {
             var route = routeService.GetById(id);
             var entries = new RouteEntriesViewModel();

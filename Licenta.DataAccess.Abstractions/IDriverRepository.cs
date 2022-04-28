@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Licenta.Model;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using Licenta.Model;
 
 namespace Licenta.DataAccess.Abstractions
 {
-    public interface IDriverRepository:IBaseRepository<Driver>
+    public interface IDriverRepository : IBaseRepository<Driver>
     {
         Driver GetByUserId(string userId);
         ICollection<RouteEntry> GetRouteEntries(Guid id);
@@ -15,6 +14,6 @@ namespace Licenta.DataAccess.Abstractions
         new IEnumerable<Driver> GetAll();
         RoutesHistory GetRoutesHistory(Guid id);
         Driver GetRouteWithVehicle(Guid id);
-        
+
     }
 }

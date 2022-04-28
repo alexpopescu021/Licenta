@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Licenta.ApplicationLogic.Services;
+using Licenta.ViewModels.Dispatchers;
+using Licenta.ViewModels.Routes;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using Licenta.ApplicationLogic.Services;
-using Licenta.ViewModels.Dispatchers;
-using Licenta.ViewModels.Routes;
+using System;
+using System.Collections.Generic;
 
 namespace Licenta.Controllers
 {
@@ -22,7 +20,7 @@ namespace Licenta.Controllers
         private readonly UserManager<IdentityUser> userManager;
         private readonly DispatcherService dispatcherService;
         public DispatchersController(DriverService driverService, ILogger<DriverService> logger
-            ,VehicleService vehicleService, UserManager<IdentityUser>userManager,DispatcherService dispatcherService,
+            , VehicleService vehicleService, UserManager<IdentityUser> userManager, DispatcherService dispatcherService,
             RouteService routeService)
         {
             this.driverService = driverService;
@@ -58,7 +56,7 @@ namespace Licenta.Controllers
 
         }
         [HttpGet]
-        public IActionResult AssignRoute([FromRoute]string id)
+        public IActionResult AssignRoute([FromRoute] string id)
         {
             string DriverId = id;
             AssignRouteViewModel assignRouteViewModel = new AssignRouteViewModel
@@ -66,24 +64,24 @@ namespace Licenta.Controllers
                 DriverId = DriverId,
                 RouteList = GetRouteList()
             };
-           return PartialView("_AssignRoutePartial", assignRouteViewModel);
+            return PartialView("_AssignRoutePartial", assignRouteViewModel);
 
         }
 
         [HttpPost]
-        public IActionResult AssignRoute([FromForm]AssignRouteViewModel data)
+        public IActionResult AssignRoute([FromForm] AssignRouteViewModel data)
         {
-                var userId = userManager.GetUserId(User);
-                var dispatcherDb = dispatcherService.GetByUserId(userId);
+            var userId = userManager.GetUserId(User);
+            var dispatcherDb = dispatcherService.GetByUserId(userId);
 
-                if (ModelState.IsValid)
-                {
-                    var driver = driverService.GetByUserId(data.DriverId);
-                    var route = routeService.GetById(data.RouteId);
-                    dispatcherService.ConnectDriverToRoute(route, driver, dispatcherDb);
-                }
-                return PartialView("_AssignRoutePartial", data);
-            
+            if (ModelState.IsValid)
+            {
+                var driver = driverService.GetByUserId(data.DriverId);
+                var route = routeService.GetById(data.RouteId);
+                dispatcherService.ConnectDriverToRoute(route, driver, dispatcherDb);
+            }
+            return PartialView("_AssignRoutePartial", data);
+
         }
 
         [HttpGet]
@@ -118,6 +116,6 @@ namespace Licenta.Controllers
             }
             return routesNames;
         }
- 
+
     }
 }

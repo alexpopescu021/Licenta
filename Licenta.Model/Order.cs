@@ -21,7 +21,7 @@ namespace Licenta.Model
             Status = status;
         }
 
-        public static Order Create(Recipient recipient, Customer sender, LocationAddress pickup, 
+        public static Order Create(Recipient recipient, Customer sender, LocationAddress pickup,
             LocationAddress delivery, decimal price)
 
         {

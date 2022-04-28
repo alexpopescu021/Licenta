@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Licenta.DataAccess.Abstractions;
+﻿using Licenta.DataAccess.Abstractions;
 using Licenta.Model;
+using System;
+using System.Collections.Generic;
 
 namespace Licenta.ApplicationLogic.Services
 {

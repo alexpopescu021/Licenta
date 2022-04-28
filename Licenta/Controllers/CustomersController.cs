@@ -1,15 +1,11 @@
-﻿using Licenta.ViewModels.Customers;
+﻿using Licenta.ApplicationLogic.Services;
+using Licenta.Model;
+using Licenta.ViewModels.Customers;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
-using Licenta.ApplicationLogic.Services;
-using Licenta.Model;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Licenta.Controllers
 {
@@ -38,7 +34,7 @@ namespace Licenta.Controllers
                 };
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //log
             }
@@ -64,7 +60,7 @@ namespace Licenta.Controllers
                 return PartialView("_UpdateCustomerPartial", editCustomerViewModel);
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //log
                 return BadRequest("Failed to edit customer entity");
@@ -74,7 +70,7 @@ namespace Licenta.Controllers
         [HttpPost]
         public IActionResult UpdateCustomer([FromForm] UpdateCustomerViewModel updatedData, [FromRoute] string Id)
         {
-            if ( updatedData.Name == null ||
+            if (updatedData.Name == null ||
                    updatedData.PhoneNo == null)
             {
                 return PartialView("_UpdateCustomerPartial", new NewCustomerViewModel());
@@ -89,7 +85,7 @@ namespace Licenta.Controllers
                                                 updatedData.Email);
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //log
                 return BadRequest("Failed to edit customer entity");
@@ -130,9 +126,9 @@ namespace Licenta.Controllers
 
                 customerService.AddLocationToCustomer(customer.Id, newLocation);
 
-                return RedirectToPage("/Account/Manage/PickupLocations", new { area = "Identity" } );
+                return RedirectToPage("/Account/Manage/PickupLocations", new { area = "Identity" });
             }
-            catch (Exception notFound) { return null; }
+            catch (Exception) { return null; }
 
         }
 
@@ -169,9 +165,9 @@ namespace Licenta.Controllers
                 return PartialView("_EditLocationPartial", editLocationViewModel);
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                
+
                 return BadRequest("Failed to update location entity");
             }
         }
@@ -199,9 +195,9 @@ namespace Licenta.Controllers
 
                 return RedirectToPage("/Account/Manage/PickupLocations", new { area = "Identity" });
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                
+
                 return BadRequest("Failed to edit location entity");
             }
         }
@@ -226,7 +222,7 @@ namespace Licenta.Controllers
             {
                 customerService.RemoveCustomerById(removeData.Id);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //log
             }

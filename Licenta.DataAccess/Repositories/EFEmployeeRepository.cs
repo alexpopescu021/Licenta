@@ -1,35 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Licenta.DataAccess.Abstractions;
+﻿using Licenta.DataAccess.Abstractions;
 using Licenta.Model;
 
 namespace Licenta.DataAccess.Repositories
 {
-    public class EFEmployeeRepository: IEmployeeRepository
+    public class EFEmployeeRepository : IEmployeeRepository
     {
-      public EFEmployeeRepository(ApplicationDbContext dbContext)
+        public EFEmployeeRepository(ApplicationDbContext dbContext)
         {
             DbContext = dbContext;
-          
+
         }
 
         private readonly ApplicationDbContext DbContext;
 
-        public void AddEmployee(string userId, string name, string email , string role)
+        public void AddEmployee(string userId, string name, string email, string role)
         {
-            if(role == "Driver")
+            if (role == "Driver")
             {
-               var driver = Driver.Create(userId, name, email);
+                var driver = Driver.Create(userId, name, email);
                 DbContext.Drivers.Add(driver);
             }
-            else if(role == "Dispatcher")
+            else if (role == "Dispatcher")
             {
                 var dispatcher = Dispatcher.Create(userId, name, email);
                 DbContext.Dispatchers.Add(dispatcher);
             }
             DbContext.SaveChanges();
         }
-       
+
     }
 }

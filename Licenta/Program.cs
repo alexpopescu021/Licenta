@@ -4,11 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Licenta
 {
@@ -23,7 +18,7 @@ namespace Licenta
                 var roleManager = services.GetService<RoleManager<IdentityRole>>();
                 var userManager = services.GetService<UserManager<IdentityUser>>();
                 var configuration = services.GetService<IConfiguration>();
-                
+
 
             }
 

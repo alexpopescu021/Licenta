@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Licenta.Model
 {
-    public enum RouteStatus { NotAssigned, Assigned}
+    public enum RouteStatus { NotAssigned, Assigned }
     public class Route : DataEntity
     {
-        public ICollection<RouteEntry> RouteEntries { get;  set; }
+        public ICollection<RouteEntry> RouteEntries { get; set; }
         public Vehicle Vehicle { get; private set; }
         public DateTime StartTime { get; private set; }
         public DateTime FinishTime { get; private set; }
@@ -20,7 +19,7 @@ namespace Licenta.Model
             };
             return route;
         }
-       
+
         public static Route Create(Vehicle vehicle)
         {
             var route = new Route()
@@ -28,8 +27,8 @@ namespace Licenta.Model
                 Id = Guid.NewGuid(),
                 Vehicle = vehicle,
                 status = RouteStatus.NotAssigned
-                
-            }; 
+
+            };
             return route;
         }
 
@@ -54,7 +53,7 @@ namespace Licenta.Model
         public void SetFinishTime()
         {
             FinishTime = DateTime.UtcNow;
-           
+
         }
         public void DeleteRouteEntry(RouteEntry routeEntry)
         {
@@ -69,5 +68,5 @@ namespace Licenta.Model
         {
             Vehicle = vehicle;
         }
-    } 
+    }
 }

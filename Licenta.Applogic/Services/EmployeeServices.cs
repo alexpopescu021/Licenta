@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Licenta.DataAccess.Abstractions;
+﻿using Licenta.DataAccess.Abstractions;
 using Licenta.Model;
 
 namespace Licenta.ApplicationLogic.Services
 {
-   public class EmployeeServices
+    public class EmployeeServices
     {
         private readonly IEmployeeRepository EmployeeRepository;
         private readonly IPersistenceContext PersistenceContext;
@@ -28,8 +25,8 @@ namespace Licenta.ApplicationLogic.Services
             var employee = GetEmployee(userId);
 
             if (employee.Id != null && DriverRepository.Remove(employee.Id) == false)
-            {    
-                 DispatcherRepository.Remove(employee.Id);
+            {
+                DispatcherRepository.Remove(employee.Id);
             }
             PersistenceContext.SaveChanges();
 
@@ -45,18 +42,18 @@ namespace Licenta.ApplicationLogic.Services
             return employee;
         }
 
-        public void UpdateEmployee(string name, string email,  string Role , string UserId)
+        public void UpdateEmployee(string name, string email, string Role, string UserId)
         {
             var employee = GetEmployee(UserId);
-            
-            if(Role == "Driver")
+
+            if (Role == "Driver")
             {
                 var driver = DriverRepository.GetById(employee.Id);
                 driver.SetName(name);
                 driver.SetEmail(email);
                 DriverRepository.Update(driver);
             }
-            else if(Role == "Dispatcher")
+            else if (Role == "Dispatcher")
             {
                 var dispatcher = DispatcherRepository.GetById(employee.Id);
                 dispatcher.SetName(name);
