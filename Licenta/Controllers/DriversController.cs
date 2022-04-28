@@ -52,7 +52,6 @@ namespace Licenta.Controllers
         }
         public IActionResult SetOrderStatus(OrderStatus status, Guid orderId)
         {
-
             try
             {
                 OrderService.ChangeOrderStatus(orderId, status);
@@ -113,7 +112,7 @@ namespace Licenta.Controllers
                 DriverService.SetDriverStatus(driver, DriverStatus.Driving);
                 foreach(var entry in driver.CurrentRoute.RouteEntries)
                 {
-                    entry.Order.SetStatus(OrderStatus.Delivering);
+                    OrderService.ChangeOrderStatus(entry.Order.Id, OrderStatus.Delivering);
                 }
                 // set order status to delivering
                 return RedirectToAction("GetOrdersPartial");

@@ -2,6 +2,7 @@
 using Licenta.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Licenta.ApplicationLogic.Services
 {
@@ -133,7 +134,24 @@ namespace Licenta.ApplicationLogic.Services
                 driver.SetCurrentRouteNull();
                 driver.SetStatus(DriverStatus.Free);
             }
-
+            foreach(var entry in route.RouteEntries)
+            {
+                entry.Order.SetStatus(OrderStatus.Created);
+            }
+            if(route.RouteEntries.Any(e => e.Order.Status == OrderStatus.Delivered) &&
+               !route.RouteEntries.Any(e => e.Order.Status == OrderStatus.Delivered))
+            {
+                route.SetStatus(RouteStatus.Partially_Completed);
+            }
+            else if(route.RouteEntries.Any(e => e.Order.Status == OrderStatus.Delivered))
+            {
+                route.SetStatus(RouteStatus.Completed);
+            }
+            else
+            {
+                route.SetStatus(RouteStatus.NotAssigned);
+            }
+            
             route.Vehicle.UpdateStatus(VehicleStatus.Free);
             persistenceContext.SaveChanges();
         }

@@ -15,7 +15,7 @@
 
 <div class="row d-flex justify-content-between mt-3 mb-3 mr-auto">
     <h1 class="ml-3">Your orders</h1>
-    <a class="btn bg-menu" asp-action="RouteMap" asp-controller="Drivers" style="max-height:45px;text-align:center">Go to map</a>
+    <a id="mapButton" class="btn bg-menu" asp-action="RouteMap" asp-controller="Drivers" style="max-height:45px;text-align:center">Go to map</a>
 </div>
 
 <div id="OrdersTable">
@@ -151,6 +151,15 @@
         $('#Orders').DataTable({ responsive: true, lengthMenu: [5, 10, 15] });
         setCookies();
         EnableButtons();
+        var table = $('#Orders').DataTable();
+ 
+        if ( !table.data().any() ) 
+        {
+            $('#StartRoute').prop('disabled', false);
+            const mapButton = document.getElementById("mapButton");
+            const classes = mapButton.classList;
+            classes.add("disabled");
+        }
         if ($('#StartRoute').is(":disabled") == false) {
             $('#EndRoute').prop('disabled', true);
         }
@@ -167,7 +176,7 @@
             if ($.cookie('' + i) != null) {
 
                 if ($.cookie('' + i).search("Pick") > -1 && $('#' + i).html().search("Pick") > -1 ||
-                    ($.cookie('' + i).search("Deliver") > -1 && $('#' + i).html().search("Deliver") > -1)) {
+                   ($.cookie('' + i).search("Deliver") > -1 && $('#' + i).html().search("Deliver") > -1)) {
 
                     $('#' + i).html($.cookie('' + i));
                     if ($('#'+ i).html().indexOf('f') > -1)
@@ -179,9 +188,9 @@
 
                 }
             }
-            }
+        }
 
-            $('#StartRoute').prop('disabled', $.cookie('StartRoute'));
+            //$('#StartRoute').prop('disabled', $.cookie('StartRoute'));
     }
 
     function StatusUpdate(id) {

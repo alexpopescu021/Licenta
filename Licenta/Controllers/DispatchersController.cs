@@ -78,6 +78,10 @@ namespace Licenta.Controllers
             {
                 var driver = driverService.GetByUserId(data.DriverId);
                 var route = routeService.GetById(data.RouteId);
+                foreach(var entry in route.RouteEntries)
+                {
+                    entry.Order.SetStatus(Model.OrderStatus.Assigned);
+                }
                 dispatcherService.ConnectDriverToRoute(route, driver, dispatcherDb);
             }
             return PartialView("_AssignRoutePartial", data);
