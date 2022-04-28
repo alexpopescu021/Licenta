@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Licenta.Model
 {
-    public enum RouteStatus { NotAssigned, Assigned }
+    public enum RouteStatus { NotAssigned, Assigned, Partially_Completed, Completed }
     public class Route : DataEntity
     {
         public ICollection<RouteEntry> RouteEntries { get; set; }

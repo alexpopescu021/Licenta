@@ -2,6 +2,7 @@
 using Licenta.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Licenta.ApplicationLogic.Services
 {
@@ -31,7 +32,16 @@ namespace Licenta.ApplicationLogic.Services
         public Driver EndCurrentRoute(Driver driver)
         {
             driver = DriverRepository.GetDriverWithRoute(driver.Id);
-            //driver.AddRouteToHistoric(driver.CurrentRoute);
+
+            if(driver.CurrentRoute.RouteEntries.Any(r => r.Order.Status == OrderStatus.Delivered) &&
+               !driver.CurrentRoute.RouteEntries.Any(r => r.Order.Status == OrderStatus.Delivered))
+                {
+                driver.CurrentRoute.SetStatus(RouteStatus.Partially_Completed);
+            }
+            else if(driver.CurrentRoute.RouteEntries.All(r => r.Order.Status == OrderStatus.Delivered))
+            {
+                driver.CurrentRoute.SetStatus(RouteStatus.Completed);
+            }
             driver.CurrentRoute.SetFinishTime();
             driver.SetCurrentRouteNull();
             SetDriverStatus(driver, DriverStatus.Free);

@@ -117,12 +117,11 @@ namespace Licenta.Controllers
                     var order = orderService.GetById(orderData.OrderId);
                     var route = routeService.GetById(orderData.RouteId);
                     RouteEntry entry = new RouteEntry() { Id = Guid.NewGuid() };
+                    entry.SetOrder(order);
                     order.SetStatus(OrderStatus.Assigned);
                     entry.SetOrder(order);
                     entry.SetType(orderData.type);
                     routeService.AddEntry(route.Id.ToString(), entry);
-
-
                 }
                 return PartialView("_AddOrderPartial", orderData);
             }
@@ -156,8 +155,6 @@ namespace Licenta.Controllers
         public IActionResult OrderList([FromForm] AddOrderViewModel data)
         {
             return AddOrder(data.RouteId);
-
-
         }
 
         [HttpGet]
@@ -186,7 +183,6 @@ namespace Licenta.Controllers
         [HttpPost]
         public IActionResult NewRoute([FromForm] NewRouteViewModel routeData)
         {
-
             try
             {
                 if (ModelState.IsValid)
@@ -217,7 +213,6 @@ namespace Licenta.Controllers
                 Routes = routeService.GetAllRoutes()
             };
             return PartialView("_RoutesTablePartial", routesView);
-
         }
 
 

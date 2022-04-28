@@ -23,6 +23,7 @@ namespace Licenta.DataAccess.Repositories
             return dbContext.Drivers
                 .Include(o => o.CurrentRoute)
                 .ThenInclude(o => o.RouteEntries)
+                .ThenInclude(a => a.Order)
                 .Include(o => o.RoutesHistoric)
                 .Where(o => o.Id == id).FirstOrDefault();
         }
