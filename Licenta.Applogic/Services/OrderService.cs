@@ -49,6 +49,12 @@ namespace Licenta.ApplicationLogic.Services
             return order;
         }
 
+        public IEnumerable<Order> GetOrdersForCurrentCustomer(string senderId)
+        {
+            Guid.TryParse(senderId, out Guid customerId);
+            return OrderRepository.GetOrdersForCurrentCustomer(customerId);
+        }
+
         public Recipient CreateNewRecipient(string name, string phoneNo, string email)
         {
             var recipient = Recipient.Create(name, phoneNo, email);

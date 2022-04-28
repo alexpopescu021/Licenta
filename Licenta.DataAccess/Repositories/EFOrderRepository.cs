@@ -45,6 +45,20 @@ namespace Licenta.DataAccess.Repositories
                         .AsEnumerable();
         }
 
+        public IEnumerable<Order> GetOrdersForCurrentCustomer(Guid senderId)
+        {
+            return dbContext.Orders
+                        .Where(s => s.Sender.Id == senderId)
+                        .Include(o => o.PickUpAddress)
+                        .Include(o => o.DeliveryAddress)
+                        .Include(o => o.Sender)
+                        .Include(o => o.Sender.ContactDetails)
+                        .Include(o => o.Recipient)
+                        .Include(o => o.Recipient.ContactDetails)
+                        .OrderByDescending(o => o.CreationTime)
+                        .AsEnumerable();                     
+        }
+
         public bool RemoveOrdersFromCustomer(Guid customerId)
         {
             var orders = dbContext.Orders

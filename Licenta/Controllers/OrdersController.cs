@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Licenta.Model;
 using System.Security.Claims;
-using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
 using System.Web.Mvc;
 
 namespace Licenta.Controllers
@@ -17,11 +17,11 @@ namespace Licenta.Controllers
     {
         private readonly OrderService orderService;
         private readonly CustomerService customerService;
-
-        public OrdersController(OrderService orderService, CustomerService customerService)
+        private readonly UserManager<IdentityUser> userManager;
+        public OrdersController(OrderService orderService, CustomerService customerService, UserManager<IdentityUser> _userManager)
         {
             this.orderService = orderService;
-            
+            userManager = _userManager;
             this.customerService = customerService;
         }
         public IActionResult Index()
@@ -30,10 +30,17 @@ namespace Licenta.Controllers
         }
         public IActionResult OrdersTable()
         {
-            var ordersView = new OrderViewModel()
+            var ordersView = new OrderViewModel();
+            if(User.IsInRole("Dispatcher"))
             {
-                Orders = orderService.GetAllOrders()
-            };
+                ordersView.Orders = orderService.GetAllOrders();
+            }
+            else if (!User.IsInRole("Admin") && !User.IsInRole("Driver") && !User.IsInRole("Dispatcher"))
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var senderId = customerService.GetCustomerById(userId).Id.ToString();
+                ordersView.Orders = orderService.GetOrdersForCurrentCustomer(senderId);
+            }
 
             return PartialView("_OrdersTablePartial", ordersView);
         }
@@ -147,8 +154,8 @@ namespace Licenta.Controllers
 
                 if (senderId == null && GetCustomerList().Count > 0)
                 {
-                    senderId = GetCustomerList().ElementAt(0).Value;
-                    // change this to get the current logged in user not a default one
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    senderId = customerService.GetCustomerById(userId).Id.ToString();
                     pickupLocations.AddRange(GetLocationsList(senderId));
                     deliveryLocations.AddRange(GetLocationsList(senderId));
                     deliveryLocations.RemoveAt(0);
@@ -188,8 +195,6 @@ namespace Licenta.Controllers
                     var bonusLocation = LocationAddress.Create(orderData.Country,
                         orderData.City, orderData.Street,
                         orderData.StreetNumber, orderData.PostalCode, null);
-
-
 
                     customerService.AddLocation(bonusLocation);
 
