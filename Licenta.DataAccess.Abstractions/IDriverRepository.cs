@@ -14,6 +14,6 @@ namespace Licenta.DataAccess.Abstractions
         new IEnumerable<Driver> GetAll();
         RoutesHistory GetRoutesHistory(Guid id);
         Driver GetRouteWithVehicle(Guid id);
-
+        Driver GetDriverWithRouteFromUserId(Guid driverGuid);
     }
 }

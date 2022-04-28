@@ -27,7 +27,15 @@ namespace Licenta.DataAccess.Repositories
                 .Include(o => o.RoutesHistoric)
                 .Where(o => o.Id == id).FirstOrDefault();
         }
-
+        public Driver GetDriverWithRouteFromUserId(Guid id)
+        {
+            return dbContext.Drivers
+                .Include(o => o.CurrentRoute)
+                .ThenInclude(o => o.RouteEntries)
+                .ThenInclude(a => a.Order)
+                .Include(o => o.RoutesHistoric)
+                .Where(o => o.UserId == id.ToString()).FirstOrDefault();
+        }
         public IEnumerable<Driver> GetDriversOnRoute(Guid routeId)
         {
             return dbContext.Drivers

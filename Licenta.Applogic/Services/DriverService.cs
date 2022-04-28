@@ -29,6 +29,16 @@ namespace Licenta.ApplicationLogic.Services
 
         }
 
+        public Driver GetDriverWithRoute(string driverId)
+        {
+            Guid.TryParse(driverId, out Guid driverGuid);
+            return DriverRepository.GetDriverWithRoute(driverGuid);
+        }
+        public Driver GetDriverWithRouteFromUserId(string driverId)
+        {
+            Guid.TryParse(driverId, out Guid driverGuid);
+            return DriverRepository.GetDriverWithRouteFromUserId(driverGuid);
+        }
         public Driver EndCurrentRoute(Driver driver)
         {
             driver = DriverRepository.GetDriverWithRoute(driver.Id);
@@ -48,7 +58,6 @@ namespace Licenta.ApplicationLogic.Services
             DriverRepository.Update(driver);
             return driver;
         }
-
 
         public void SetDriverStatus(Driver driver, DriverStatus status)
         {

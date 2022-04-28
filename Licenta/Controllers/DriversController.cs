@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Licenta.Controllers
@@ -107,8 +108,14 @@ namespace Licenta.Controllers
             var user = await UserManager.GetUserAsync(User);
             try
             {
-                var driver = DriverService.GetByUserId(user.Id);
+
+                var driver = DriverService.GetDriverWithRouteFromUserId(user.Id);
                 DriverService.SetDriverStatus(driver, DriverStatus.Driving);
+                foreach(var entry in driver.CurrentRoute.RouteEntries)
+                {
+                    entry.Order.SetStatus(OrderStatus.Delivering);
+                }
+                // set order status to delivering
                 return RedirectToAction("GetOrdersPartial");
             }
             catch (Exception e)
