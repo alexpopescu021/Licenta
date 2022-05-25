@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Licenta.Model.Contact">
+    <Position X="2" Y="3.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Licenta.Model.Customer">
+    <Position X="2" Y="6" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Licenta.Model.DataEntity">
+    <Position X="6.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Licenta.Model.Dispatcher">
+    <Position X="11" Y="7.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Licenta.Model.Driver">
+    <Position X="9.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Licenta.Model.Employee">
+    <Position X="11" Y="3.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Licenta.Model.LocationAddress">
+    <Position X="9.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Licenta.Model.Order">
+    <Position X="7.5" Y="6" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Licenta.Model.Recipient">
+    <Position X="3.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Licenta.Model.Route">
+    <Position X="5.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Licenta.Model.RouteEntry">
+    <Position X="3.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Licenta.Model.RoutesHistory">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Licenta.Model.Vehicle">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Licenta.Model.VehicleDriver">
+    <Position X="3.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Licenta.ApplicationLogic.Services.CustomerService" Collapsed="true">
+    <Position X="16.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAQAAAAEQBAAAEAAAAAQBACAAACCEAAIAgEAAAEAAg=</HashCode>
+      <FileName>Services\CustomerService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Licenta.ApplicationLogic.Services.DispatcherService" Collapsed="true">
+    <Position X="18.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEABAAAgAAAAAAAAAAQAAAAAAAAAEAQABAAAAAAAAAA=</HashCode>
+      <FileName>Services\DispatcherService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Licenta.ApplicationLogic.Services.DriverService" Collapsed="true">
+    <Position X="20.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AFAAAAAAwAAAAAJAAAQAAAAABAAAAAIiAAAAgAAAAIA=</HashCode>
+      <FileName>Services\DriverService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Licenta.ApplicationLogic.Services.EmployeeServices" Collapsed="true">
+    <Position X="16.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAIAgABAAAQAAAAAAAAAEAAoAAAAAAAAAAA=</HashCode>
+      <FileName>Services\EmployeeServices.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Licenta.ApplicationLogic.Services.OrderService" Collapsed="true">
+    <Position X="18.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAEAAQAAAAEAQABAQAAAgAAAQAAEEAIAAAAIg=</HashCode>
+      <FileName>Services\OrderService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Licenta.ApplicationLogic.Services.RouteService" Collapsed="true">
+    <Position X="20.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAoAAAAAAAAEBAAAAEBAAAAAAAAEQABBAAAAAABIA=</HashCode>
+      <FileName>Services\RouteService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Licenta.ApplicationLogic.Services.VehicleService" Collapsed="true">
+    <Position X="16.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAABAgAAAAAAAAAAAABAAAAAgAIECAAgAAAAAAAIA=</HashCode>
+      <FileName>Services\VehicleService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Licenta.DataAccess.Abstractions.IBaseRepository&lt;T&gt;">
+    <Position X="22.25" Y="14.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Licenta.DataAccess.Abstractions.ICustomerRepository">
+    <Position X="20.25" Y="16.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Licenta.DataAccess.Abstractions.IDispatcherRepository">
+    <Position X="23.25" Y="20.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Licenta.DataAccess.Abstractions.IDriverRepository">
+    <Position X="24.25" Y="16.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Licenta.DataAccess.Abstractions.IEmployeeRepository" Collapsed="true">
+    <Position X="18.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Licenta.DataAccess.Abstractions.IOrderRepository">
+    <Position X="21.25" Y="20.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Licenta.DataAccess.Abstractions.IPersistenceContext" Collapsed="true">
+    <Position X="20.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Licenta.DataAccess.Abstractions.IRecipientRepository">
+    <Position X="24.25" Y="14.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Licenta.DataAccess.Abstractions.IRouteRepository">
+    <Position X="19" Y="14.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Licenta.DataAccess.Abstractions.IVehicleRepository">
+    <Position X="22.25" Y="16.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
