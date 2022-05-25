@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Dispatchers\_RemoveRoutePartial.cshtml" />
     <Content Remove="wwwroot\css\bootstrap.css.map" />
     <Content Remove="wwwroot\css\bootstrap.min.css.map" />
   </ItemGroup>
@@ -19,6 +20,7 @@
     <None Include="Views\Dispatchers\Index.cshtml" />
     <None Include="Views\Dispatchers\_AssignRoutePartial.cshtml" />
     <None Include="Views\Dispatchers\_DriversTablePartial.cshtml" />
+    <None Include="Views\Dispatchers\_RemoveRoutePartial.cshtml" />
     <None Include="Views\Drivers\AvailableVehicles.cshtml" />
     <None Include="Views\Drivers\DriverInfo.cshtml" />
     <None Include="Views\Drivers\DriversTable.cshtml" />
@@ -61,6 +63,17 @@
     <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
     <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
     <None Include="wwwroot\lib\bootstrap\LICENSE" />
+    <None Include="wwwroot\lib\jquery-cookie\.gitignore" />
+    <None Include="wwwroot\lib\jquery-cookie\.jshintrc" />
+    <None Include="wwwroot\lib\jquery-cookie\.tm_properties" />
+    <None Include="wwwroot\lib\jquery-cookie\.travis.yml" />
+    <None Include="wwwroot\lib\jquery-cookie\CHANGELOG.md" />
+    <None Include="wwwroot\lib\jquery-cookie\CONTRIBUTING.md" />
+    <None Include="wwwroot\lib\jquery-cookie\Gruntfile.js" />
+    <None Include="wwwroot\lib\jquery-cookie\jquery.cookie.js" />
+    <None Include="wwwroot\lib\jquery-cookie\README.md" />
+    <None Include="wwwroot\lib\jquery-cookie\test\server.js" />
+    <None Include="wwwroot\lib\jquery-cookie\test\tests.js" />
     <None Include="wwwroot\lib\datatables-buttons\js\buttons.colVis.js" />
     <None Include="wwwroot\lib\datatables-buttons\js\buttons.colVis.min.js" />
     <None Include="wwwroot\lib\datatables-buttons\js\buttons.flash.js" />

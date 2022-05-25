@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Licenta.Model
 {
-    public enum VehicleStatus { Free, Busy, UnAvailable}
+    public enum VehicleStatus { Free, Busy, UnAvailable }
     public class Vehicle : DataEntity
     {
         public string Name { get; protected set; }
@@ -35,19 +33,19 @@ namespace Licenta.Model
 
         public Vehicle Update(string name, string type, string registrationNumber, int maximCarryWeight, string vin)
         {
-            this.Name = name;
-            this.Type = type;
-            this.RegistrationNumber = registrationNumber;
-            this.MaximCarryWeightKg = maximCarryWeight;
-            this.VIN = vin;
+            Name = name;
+            Type = type;
+            RegistrationNumber = registrationNumber;
+            MaximCarryWeightKg = maximCarryWeight;
+            VIN = vin;
 
             return this;
         }
 
         public VehicleStatus UpdateStatus(VehicleStatus status)
         {
-            this.Status = status;
-            return this.Status;
+            Status = status;
+            return Status;
         }
 
     }

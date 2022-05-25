@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Licenta.Model
+﻿namespace Licenta.Model
 {
-    public enum OrderType { Both,PickUp,Delivery}
-    public class RouteEntry:DataEntity
+    public enum OrderType { Both, PickUp, Delivery }
+    public class RouteEntry : DataEntity
     {
         public Order Order { get; private set; }
         public OrderType OrderType { get; private set; }

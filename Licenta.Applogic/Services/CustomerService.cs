@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Licenta.DataAccess.Abstractions;
+using Licenta.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using Licenta.DataAccess.Abstractions;
-using Licenta.Model;
 
 namespace Licenta.ApplicationLogic.Services
 {
@@ -52,7 +50,7 @@ namespace Licenta.ApplicationLogic.Services
         {
             return customerRepository.GetAll();
         }
-      
+
 
         public LocationAddress GetLocationAddress(string locationId)
         {
@@ -77,7 +75,7 @@ namespace Licenta.ApplicationLogic.Services
 
         public void AddLocationToCustomer(Guid customerId, LocationAddress locationAddress)
         {
-            customerRepository.AddLocationToCustomer(customerId, locationAddress); 
+            customerRepository.AddLocationToCustomer(customerId, locationAddress);
         }
 
         public void AddLocation(LocationAddress locationAddress)
@@ -105,18 +103,18 @@ namespace Licenta.ApplicationLogic.Services
 
             var contact = customerToUpdate.UpdateContactDetails(phoneNo, email);
             customerToUpdate.UpdateCustomer(name, contact);
- 
+
             persistenceContext.SaveChanges();
 
             return customerToUpdate;
         }
 
-        public LocationAddress UpdateLocationAddress(Guid locationId, string country, string city, 
-                                                    string street, string streetNumber, string postalCode)
+        public LocationAddress UpdateLocationAddress(Guid locationId, string country, string city,
+                                                    string street, string streetNumber, string postalCode, string? tag)
         {
             var locationToUpdate = customerRepository.GetLocationAddress(locationId);
 
-            locationToUpdate.Update(country, city, street, streetNumber, postalCode);
+            locationToUpdate.Update(country, city, street, streetNumber, postalCode, tag);
             persistenceContext.SaveChanges();
 
             return locationToUpdate;

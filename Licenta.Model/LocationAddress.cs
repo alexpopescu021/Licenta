@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 
 namespace Licenta.Model
@@ -13,10 +10,11 @@ namespace Licenta.Model
         public string Street { get; protected set; }
         public string StreetNumber { get; protected set; }
         public string PostalCode { get; protected set; }
+        public string Tag { get; protected set; }
 
         protected LocationAddress() { }
 
-        public static LocationAddress Create(string country, string city, string street, string streetNumber, string postalCode)
+        public static LocationAddress Create(string country, string city, string street, string streetNumber, string postalCode, string? tag)
         {
             var createdLocation = new LocationAddress()
             {
@@ -25,7 +23,8 @@ namespace Licenta.Model
                 City = city,
                 Street = street,
                 StreetNumber = streetNumber,
-                PostalCode = postalCode
+                PostalCode = postalCode,
+                Tag = tag
             };
 
             return createdLocation;
@@ -48,14 +47,14 @@ namespace Licenta.Model
             StreetNumber = streetNumber;
 
         }
-        public LocationAddress Update(string country, string city, string street, string streetNumber, string postalCode)
+        public LocationAddress Update(string country, string city, string street, string streetNumber, string postalCode, string? tag)
         {
             Country = country;
             City = city;
             Street = street;
             StreetNumber = streetNumber;
             PostalCode = postalCode;
-
+            Tag = tag;
             return this;
 
         }

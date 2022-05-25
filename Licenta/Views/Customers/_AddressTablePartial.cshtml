@@ -23,7 +23,14 @@
                 <td>@address.Street</td>
                 <td>@address.StreetNumber</td>
                 <td>@address.PostalCode</td>
-                <td>Placeholder for tag(Home, work, etc)</td>
+                @if(@address.Tag != null)
+                {
+                    <td>@address.Tag</td>
+                }
+                else
+                {
+                    <td>No tag created</td>
+                }
 
                 <td class="d-flex justify-content-around">
 

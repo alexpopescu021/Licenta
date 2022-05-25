@@ -6,6 +6,7 @@
         <tr>
             <th>Vehicle</th>
             <th>Orders</th>
+            <th>Status</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -51,11 +52,16 @@
                         }
                     </div>
                 </td>
+                <td>
+                    <div class="d-flex justify-content-around">
+                        @route.status
+                    </div>
+                </td>
 
                 <td style="width: 35%">
                     <div class="d-flex justify-content-around">
-                        <button class="btn btn-outline-info mr-3 ml-3" title="Add Order" data-toggle="modal" id="@route.Id"
-                                onclick="LoadAddOrderView('@route.Id')" data-target="#addOrderModal">
+                        <button class="btn btn-outline-info mr-3 ml-3" title="Add Order" @*data-toggle="modal"*@ id="@route.Id"
+                                onclick="LoadAddOrderView('@route.Id', '@route.status')" data-target="#addOrderModal">
                             <i class="material-icons fa fa-plus"></i>
                         </button>
 

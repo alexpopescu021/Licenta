@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Licenta.Model
 {
-    public enum DriverStatus {Free, Driving }
-    public class Driver: Employee
+    public enum DriverStatus { Free, Driving }
+    public class Driver : Employee
     {
         public ICollection<Vehicle> VehicleHistory { get; protected set; }
-       
+
         public RoutesHistory RoutesHistoric { get; private set; }
         public Route CurrentRoute { get; private set; }
         public DriverStatus Status { get; private set; }
@@ -23,7 +22,7 @@ namespace Licenta.Model
                 //RoutesHistoric = RoutesHistory.Create()
             };
             return driver;
-        
+
         }
         public void SetCurrentRoute(Route route)
         {
@@ -43,6 +42,6 @@ namespace Licenta.Model
         {
             Status = status;
         }
-       
+
     }
 }

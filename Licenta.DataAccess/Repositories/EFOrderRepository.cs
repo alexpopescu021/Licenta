@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Licenta.DataAccess.Abstractions;
 using Licenta.Model;
-using Licenta.DataAccess.Abstractions;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using Licenta.DataAccess.Repositories;
-using Licenta.DataAccess;
 
 namespace Licenta.DataAccess.Repositories
 {
@@ -35,6 +32,20 @@ namespace Licenta.DataAccess.Repositories
         public new IEnumerable<Order> GetAll()
         {
             return dbContext.Orders
+                        .Include(o => o.PickUpAddress)
+                        .Include(o => o.DeliveryAddress)
+                        .Include(o => o.Sender)
+                        .Include(o => o.Sender.ContactDetails)
+                        .Include(o => o.Recipient)
+                        .Include(o => o.Recipient.ContactDetails)
+                        .OrderByDescending(o => o.CreationTime)
+                        .AsEnumerable();
+        }
+
+        public IEnumerable<Order> GetOrdersForCurrentCustomer(Guid senderId)
+        {
+            return dbContext.Orders
+                        .Where(s => s.Sender.Id == senderId)
                         .Include(o => o.PickUpAddress)
                         .Include(o => o.DeliveryAddress)
                         .Include(o => o.Sender)

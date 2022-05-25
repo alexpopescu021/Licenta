@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Licenta.DataAccess.Abstractions;
+﻿using Licenta.DataAccess.Abstractions;
 using Licenta.Model;
 
 namespace Licenta.ApplicationLogic.Services
@@ -31,9 +28,18 @@ namespace Licenta.ApplicationLogic.Services
         {
             driver.SetCurrentRoute(route);
             route.SetStatus(RouteStatus.Assigned);
-            this.routeRepository.Update(route);
-            this.driverRepository.Update(driver);
-            this.PersistenceContext.SaveChanges();
+            routeRepository.Update(route);
+            driverRepository.Update(driver);
+            PersistenceContext.SaveChanges();
+        }
+
+        public void DisconnectDriverToRoute(Route route, Driver driver, Dispatcher dispatcher)
+        {
+            driver.SetCurrentRouteNull();
+            route.SetStatus(RouteStatus.NotAssigned);
+            routeRepository.Update(route);
+            driverRepository.Update(driver);
+            PersistenceContext.SaveChanges();
         }
     }
 }

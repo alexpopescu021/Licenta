@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Licenta.Model;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using Licenta.Model;
 
 namespace Licenta.DataAccess.Abstractions
 {
-    public interface IOrderRepository:IBaseRepository<Order>
+    public interface IOrderRepository : IBaseRepository<Order>
     {
         //  void ChangeOrderStatus(Guid orderId,OrderStatus status);
 
@@ -14,5 +13,6 @@ namespace Licenta.DataAccess.Abstractions
         new IEnumerable<Order> GetAll();
         bool RemoveOrder(Guid orderId);
         bool RemoveOrdersFromCustomer(Guid customerId);
+        IEnumerable<Order> GetOrdersForCurrentCustomer(Guid senderId);
     }
 }

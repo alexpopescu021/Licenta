@@ -71,11 +71,10 @@
             <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
             <script type="text/javascript" src="~/lib/datatables/Responsive-2.2.3/js/dataTables.responsive.min.js"></script>
 
-
             <script type="text/javascript">
-        $(document).ready(function () {
-            loadTable();
-        });
+                $(document).ready(function () {
+                    loadTable();
+                });
 
 
         function LoadEditOrderView(Id) {
@@ -88,15 +87,14 @@
             });
         }
 
-        function LoadDropdown(customerControl, locationControl, bonusLocationControl, locationType) {
+        function LoadDropdown(customerControl, locationControl, locationType) {
 
             $('#newOrderDialog').removeClass("modal-custom-lg").addClass("modal-custom");
             var customerId = $(customerControl).val();
             var locationId = $(locationControl).val();
-            var bonusLocationId = $(bonusLocationControl).val();
 
             loadServerPartialView("#newOrderBody", '@Url.Action("NewOrder", "Orders")' + "/"
-                + customerId + ';' + locationId + ';' + bonusLocationId + ';' + locationType);
+                + customerId + ';' + locationId + ';' + locationType);
         }
 
             function LoadNewOrderView() {
@@ -117,36 +115,5 @@
              loadServerPartialView("#removeOrderBody",'@Url.Action("Remove", "Orders")' + "/" + Id);
         }
 
-        function addBonusPickupLocation() {
-
-            $('#bonusLocation').toggle();
-
-            if ($('#pickupSelector select').val() == null) {
-                $('#pickupSelector select').children()[0].selected = true;
-            } else {
-                $('#pickupSelector select').val(null);
-            }
-
-            $('#addDeliveryButton').toggleDisabled();
-            $('#newOrderDialog').toggleClass("modal-custom").toggleClass("modal-custom-lg");
-            $('#addPickupButton').toggleClass("btn btn-add-blue ml-4").toggleClass("btn btn-outline-danger ml-4");
-            $('#addPickupButton span').toggleClass("fa fa-plus").toggleClass("fa fa-minus");
-        }
-
-        function addBonusDeliveryLocation() {
-
-            $('#bonusLocation').toggle();
-
-            if ($('#deliverySelector select').val() == null) {
-                $('#deliverySelector select').children()[0].selected = true;
-            } else {
-                $('#deliverySelector select').val(null);
-            }
-
-            $('#addPickupButton').toggleDisabled();
-            $('#newOrderDialog').toggleClass("modal-custom").toggleClass("modal-custom-OrdToStringersDeliveryCityAddresslElementAtgOrdersrders");
-            $('#addDeliveryButton').toggleClass("btn btn-add-blue ml-4").toggleClass("btn btn-outline-danger ml-4");
-            $('#addDeliveryButton span').toggleClass("fa fa-plus").toggleClass("fa fa-minus");
-        }
             </script>
         }

@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Licenta.DataAccess.Abstractions;
+﻿using Licenta.DataAccess.Abstractions;
 using Licenta.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Licenta.ApplicationLogic.Services
 {
@@ -75,6 +76,10 @@ namespace Licenta.ApplicationLogic.Services
             return routeRepository.GetEntry(guid);
         }
 
+        public Order GetOrderIdFromEntry(Guid id)
+        {
+            return routeRepository.GetOrder(id);
+        }
         public bool Remove(string id)
         {
             Guid routeId = Guid.Empty;
@@ -99,7 +104,6 @@ namespace Licenta.ApplicationLogic.Services
 
             foreach (var driver in drivers)
             {
-                //driver.AddRouteToHistoric(driver.CurrentRoute);
                 driver.CurrentRoute.SetFinishTime();
                 driver.SetCurrentRouteNull();
                 driver.SetStatus(DriverStatus.Free);
@@ -115,6 +119,41 @@ namespace Licenta.ApplicationLogic.Services
             }
 
             return false;
+        }
+
+        public void DeselectRoute(string id)
+        {
+            Guid.TryParse(id, out Guid routeId);
+            var route = routeRepository.GetRouteById(routeId);
+
+            var drivers = driverRepository.GetDriversOnRoute(route.Id);
+
+            foreach (var driver in drivers)
+            {
+                driver.CurrentRoute.SetFinishTime();
+                driver.SetCurrentRouteNull();
+                driver.SetStatus(DriverStatus.Free);
+            }
+            foreach(var entry in route.RouteEntries)
+            {
+                entry.Order.SetStatus(OrderStatus.Created);
+            }
+            if(route.RouteEntries.Any(e => e.Order.Status == OrderStatus.Delivered) &&
+               !route.RouteEntries.Any(e => e.Order.Status == OrderStatus.Delivered))
+            {
+                route.SetStatus(RouteStatus.Partially_Completed);
+            }
+            else if(route.RouteEntries.Any(e => e.Order.Status == OrderStatus.Delivered))
+            {
+                route.SetStatus(RouteStatus.Completed);
+            }
+            else
+            {
+                route.SetStatus(RouteStatus.NotAssigned);
+            }
+            
+            route.Vehicle.UpdateStatus(VehicleStatus.Free);
+            persistenceContext.SaveChanges();
         }
     }
 }

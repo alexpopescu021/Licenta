@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Logging;
-using Licenta.ApplicationLogic.Services;
+﻿using Licenta.ApplicationLogic.Services;
 using Licenta.Model;
 using Licenta.ViewModels.Drivers;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Licenta.Controllers
 {
     public class DriversController : Controller
     {
-        public DriversController(UserManager<IdentityUser> userManager,DriverService driverService,OrderService orderService,
-            ILogger<DriversController> logger,VehicleService vehicleService)
+        public DriversController(UserManager<IdentityUser> userManager, DriverService driverService, OrderService orderService,
+            ILogger<DriversController> logger, VehicleService vehicleService)
         {
             UserManager = userManager;
             DriverService = driverService;
@@ -23,15 +21,15 @@ namespace Licenta.Controllers
             VehicleService = vehicleService;
             Logger = logger;
         }
-        private UserManager<IdentityUser> UserManager;
-        private VehicleService VehicleService;
-        private DriverService DriverService;
-        private OrderService OrderService;
-        private ILogger Logger;
+        private readonly UserManager<IdentityUser> UserManager;
+        private readonly VehicleService VehicleService;
+        private readonly DriverService DriverService;
+        private readonly OrderService OrderService;
+        private readonly ILogger Logger;
         public async Task<IActionResult> Index()
-        
+
         {
-           
+
             var user = await UserManager.GetUserAsync(User);
             try
             {
@@ -52,9 +50,8 @@ namespace Licenta.Controllers
                 return BadRequest();
             }
         }
-        public IActionResult SetOrderStatus(OrderStatus status , Guid orderId)
+        public IActionResult SetOrderStatus(OrderStatus status, Guid orderId)
         {
-
             try
             {
                 OrderService.ChangeOrderStatus(orderId, status);
@@ -110,8 +107,14 @@ namespace Licenta.Controllers
             var user = await UserManager.GetUserAsync(User);
             try
             {
-                var driver = DriverService.GetByUserId(user.Id);
+
+                var driver = DriverService.GetDriverWithRouteFromUserId(user.Id);
                 DriverService.SetDriverStatus(driver, DriverStatus.Driving);
+                foreach(var entry in driver.CurrentRoute.RouteEntries)
+                {
+                    OrderService.ChangeOrderStatus(entry.Order.Id, OrderStatus.Delivering);
+                }
+                // set order status to delivering
                 return RedirectToAction("GetOrdersPartial");
             }
             catch (Exception e)
@@ -132,7 +135,7 @@ namespace Licenta.Controllers
                 routesHistoricViewModel.ConfigureRoutes(routesHistoric.Routes);
                 return View(routesHistoricViewModel);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Logger.LogDebug("Failed to retrieve routes for current driver {@Exception}", e);
                 Logger.LogError("Failed to retrieve routes for current driver {Exception}", e.Message);
@@ -147,13 +150,13 @@ namespace Licenta.Controllers
 
                 return View(route);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Logger.LogDebug("Failed to retrieve route  {@Exception}", e);
                 Logger.LogError("Failed to retrieve route  {Exception}", e.Message);
                 return BadRequest();
             }
-        }  
+        }
 
         public IActionResult DriversTable()
         {
@@ -167,13 +170,13 @@ namespace Licenta.Controllers
 
                 return View(viewModel);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
         }
 
-       // public IActionResult GetDrivers()
+        // public IActionResult GetDrivers()
 
         public IActionResult DetailsDriver(string id)
         {
@@ -224,7 +227,7 @@ namespace Licenta.Controllers
                 var vehicles = VehicleService.GetAvailableVehicles();
                 return View(vehicles);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Logger.LogDebug("Failed to retrieve available vehicles {@Exception}", e);
                 Logger.LogError("Failed to retrieve available vehicles {Exception}", e.Message);
@@ -235,7 +238,7 @@ namespace Licenta.Controllers
         {
             try
             {
-                
+
                 return PartialView("DriverInfo");
             }
             catch (Exception e)
@@ -245,6 +248,6 @@ namespace Licenta.Controllers
                 return BadRequest("Failed to create a new vehicle change request");
             }
         }
-        
+
     }
 }

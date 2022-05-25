@@ -1,14 +1,11 @@
 ﻿using Licenta.ApplicationLogic.Services;
+using Licenta.Model;
 using Licenta.ViewModels.Orders;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Licenta.Model;
 using System.Security.Claims;
-using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
 
 namespace Licenta.Controllers
@@ -17,11 +14,11 @@ namespace Licenta.Controllers
     {
         private readonly OrderService orderService;
         private readonly CustomerService customerService;
-
-        public OrdersController(OrderService orderService, CustomerService customerService)
+        private readonly UserManager<IdentityUser> userManager;
+        public OrdersController(OrderService orderService, CustomerService customerService, UserManager<IdentityUser> _userManager)
         {
             this.orderService = orderService;
-            
+            userManager = _userManager;
             this.customerService = customerService;
         }
         public IActionResult Index()
@@ -30,17 +27,32 @@ namespace Licenta.Controllers
         }
         public IActionResult OrdersTable()
         {
-            var ordersView = new OrderViewModel()
+            var ordersView = new OrderViewModel();
+            if (User.IsInRole("Dispatcher"))
             {
-                Orders = orderService.GetAllOrders()
-            };
+                ordersView.Orders = orderService.GetAllOrders();
+            }
+            else if (!User.IsInRole("Admin") && !User.IsInRole("Driver") && !User.IsInRole("Dispatcher"))
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var senderId = customerService.GetCustomerById(userId).Id.ToString();
+                ordersView.Orders = orderService.GetOrdersForCurrentCustomer(senderId);
+            }
 
             return PartialView("_OrdersTablePartial", ordersView);
         }
 
         private Microsoft.AspNetCore.Mvc.Rendering.SelectListItem CreateListItem(LocationAddress location)
         {
-            string dropdownText = $"{ location.PostalCode }, { location.Street}";
+            string dropdownText;
+            if (location.Tag == null)
+            {
+                dropdownText = $"{ location.PostalCode }, { location.Street}";
+            }
+            else
+            {
+                dropdownText = $"{ location.Tag }";
+            }
             Microsoft.AspNetCore.Mvc.Rendering.SelectListItem selectLocation = new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(dropdownText, location.Id.ToString());
             return selectLocation;
         }
@@ -81,7 +93,7 @@ namespace Licenta.Controllers
             string senderId = null;
             string pickupId = null;
             string deliveryId = null;
-            
+
             try
             {
                 if (id != null)
@@ -139,7 +151,8 @@ namespace Licenta.Controllers
 
                 if (senderId == null && GetCustomerList().Count > 0)
                 {
-                    senderId = GetCustomerList().ElementAt(0).Value;
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    senderId = customerService.GetCustomerById(userId).Id.ToString();
                     pickupLocations.AddRange(GetLocationsList(senderId));
                     deliveryLocations.AddRange(GetLocationsList(senderId));
                     deliveryLocations.RemoveAt(0);
@@ -178,9 +191,7 @@ namespace Licenta.Controllers
                 {
                     var bonusLocation = LocationAddress.Create(orderData.Country,
                         orderData.City, orderData.Street,
-                        orderData.StreetNumber, orderData.PostalCode);
-
-
+                        orderData.StreetNumber, orderData.PostalCode, null);
 
                     customerService.AddLocation(bonusLocation);
 
@@ -217,7 +228,7 @@ namespace Licenta.Controllers
         [Microsoft.AspNetCore.Mvc.HttpPost]
         public Microsoft.AspNetCore.Mvc.JsonResult ActionName(string YourValue)
         {
-           
+
             return Json(new { success = true, result = YourValue }, JsonRequestBehavior.AllowGet);
         }
     }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Licenta.Model
+﻿namespace Licenta.Model
 {
     public class Employee : DataEntity
     {

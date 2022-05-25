@@ -1,15 +1,11 @@
-﻿using Licenta.ViewModels;
+﻿using Licenta.ApplicationLogic.Services;
+using Licenta.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Licenta.ApplicationLogic.Services;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Licenta.Controllers
 {
@@ -27,26 +23,26 @@ namespace Licenta.Controllers
 
         public async Task<IActionResult> Index()
         {
-            if(User?.Identity.IsAuthenticated == true)
-            { 
+            if (User?.Identity.IsAuthenticated == true)
+            {
                 if (!User.IsInRole("Admin") && !User.IsInRole("Driver") && !User.IsInRole("Dispatcher"))
                 {
                     bool ok = true;
                     var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                     var user = await userManager.FindByIdAsync(userId.ToString());
                     if (userId.Length != 0)
-                    { 
+                    {
                         var list = customerService.GetAllCustomers();
-                        foreach(var customer in list)
+                        foreach (var customer in list)
                         {
-                            if(customer.Id.ToString() == userId)
+                            if (customer.Id.ToString() == userId)
                             {
                                 ok = false;
                             }
                         }
-                        if(ok)
+                        if (ok)
                         {
-                            customerService.CreateNewCustomerFromIdentity(userId, null,null,user.Email);
+                            customerService.CreateNewCustomerFromIdentity(userId, user.UserName, user.PhoneNumber, user.Email);
                         }
                     }
 

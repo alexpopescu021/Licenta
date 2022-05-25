@@ -1,5 +1,3 @@
-using System;
-
 namespace Licenta.ViewModels
 {
     public class ErrorViewModel

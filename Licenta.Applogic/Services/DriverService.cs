@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Licenta.ApplicationLogic.Services;
-using Licenta.DataAccess.Abstractions;
+﻿using Licenta.DataAccess.Abstractions;
 using Licenta.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Licenta.ApplicationLogic.Services
 {
-   public class DriverService
+    public class DriverService
     {
         private readonly IDriverRepository DriverRepository;
         private readonly IPersistenceContext PersistenceContext;
         private readonly IRouteRepository RouteRepository;
         private readonly OrderService OrderService;
-        public DriverService(IPersistenceContext persistenceContext, OrderService orderService )
+        public DriverService(IPersistenceContext persistenceContext, OrderService orderService)
         {
             PersistenceContext = persistenceContext;
             DriverRepository = persistenceContext.DriverRepository;
@@ -26,14 +25,33 @@ namespace Licenta.ApplicationLogic.Services
         }
         public ICollection<RouteEntry> GetRouteEntries(Guid id)
         {
-          return DriverRepository.GetRouteEntries(id);
-          
+            return DriverRepository.GetRouteEntries(id);
+
         }
 
+        public Driver GetDriverWithRoute(string driverId)
+        {
+            Guid.TryParse(driverId, out Guid driverGuid);
+            return DriverRepository.GetDriverWithRoute(driverGuid);
+        }
+        public Driver GetDriverWithRouteFromUserId(string driverId)
+        {
+            Guid.TryParse(driverId, out Guid driverGuid);
+            return DriverRepository.GetDriverWithRouteFromUserId(driverGuid);
+        }
         public Driver EndCurrentRoute(Driver driver)
         {
             driver = DriverRepository.GetDriverWithRoute(driver.Id);
-            //driver.AddRouteToHistoric(driver.CurrentRoute);
+
+            if(driver.CurrentRoute.RouteEntries.Any(r => r.Order.Status == OrderStatus.Delivered) &&
+               !driver.CurrentRoute.RouteEntries.Any(r => r.Order.Status == OrderStatus.Delivered))
+                {
+                driver.CurrentRoute.SetStatus(RouteStatus.Partially_Completed);
+            }
+            else if(driver.CurrentRoute.RouteEntries.All(r => r.Order.Status == OrderStatus.Delivered))
+            {
+                driver.CurrentRoute.SetStatus(RouteStatus.Completed);
+            }
             driver.CurrentRoute.SetFinishTime();
             driver.SetCurrentRouteNull();
             SetDriverStatus(driver, DriverStatus.Free);
@@ -41,17 +59,16 @@ namespace Licenta.ApplicationLogic.Services
             return driver;
         }
 
-
-        public void SetDriverStatus(Driver driver,DriverStatus status)
+        public void SetDriverStatus(Driver driver, DriverStatus status)
         {
             driver.SetStatus(status);
             var routeEntries = GetRouteEntries(driver.Id);
             OrderService.StartRoute(routeEntries);
-            if(status == DriverStatus.Driving)
+            if (status == DriverStatus.Driving)
             {
                 driver.CurrentRoute.SetStartTime();
             }
-            
+
             DriverRepository.Update(driver);
             PersistenceContext.SaveChanges();
         }

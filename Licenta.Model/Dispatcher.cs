@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Licenta.Model
 {
-    public class Dispatcher: Employee
+    public class Dispatcher : Employee
     {
         public static Dispatcher Create(string userId, string name, string email)
         {

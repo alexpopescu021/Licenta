@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Licenta.DataAccess.Abstractions;
+﻿using Licenta.DataAccess.Abstractions;
 using Licenta.Model;
+using System;
+using System.Collections.Generic;
 
 namespace Licenta.ApplicationLogic.Services
 {
@@ -47,6 +46,12 @@ namespace Licenta.ApplicationLogic.Services
             OrderRepository.Add(order);
             PersistenceContext.SaveChanges();
             return order;
+        }
+
+        public IEnumerable<Order> GetOrdersForCurrentCustomer(string senderId)
+        {
+            Guid.TryParse(senderId, out Guid customerId);
+            return OrderRepository.GetOrdersForCurrentCustomer(customerId);
         }
 
         public Recipient CreateNewRecipient(string name, string phoneNo, string email)

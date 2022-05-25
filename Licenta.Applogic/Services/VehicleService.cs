@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Licenta.DataAccess.Abstractions;
+using Licenta.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Licenta.DataAccess.Abstractions;
-using Licenta.Model;
 
 namespace Licenta.ApplicationLogic.Services
 {
@@ -15,7 +14,7 @@ namespace Licenta.ApplicationLogic.Services
         public VehicleService(IPersistenceContext persistenceContext)
         {
             this.persistenceContext = persistenceContext;
-            this.vehicleRepository = persistenceContext.VehicleRepository;
+            vehicleRepository = persistenceContext.VehicleRepository;
         }
 
         public Vehicle GetById(string id)

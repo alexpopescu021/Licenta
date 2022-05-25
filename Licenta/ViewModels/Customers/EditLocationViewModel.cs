@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Licenta.ViewModels.Customers
 {
@@ -29,5 +25,8 @@ namespace Licenta.ViewModels.Customers
         [Required(ErrorMessage = "Postal Code required")]
         [Display(Name = "Postal Code")]
         public string PostalCode { get; set; }
+
+        [Display(Name = "Tag")]
+        public string Tag { get; set; }
     }
 }

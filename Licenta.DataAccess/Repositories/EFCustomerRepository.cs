@@ -1,12 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Licenta.DataAccess.Abstractions;
+using Licenta.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Licenta.DataAccess.Abstractions;
-using Licenta.Model;
-using Licenta.DataAccess.Repositories;
-using Licenta.DataAccess;
 
 namespace Licenta.DataAccess.Repositories
 {
@@ -42,7 +39,7 @@ namespace Licenta.DataAccess.Repositories
                             .Where(customer =>
                                     customer.ContactDetails.PhoneNo
                                     .Contains(phoneNo)).FirstOrDefault();
-           
+
             return foundCustomer;
         }
 
@@ -78,7 +75,7 @@ namespace Licenta.DataAccess.Repositories
         public bool RemoveCustomer(Guid customerId)
         {
             var entityToRemove = GetById(customerId);
-            
+
             if (entityToRemove != null)
             {
                 if (entityToRemove.LocationAddresses.Count() > 0)
@@ -92,7 +89,7 @@ namespace Licenta.DataAccess.Repositories
                 dbContext.Remove(entityToRemove.ContactDetails);
                 dbContext.Remove(entityToRemove);
                 dbContext.SaveChanges();
-                
+
                 return true;
             }
             return false;
@@ -109,8 +106,8 @@ namespace Licenta.DataAccess.Repositories
         {
             var address = dbContext.LocationAddresses.Where(a => a.Id == locationId).FirstOrDefault();
 
-                dbContext.Remove(address);
-                dbContext.SaveChanges();
+            dbContext.Remove(address);
+            dbContext.SaveChanges();
 
 
         }

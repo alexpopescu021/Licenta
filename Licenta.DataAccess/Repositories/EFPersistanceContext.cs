@@ -1,10 +1,5 @@
-﻿using Licenta.DataAccess;
-using Licenta.DataAccess.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Licenta.DataAccess.Abstractions;
 using System.Transactions;
-using Licenta.DataAccess.Repositories;
 
 namespace Licenta.DataAccess.Repositories
 {
@@ -14,7 +9,7 @@ namespace Licenta.DataAccess.Repositories
         private TransactionScope currentTransactionScope = null;
         public EFPersistanceContext(ApplicationDbContext context)
         {
-            this.dbContext = context;
+            dbContext = context;
             VehicleRepository = new EFVehicleRepository(context);
             CustomerRepository = new EFCustomerRepository(context);
             OrderRepository = new EFOrderRepository(context);

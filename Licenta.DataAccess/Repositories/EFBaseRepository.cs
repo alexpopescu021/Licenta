@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Licenta.DataAccess.Abstractions;
+using Licenta.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Licenta.Model;
-using Licenta.DataAccess.Abstractions;
 
 namespace Licenta.DataAccess.Repositories
 {
-    public class EFBaseRepository<T> : IBaseRepository<T> where T : DataEntity 
+    public class EFBaseRepository<T> : IBaseRepository<T> where T : DataEntity
     {
         protected readonly ApplicationDbContext dbContext;
 
@@ -51,7 +50,7 @@ namespace Licenta.DataAccess.Repositories
         public T Update(T itemToUpdate)
         {
             var entity = dbContext.Update<T>(itemToUpdate);
-           dbContext.SaveChanges();
+            dbContext.SaveChanges();
             return entity.Entity;
         }
     }

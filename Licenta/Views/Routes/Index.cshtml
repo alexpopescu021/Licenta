@@ -165,14 +165,26 @@
             loadTable();
         }
 
-        function LoadAddOrderView(RouteId) {
-            $('#RouteId').val(RouteId);
+        function LoadAddOrderView(RouteId, status) {
+            if(status == "Completed")
+            {
+                alert("The route is already completed, you can not add a new order");
+                $('#addOrderModal').modal({
+                   show: false
+                });
+            }
+            else
+            {
+                $('#addOrderModal').modal({
+                   show: true
+                });
+                $('#RouteId').val(RouteId);
             routeId = RouteId;
             loadServerPartialView("#addOrderBody", '@Url.Action("AddOrder", "Routes")' + "/" + RouteId).
                 done(function () {
                     LoadDropdownOrder('#OrderId');
-
                 });
+            }          
         }
 
         function LoadRemoveOrder(RouteId) {
