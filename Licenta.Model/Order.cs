@@ -15,6 +15,7 @@ namespace Licenta.Model
         public DateTime CreationTime { get; private set; }
         public DateTime PickUpTime { get; private set; }
         public DateTime DeliveryTime { get; private set; }
+        public string AWB { get; private set; }
 
         public void SetStatus(OrderStatus status)
         {
@@ -34,9 +35,24 @@ namespace Licenta.Model
                 Recipient = recipient,
                 Sender = sender,
                 Status = OrderStatus.Created,
-                CreationTime = DateTime.UtcNow
+                CreationTime = DateTime.UtcNow,
+                AWB = CreateAWB(8)
             };
             return order;
+        }
+
+        static Random rd = new Random();
+        internal static string CreateAWB(int stringLength)
+        {
+            const string allowedChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789";
+            char[] chars = new char[stringLength];
+
+            for (int i = 0; i < stringLength; i++)
+            {
+                chars[i] = allowedChars[rd.Next(0, allowedChars.Length)];
+            }
+
+            return new string(chars);
         }
 
         public Order Update(LocationAddress pickup, LocationAddress delivery, decimal price)

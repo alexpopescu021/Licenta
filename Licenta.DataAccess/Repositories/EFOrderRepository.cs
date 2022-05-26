@@ -91,5 +91,10 @@ namespace Licenta.DataAccess.Repositories
             }
             return false;
         }
+
+        public Order GetByAwb(string awb)
+        {
+            return dbContext.Orders.Where(o => o.AWB == awb).FirstOrDefault();
+        }
     }
 }

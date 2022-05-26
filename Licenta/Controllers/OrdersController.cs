@@ -226,6 +226,21 @@ namespace Licenta.Controllers
         }
 
         [Microsoft.AspNetCore.Mvc.HttpPost]
+        public string GetAWB(string awb)
+        {
+            try
+            {
+                var response = orderService.GetByAwb(awb);
+                return response.Status.ToString();
+            }
+            catch (Exception ex)
+            {
+                //Log errror
+            }
+            return "no order found with the specific AWB";
+        }
+
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public Microsoft.AspNetCore.Mvc.JsonResult ActionName(string YourValue)
         {
 

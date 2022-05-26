@@ -31,8 +31,8 @@
                             </div>
                             <div class="body">
                                 <h5 class="text-secondary">Order Tracking</h5>
-                                <p>Login to see your current and past orders and to track them via google maps</p>
-                                <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Tracking</a>
+                                <div><input id="awbInput" placeholder="AWB" /><br /> <br /></div>
+                                <a class="btn btn-primary awb">Tracking</a>
                             </div>
                         </div>
                     </div>
@@ -230,6 +230,16 @@
 
         };
 
+        $(function(){
+
+       $(".awb").click(function(e){
+         e.preventDefault();
+           var awb = document.getElementById("awbInput").value;
+         $.post("@Url.Action("GetAWB","Orders")", { awb : awb.toString()} ,function(data){
+            alert(data);
+         });
+          });
+         });
         function calculateTip() {
             var totalCost = document.getElementById("totalCost").value;
             var transport = document.getElementById("service").value;

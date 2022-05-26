@@ -139,5 +139,10 @@ namespace Licenta.ApplicationLogic.Services
             PersistenceContext.SaveChanges();
             return order;
         }
+
+        public Order GetByAwb(string awb)
+        {
+           return OrderRepository.GetByAwb(awb);
+        }
     }
 }
