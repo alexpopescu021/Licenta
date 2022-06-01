@@ -2,11 +2,13 @@
   "dependencies": {
     "mssql2": {
       "type": "mssql",
-      "connectionId": "ConnectionStrings:LicentaContextConnection"
+      "connectionId": "ConnectionStrings:LicentaContextConnection",
+      "dynamicId": null
     },
     "mssql1": {
       "type": "mssql",
-      "connectionId": "ConnectionStrings:DefaultConnection"
+      "connectionId": "ConnectionStrings:DefaultConnection",
+      "dynamicId": null
     }
   }
 }
