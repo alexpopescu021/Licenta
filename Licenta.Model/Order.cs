@@ -23,7 +23,7 @@ namespace Licenta.Model
         }
 
         public static Order Create(Recipient recipient, Customer sender, LocationAddress pickup,
-            LocationAddress delivery, decimal price)
+            LocationAddress delivery, decimal price, string awb)
 
         {
             var order = new Order()
@@ -36,23 +36,9 @@ namespace Licenta.Model
                 Sender = sender,
                 Status = OrderStatus.Created,
                 CreationTime = DateTime.UtcNow,
-                AWB = CreateAWB(8)
+                AWB = awb
             };
             return order;
-        }
-
-        static Random rd = new Random();
-        internal static string CreateAWB(int stringLength)
-        {
-            const string allowedChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789";
-            char[] chars = new char[stringLength];
-
-            for (int i = 0; i < stringLength; i++)
-            {
-                chars[i] = allowedChars[rd.Next(0, allowedChars.Length)];
-            }
-
-            return new string(chars);
         }
 
         public Order Update(LocationAddress pickup, LocationAddress delivery, decimal price)

@@ -51,5 +51,6 @@ namespace Licenta.ViewModels.Orders
         [Required]
         [Display(Name = "Price")]
         public decimal Price { get; set; }
+        public string Awb { get; set; }
     }
 }

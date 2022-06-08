@@ -40,9 +40,9 @@ namespace Licenta.ApplicationLogic.Services
         }
 
         public Order CreateOrder(Recipient recipient, Customer sender,
-            LocationAddress deliveryAddress, LocationAddress pickUpAddress, decimal price)
+            LocationAddress deliveryAddress, LocationAddress pickUpAddress, decimal price, string awb)
         {
-            var order = Order.Create(recipient, sender, pickUpAddress, deliveryAddress, price);
+            var order = Order.Create(recipient, sender, pickUpAddress, deliveryAddress, price, awb);
             OrderRepository.Add(order);
             PersistenceContext.SaveChanges();
             return order;
@@ -80,7 +80,7 @@ namespace Licenta.ApplicationLogic.Services
             }
         }
 
-        public Order CreateOrder(Recipient recipient, Customer sender, string pickupId, string deliveryId, decimal price)
+        public Order CreateOrder(Recipient recipient, Customer sender, string pickupId, string deliveryId, decimal price, string awb)
         {
             Guid.TryParse(pickupId, out Guid pickupGuid);
             var pickupLocation = customerRepository.GetLocationAddress(pickupGuid);
@@ -88,7 +88,7 @@ namespace Licenta.ApplicationLogic.Services
             Guid.TryParse(deliveryId, out Guid deliveryGuid);
             var deliveryLocation = customerRepository.GetLocationAddress(deliveryGuid);
 
-            var order = Order.Create(recipient, sender, pickupLocation, deliveryLocation, price);
+            var order = Order.Create(recipient, sender, pickupLocation, deliveryLocation, price, awb);
 
             OrderRepository.Add(order);
             PersistenceContext.SaveChanges();

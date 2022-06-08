@@ -65,7 +65,6 @@
     </div>
 </form>
 <div id="ordersTableContainer"/>
-
         @section Scripts {
 
             <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
@@ -75,7 +74,6 @@
                 $(document).ready(function () {
                     loadTable();
                 });
-
 
         function LoadEditOrderView(Id) {
             loadServerPartialView("#editOrderBody", '@Url.Action("Update", "Orders")' + "/" + Id);

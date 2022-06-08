@@ -205,17 +205,18 @@ namespace Licenta.Controllers
                         orderData.DeliveryLocationId = bonusLocation.Id.ToString();
                     }
                 }
-
+                
                 var recipient = orderService.CreateNewRecipient(orderData.RecipientName,
                             orderData.RecipientPhoneNo,
                             orderData.RecipientEmail);
-
+                var awb = CreateAWB(8);
+                orderData.Awb = awb;
                 orderService.CreateOrder(recipient,
                     sender,
                     orderData.PickupLocationId,
                     orderData.DeliveryLocationId,
-                    orderData.Price);
-
+                    orderData.Price,
+                    orderData.Awb);
                 //return RedirectToAction("Index");
                 return PartialView("_NewOrderPartial", orderData);
             }
@@ -242,6 +243,20 @@ namespace Licenta.Controllers
         {
 
             return Json(new { success = true, result = YourValue }, JsonRequestBehavior.AllowGet);
+        }
+
+        static Random rd = new Random();
+        internal static string CreateAWB(int stringLength)
+        {
+            const string allowedChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789";
+            char[] chars = new char[stringLength];
+
+            for (int i = 0; i < stringLength; i++)
+            {
+                chars[i] = allowedChars[rd.Next(0, allowedChars.Length)];
+            }
+
+            return new string(chars);
         }
     }
 }
