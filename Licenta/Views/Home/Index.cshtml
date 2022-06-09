@@ -214,11 +214,11 @@
     <!--
       Bootstrap Modal
     -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="costModal" tabindex="-1" role="dialog" aria-labelledby="costModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="costModalLabel">Modal title</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -252,22 +252,23 @@
             var totalCost = document.getElementById("totalCost").value;
             var transport = document.getElementById("service").value;
             var Km = document.getElementById("people").value;
-
+            let isnum = /^\d+$/.test(totalCost);
             //validate input
-            if (totalCost === "" || transport == 0) {
-                alert("Please enter tip total cost");
+            if ((totalCost === "" && isnum) || Km <= 0) {
+                
+                alert("Please enter valid information");
                 return;
             }
 
-            //Calculate the tip
+            //Calculate the price
             var total = (totalCost * transport) / (Km * 0.2);
             //round to two decimal places
             total = Math.round(total * 100) / 100;
             //two digits after decimal point
             total = total.toFixed(1);
-            //Display the tip
+            //Display the price
             document.getElementById("tip").innerHTML = total;
-            $('#exampleModal').modal('toggle')
+            $('#costModal').modal('toggle')
 
         }
 
