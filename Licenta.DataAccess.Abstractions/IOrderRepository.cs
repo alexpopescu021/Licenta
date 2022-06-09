@@ -15,5 +15,6 @@ namespace Licenta.DataAccess.Abstractions
         bool RemoveOrdersFromCustomer(Guid customerId);
         IEnumerable<Order> GetOrdersForCurrentCustomer(Guid senderId);
         Order GetByAwb(string awb);
+        IEnumerable<Order> GetUnfinishedOrders();
     }
 }

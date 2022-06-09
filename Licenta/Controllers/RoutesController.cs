@@ -52,7 +52,20 @@ namespace Licenta.Controllers
 
             foreach (var order in orders)
             {
-                var text = order.DeliveryAddress.PostalCode + " " + order.DeliveryAddress.City;
+                var text = order.DeliveryAddress.PostalCode + " " + order.DeliveryAddress.Street;
+                orderNames.Add(new SelectListItem(text, order.Id.ToString()));
+            }
+            return orderNames;
+        }
+
+        private List<SelectListItem> GetUnfinishedOrderList()
+        {
+            var orders = orderService.GetUnfinishedOrders();
+            List<SelectListItem> orderNames = new List<SelectListItem>();
+
+            foreach (var order in orders)
+            {
+                var text = order.DeliveryAddress.PostalCode + " " + order.DeliveryAddress.Street;
                 orderNames.Add(new SelectListItem(text, order.Id.ToString()));
             }
             return orderNames;
@@ -68,7 +81,7 @@ namespace Licenta.Controllers
 
             foreach (var order in routes)
             {
-                orderNames.Add(new SelectListItem(order.Order.DeliveryAddress.PostalCode, order.Id.ToString()));
+                orderNames.Add(new SelectListItem(order.Order.DeliveryAddress.Street, order.Id.ToString()));
             }
             return orderNames;
         }
@@ -143,7 +156,7 @@ namespace Licenta.Controllers
             AddOrderViewModel model = new AddOrderViewModel()
             {
                 OrderId = orderId,
-                OrderList = GetOrderList(),
+                OrderList = GetUnfinishedOrderList(),
                 RouteId = RouteId
 
             };

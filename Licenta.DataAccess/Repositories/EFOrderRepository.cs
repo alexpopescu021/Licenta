@@ -55,7 +55,19 @@ namespace Licenta.DataAccess.Repositories
                         .OrderByDescending(o => o.CreationTime)
                         .AsEnumerable();
         }
-
+        public IEnumerable<Order> GetUnfinishedOrders()
+        {
+            return dbContext.Orders
+                        .Where(o => o.Status != OrderStatus.Delivered)
+                        .Include(o => o.PickUpAddress)
+                        .Include(o => o.DeliveryAddress)
+                        .Include(o => o.Sender)
+                        .Include(o => o.Sender.ContactDetails)
+                        .Include(o => o.Recipient)
+                        .Include(o => o.Recipient.ContactDetails)
+                        .OrderByDescending(o => o.CreationTime)
+                        .AsEnumerable();
+        }
         public bool RemoveOrdersFromCustomer(Guid customerId)
         {
             var orders = dbContext.Orders

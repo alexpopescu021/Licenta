@@ -67,12 +67,12 @@
 
                         <a class="btn btn-outline-dark mr-3 ml-3" asp-route-id="@route.Id" asp-action="Map" asp-controller="Routes" title="Show orders on map"><i class="fas fa-map-marked-alt"></i></a>
 
-                        <button class="btn btn-outline-dark mr-3 ml-3" title="Edit" data-toggle="modal"
-                                onclick="LoadVehicleEdit('@route.Id');" data-target="#changeVehicleModal">
+                        <button class="btn btn-outline-dark mr-3 ml-3" title="Edit" @*data-toggle="modal"*@
+                                onclick="LoadVehicleEdit('@route.Id', '@route.status')" data-target="#changeVehicleModal">
                             <i class="material-icons fa fa-edit"></i>
                         </button>
-                        <button class="btn btn-outline-danger remove-route-button" title="Remove Order" data-toggle="modal"
-                                onclick="LoadRemoveOrder('@route.Id');" data-target="#removeOrderModal">
+                        <button class="btn btn-outline-danger remove-route-button" title="Remove Order"@* data-toggle="modal"*@
+                                onclick="LoadRemoveOrder('@route.Id', '@route.status')" data-target="#removeOrderModal">
                             <div class="col d-flex justify-content-around">
                                 <i class="material-icons fa fa-trash"></i>
                                 <i class="material-icons fa fa-box"></i>

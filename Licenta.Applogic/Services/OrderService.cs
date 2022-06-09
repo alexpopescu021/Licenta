@@ -54,6 +54,11 @@ namespace Licenta.ApplicationLogic.Services
             return OrderRepository.GetOrdersForCurrentCustomer(customerId);
         }
 
+        public IEnumerable<Order> GetUnfinishedOrders()
+        {
+            return OrderRepository.GetUnfinishedOrders();
+        }
+
         public Recipient CreateNewRecipient(string name, string phoneNo, string email)
         {
             var recipient = Recipient.Create(name, phoneNo, email);

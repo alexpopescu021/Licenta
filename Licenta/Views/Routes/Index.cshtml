@@ -187,22 +187,48 @@
             }          
         }
 
-        function LoadRemoveOrder(RouteId) {
-            $('#RouteId').val(RouteId);
+        function LoadRemoveOrder(RouteId, status) {
+            if(status == "Completed")
+            {
+                alert("The route is already completed, you can not remove an order");
+                $('#removeOrderModal').modal({
+                   show: false
+                });
+            }
+            else
+            {
+                $('#removeOrderModal').modal({
+                   show: true
+                });
+                $('#RouteId').val(RouteId);
             routeId = RouteId;
             loadServerPartialView("#removeOrderBody", '@Url.Action("RemoveOrder", "Routes")' + "/" + RouteId).
                 done(function () {
                     LoadDropdownOrderRemove('#OrderId',routeId);
                 });
+            }
         }
 
-        function LoadVehicleEdit(RouteId) {
+        function LoadVehicleEdit(RouteId, status) {
+            if(status == "Completed")
+            {
+                alert("The route is already completed, you can not change the car");
+                $('#changeVehicleModal').modal({
+                   show: false
+                });
+            }
+            else
+            {
+                $('#changeVehicleModal').modal({
+                   show: true
+                });
             $('#RouteId').val(RouteId);
             routeId = RouteId;
             loadServerPartialView("#changeVehicleBody", '@Url.Action("ChangeVehicle", "Routes")' + "/" + RouteId).
                 done(function () {
                     LoadDropdownVehicleEdit('#VehicleId',routeId);
                 });
+            }
         }
 
         function LoadDropdownVehicle(vehicleControl) {
