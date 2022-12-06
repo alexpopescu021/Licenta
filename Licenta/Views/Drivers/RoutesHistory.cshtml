@@ -89,7 +89,7 @@
 
             <td style="text-align:center">@route.StartTime.ToShortDateString() @route.StartTime.ToString("HH:mm")</td>
             <td style="text-align:center">@route.FinishTime.ToShortDateString() @route.FinishTime.ToString("HH:mm")</td>
-            <td style="text-align:center"><a title="see orders on this route" asp-action="Route" asp-controller="Drivers" asp-route-id="@route.Id">View Orders <i class="fas fa-info-circle"></i> </a></td>
+            <td style="text-align:center"><a title="see orders on this route" asp-action="Route" asp-controller="Drivers" asp-route-id="@route.Id">View Orders <em class="fas fa-info-circle"></em> </a></td>
         </tr>
         }
     </tbody>

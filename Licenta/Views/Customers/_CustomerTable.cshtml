@@ -31,7 +31,7 @@
                         {
                         <button class="dropdown-item btn-blue edit-dropdown-item" data-toggle="modal"
                                 onclick="LoadEditLocationView('@location.Id')" data-target="#editLocationModal">
-                            <i class="fa fa-edit mr-2"></i>
+                            <em class="fa fa-edit mr-2"></em>
                             @location.Country,
                             @location.City,
                             @location.Street,
@@ -48,17 +48,17 @@
 
                         <button class="btn btn-add-blue mr-1 ml-1" title="Add Location" data-toggle="modal"
                                 onclick="LoadAddLocationView('@customer.Id')" data-target="#locationModal">
-                            <i class="material-icons fa fa-plus"></i>
+                            <em class="material-icons fa fa-plus"></em>
                         </button>
 
                         <button class="btn btn-outline-dark mr-1 ml-1" title="Edit" data-toggle="modal"
                                 onclick="LoadUpdateCustomerView('@customer.Id');" data-target="#updateCustomerModal">
-                            <i class="material-icons fa fa-edit"></i>
+                            <em class="material-icons fa fa-edit"></em>
                         </button>
                         @if (User.IsInRole("Admin")) { 
                             <button class="btn btn-outline-danger mr-1 ml-1" title="Delete" data-toggle="modal"
                                     onclick="LoadRemoveCustomerView('@customer.Id');" data-target="#removeModal">
-                                <i class="material-icons fa fa-trash"></i>
+                                <em class="material-icons fa fa-trash"></em>
                             </button>
                         }
                         </div>
