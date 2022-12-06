@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @model IEnumerable<IdentityUser>
-@inject UserManager<IdentityUser> userManager;
+@inject UserManager<IdentityUser> UserManager;
 @{
     ViewData["Title"] = "_TablePartial";
 }
@@ -27,10 +27,10 @@
             <td>@user.UserName </td>
             <td>
                 @{
-                    if (userManager.GetRolesAsync(user).GetAwaiter().GetResult().Any())
+                    if (UserManager.GetRolesAsync(user).GetAwaiter().GetResult().Any())
                     {
 
-                        var roles = userManager.GetRolesAsync(user).GetAwaiter().GetResult();
+                        var roles = UserManager.GetRolesAsync(user).GetAwaiter().GetResult();
                         <p>@roles[0]</p>
                     }
                     else

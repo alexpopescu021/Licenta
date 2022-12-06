@@ -4,16 +4,16 @@ using System.Linq;
 
 namespace Licenta.DataAccess.Repositories
 {
-    public class EFDispatcherRepository : EFBaseRepository<Dispatcher>, IDispatcherRepository
+    public class EfDispatcherRepository : EfBaseRepository<Dispatcher>, IDispatcherRepository
     {
-        public EFDispatcherRepository(ApplicationDbContext context) : base(context)
+        public EfDispatcherRepository(ApplicationDbContext context) : base(context)
         {
 
         }
 
         public Dispatcher GetByUserId(string userId)
         {
-            return dbContext.Dispatchers.FirstOrDefault(o => o.UserId == userId);
+            return DbContext.Dispatchers.FirstOrDefault(o => o.UserId == userId);
         }
     }
 }

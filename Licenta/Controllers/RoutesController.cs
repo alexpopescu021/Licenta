@@ -1,5 +1,4 @@
-﻿using Licenta.ApplicationLogic.Services;
-using Licenta.Model;
+﻿using Licenta.Model;
 using Licenta.ViewModels.Routes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Licenta.AppLogic.Services;
 
 
 namespace Licenta.Controllers
@@ -82,14 +82,14 @@ namespace Licenta.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddOrder(string RouteId)
+        public IActionResult AddOrder(string routeId)
         {
             try
             {
                 var newOrderViewModel = new AddOrderViewModel()
                 {
                     OrderList = GetOrderList(),
-                    RouteId = RouteId,
+                    RouteId = routeId,
                     OrderType = GetOrderType()
                 };
                 return PartialView("_AddOrderPartial", newOrderViewModel);
@@ -127,7 +127,7 @@ namespace Licenta.Controllers
                     entry.SetOrder(order);
                     order.SetStatus(OrderStatus.Assigned);
                     entry.SetOrder(order);
-                    entry.SetType(orderData.type);
+                    entry.SetType(orderData.Type);
                     routeService.AddEntry(route.Id.ToString(), entry);
                 }
                 return PartialView("_AddOrderPartial", orderData);
@@ -145,13 +145,13 @@ namespace Licenta.Controllers
         {
             var splitId = id.Split(';');
             var orderId = splitId[0];
-            var RouteId = splitId[1];
+            var routeId = splitId[1];
 
             var model = new AddOrderViewModel()
             {
                 OrderId = orderId,
                 OrderList = GetUnfinishedOrderList(),
-                RouteId = RouteId
+                RouteId = routeId
 
             };
             return PartialView("_AddOrderPartial", model);
@@ -224,12 +224,12 @@ namespace Licenta.Controllers
 
 
         [HttpGet]
-        public IActionResult Remove([FromRoute] string Id)
+        public IActionResult Remove([FromRoute] string id)
         {
 
             var removeViewModel = new RemoveRouteViewModel()
             {
-                Id = Id
+                Id = id
             };
 
             return PartialView("_RemoveRoutePartial", removeViewModel);
@@ -248,12 +248,12 @@ namespace Licenta.Controllers
         public IActionResult RemoveOrderList([FromRoute] string id)
         {
             var splitId = id.Split(';');
-            var RouteId = splitId[1];
+            var routeId = splitId[1];
 
             var model = new DeleteOrderViewModel()
             {
-                OrderList = GetOrderListFromRoute(RouteId),
-                routeId = RouteId
+                OrderList = GetOrderListFromRoute(routeId),
+                RouteId = routeId
 
             };
             return PartialView("_RemoveOrderPartial", model);
@@ -262,20 +262,20 @@ namespace Licenta.Controllers
         [HttpPost]
         public IActionResult RemoveOrderList([FromForm] DeleteOrderViewModel data)
         {
-            return RemoveOrder(data.routeId);
+            return RemoveOrder(data.RouteId);
 
 
         }
 
         [HttpGet]
-        public IActionResult RemoveOrder(string RouteId)
+        public IActionResult RemoveOrder(string routeId)
         {
             try
             {
                 var newOrderViewModel = new DeleteOrderViewModel()
                 {
                     OrderList = GetOrderList(),
-                    routeId = RouteId
+                    RouteId = routeId
                 };
                 return PartialView("_RemoveOrderPartial", newOrderViewModel);
             }
@@ -294,8 +294,8 @@ namespace Licenta.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    var routeEntry = routeService.GetEntryById(orderData.orderId);
-                    var route = routeService.GetById(orderData.routeId);
+                    var routeEntry = routeService.GetEntryById(orderData.OrderId);
+                    var route = routeService.GetById(orderData.RouteId);
                     var order = routeService.GetOrderIdFromEntry(routeEntry.Id);
                     order.SetStatus(OrderStatus.Created);
                     routeService.RemoveEntry(route.Id.ToString(), routeEntry);
@@ -315,12 +315,12 @@ namespace Licenta.Controllers
         [HttpGet]
         public IActionResult ChangeVehicle([FromRoute] string id)
         {
-            var RouteId = id ?? throw new ArgumentNullException(nameof(id));
+            var routeId = id ?? throw new ArgumentNullException(nameof(id));
             try
             {
                 var newRouteViewModel = new ChangeVehicleViewModel()
                 {
-                    RouteId = RouteId,
+                    RouteId = routeId,
                     VehicleList = GetVehicleList()
                 };
 

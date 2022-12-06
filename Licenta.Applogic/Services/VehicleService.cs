@@ -1,10 +1,10 @@
-﻿using Licenta.DataAccess.Abstractions;
-using Licenta.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Licenta.DataAccess.Abstractions;
+using Licenta.Model;
 
-namespace Licenta.ApplicationLogic.Services
+namespace Licenta.AppLogic.Services
 {
     public class VehicleService
     {
@@ -19,8 +19,7 @@ namespace Licenta.ApplicationLogic.Services
 
         public Vehicle GetById(string id)
         {
-            var vehicleId = Guid.Empty;
-            Guid.TryParse(id, out vehicleId);
+            Guid.TryParse(id, out var vehicleId);
 
             return vehicleRepository?.GetById(vehicleId);
         }
@@ -45,8 +44,7 @@ namespace Licenta.ApplicationLogic.Services
 
         public bool Remove(string id)
         {
-            var vehicleId = Guid.Empty;
-            Guid.TryParse(id, out vehicleId);
+            Guid.TryParse(id, out var vehicleId);
 
             var result = vehicleRepository?.Remove(vehicleId);
             if (result == true)

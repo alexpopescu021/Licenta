@@ -1,7 +1,7 @@
 ﻿using Licenta.DataAccess.Abstractions;
 using Licenta.Model;
 
-namespace Licenta.ApplicationLogic.Services
+namespace Licenta.AppLogic.Services
 {
     public class EmployeeServices
     {
@@ -38,11 +38,11 @@ namespace Licenta.ApplicationLogic.Services
             return employee;
         }
 
-        public void UpdateEmployee(string name, string email, string Role, string UserId)
+        public void UpdateEmployee(string name, string email, string role, string userId)
         {
-            var employee = GetEmployee(UserId);
+            var employee = GetEmployee(userId);
 
-            switch (Role)
+            switch (role)
             {
                 case "Driver":
                 {

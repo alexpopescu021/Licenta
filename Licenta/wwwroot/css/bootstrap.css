@@ -585,6 +585,7 @@ progress {
     background-color: #d9e3f1;
     border: 0 solid #dee2e6;
     border-radius: .25rem;
+    box-shadow: 0 .125rem .25rem #375e94;
     box-shadow: 0 .125rem .25rem rgba(55,94,148,.2);
     max-width: 100%;
     height: auto

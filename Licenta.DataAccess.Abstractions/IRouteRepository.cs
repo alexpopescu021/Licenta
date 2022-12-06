@@ -8,12 +8,12 @@ namespace Licenta.DataAccess.Abstractions
     {
         Route GetRouteById(Guid routeId);
         new IEnumerable<Route> GetAll();
-        RouteEntry Add(RouteEntry entry, Guid RouteId);
+        RouteEntry Add(RouteEntry entry, Guid routeId);
         //Route Create();
         IEnumerable<RouteEntry> GetAllRouteEntries();
 
         RouteEntry GetEntry(Guid id);
-        void Remove(RouteEntry entry, Guid RouteId);
+        void Remove(RouteEntry entry, Guid routeId);
         Order GetOrder(Guid guid);
     }
 }

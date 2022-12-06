@@ -15,7 +15,7 @@ namespace Licenta.Model
         public DateTime CreationTime { get; private set; }
         public DateTime PickUpTime { get; private set; }
         public DateTime DeliveryTime { get; private set; }
-        public string AWB { get; private set; }
+        public string Awb { get; private set; }
 
         public void SetStatus(OrderStatus status)
         {
@@ -36,7 +36,7 @@ namespace Licenta.Model
                 Sender = sender,
                 Status = OrderStatus.Created,
                 CreationTime = DateTime.UtcNow,
-                AWB = awb
+                Awb = awb
             };
             return order;
         }

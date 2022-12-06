@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Licenta.Data
+namespace Licenta.Areas.Identity.Data
 {
     public class LicentaContext : IdentityDbContext<IdentityUser>
     {

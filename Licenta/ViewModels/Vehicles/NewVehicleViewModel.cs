@@ -20,6 +20,6 @@ namespace Licenta.ViewModels.Vehicles
 
         [Required]
         [Display(Name = "VIN(Vehicle Identification Number)")]
-        public string VIN { get; set; }
+        public string Vin { get; set; }
     }
 }

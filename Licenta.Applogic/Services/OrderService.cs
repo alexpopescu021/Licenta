@@ -1,9 +1,9 @@
-﻿using Licenta.DataAccess.Abstractions;
-using Licenta.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Licenta.DataAccess.Abstractions;
+using Licenta.Model;
 
-namespace Licenta.ApplicationLogic.Services
+namespace Licenta.AppLogic.Services
 {
     public class OrderService
     {
@@ -25,17 +25,17 @@ namespace Licenta.ApplicationLogic.Services
         public void ChangeOrderStatus(Guid orderId, OrderStatus status)
         {
 
-            var Order = OrderRepository.GetById(orderId);
-            Order.SetStatus(status);
+            var order = OrderRepository.GetById(orderId);
+            order.SetStatus(status);
             if (status == OrderStatus.PickedUp)
             {
-                Order.SetPickUpTime();
+                order.SetPickUpTime();
             }
             if (status == OrderStatus.Delivered)
             {
-                Order.SetDeliveryTime();
+                order.SetDeliveryTime();
             }
-            OrderRepository.Update(Order);
+            OrderRepository.Update(order);
             PersistenceContext.SaveChanges();
         }
 
@@ -100,9 +100,9 @@ namespace Licenta.ApplicationLogic.Services
             return order;
         }
 
-        public Order GetById(string Id)
+        public Order GetById(string id)
         {
-            Guid.TryParse(Id, out var guid);
+            Guid.TryParse(id, out var guid);
             return OrderRepository.GetById(guid);
         }
 

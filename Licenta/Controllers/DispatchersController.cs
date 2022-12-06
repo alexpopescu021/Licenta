@@ -1,5 +1,4 @@
-﻿using Licenta.ApplicationLogic.Services;
-using Licenta.ViewModels.Dispatchers;
+﻿using Licenta.ViewModels.Dispatchers;
 using Licenta.ViewModels.Routes;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using Licenta.AppLogic.Services;
 
 namespace Licenta.Controllers
 {
@@ -58,10 +58,10 @@ namespace Licenta.Controllers
         [HttpGet]
         public IActionResult AssignRoute([FromRoute] string id)
         {
-            var DriverId = id;
+            var driverId = id;
             var assignRouteViewModel = new AssignRouteViewModel
             {
-                DriverId = DriverId,
+                DriverId = driverId,
                 RouteList = GetRouteList()
             };
             return PartialView("_AssignRoutePartial", assignRouteViewModel);
@@ -82,19 +82,19 @@ namespace Licenta.Controllers
                 {
                     entry.Order.SetStatus(Model.OrderStatus.Assigned);
                 }
-                dispatcherService.ConnectDriverToRoute(route, driver, dispatcherDb);
+                dispatcherService.ConnectDriverToRoute(route, driver);
             }
             return PartialView("_AssignRoutePartial", data);
 
         }
 
         [HttpGet]
-        public IActionResult RemoveRouteFromDriver([FromRoute] string Id)
+        public IActionResult RemoveRouteFromDriver([FromRoute] string id)
         {
 
             var removeViewModel = new RemoveRouteViewModel()
             {
-                Id = Id
+                Id = id
             };
 
             return PartialView("_RemoveRoutePartial", removeViewModel);

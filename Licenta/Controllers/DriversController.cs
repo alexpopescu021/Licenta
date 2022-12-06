@@ -1,12 +1,11 @@
-﻿using Licenta.ApplicationLogic.Services;
-using Licenta.Model;
+﻿using Licenta.Model;
 using Licenta.ViewModels.Drivers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
+using Licenta.AppLogic.Services;
 
 namespace Licenta.Controllers
 {
@@ -184,7 +183,7 @@ namespace Licenta.Controllers
             {
                 var driverId = Guid.Parse(id);
 
-                var viewModel = new RoutesHistoryViewModel { };
+                var viewModel = new RoutesHistoryViewModel();
                 viewModel.ConfigureRoutes(DriverService.GetRoutesHistory(driverId).Routes);
 
                 return View("RoutesHistory", viewModel);

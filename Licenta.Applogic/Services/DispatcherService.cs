@@ -1,14 +1,13 @@
 ﻿using Licenta.DataAccess.Abstractions;
 using Licenta.Model;
 
-namespace Licenta.ApplicationLogic.Services
+namespace Licenta.AppLogic.Services
 {
     public class DispatcherService
     {
         private readonly IDispatcherRepository DispatcherRepository;
         private readonly IPersistenceContext PersistenceContext;
         private readonly IDriverRepository driverRepository;
-        private readonly IVehicleRepository vehicleRepository;
         private readonly IRouteRepository routeRepository;
 
         public DispatcherService(IPersistenceContext persistenceContext)
@@ -16,7 +15,6 @@ namespace Licenta.ApplicationLogic.Services
             PersistenceContext = persistenceContext;
             DispatcherRepository = persistenceContext.DispatcherRepository;
             driverRepository = persistenceContext.DriverRepository;
-            vehicleRepository = persistenceContext.VehicleRepository;
             routeRepository = persistenceContext.RouteRepository;
         }
         public Dispatcher GetByUserId(string userId)
@@ -24,7 +22,7 @@ namespace Licenta.ApplicationLogic.Services
             return DispatcherRepository.GetByUserId(userId);
         }
 
-        public void ConnectDriverToRoute(Route route, Driver driver, Dispatcher dispatcher)
+        public void ConnectDriverToRoute(Route route, Driver driver)
         {
             driver.SetCurrentRoute(route);
             route.SetStatus(RouteStatus.Assigned);
@@ -33,7 +31,8 @@ namespace Licenta.ApplicationLogic.Services
             PersistenceContext.SaveChanges();
         }
 
-        public void DisconnectDriverToRoute(Route route, Driver driver, Dispatcher dispatcher)
+/*
+        public void DisconnectDriverToRoute(Route route, Driver driver)
         {
             driver.SetCurrentRouteNull();
             route.SetStatus(RouteStatus.NotAssigned);
@@ -41,5 +40,6 @@ namespace Licenta.ApplicationLogic.Services
             driverRepository.Update(driver);
             PersistenceContext.SaveChanges();
         }
+*/
     }
 }

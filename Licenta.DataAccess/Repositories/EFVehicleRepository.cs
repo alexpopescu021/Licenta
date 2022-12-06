@@ -7,21 +7,21 @@ using System.Linq;
 
 namespace Licenta.DataAccess.Repositories
 {
-    public class EFVehicleRepository : EFBaseRepository<Vehicle>, IVehicleRepository
+    public class EfVehicleRepository : EfBaseRepository<Vehicle>, IVehicleRepository
     {
-        public EFVehicleRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public EfVehicleRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
 
         public override IEnumerable<Vehicle> GetAll()
         {
-            return dbContext.Vehicles;
+            return DbContext.Vehicles;
         }
 
 
         public Vehicle GetByRegistrationNumber(string registrationNumber)
         {
-            return dbContext.Vehicles.FirstOrDefault(o => o.RegistrationNumber == registrationNumber);
+            return DbContext.Vehicles.FirstOrDefault(o => o.RegistrationNumber == registrationNumber);
         }
 
 
@@ -46,7 +46,7 @@ namespace Licenta.DataAccess.Repositories
 
         public IEnumerable<VehicleDriver> GetHistory(Guid id)
         {
-            var vdList = dbContext.VehicleDrivers
+            var vdList = DbContext.VehicleDrivers
                             .Where(vehicleDriver => vehicleDriver.Vehicle.Id == id)
                             .Include(vehicleDriver => vehicleDriver.Driver)
                             .ThenInclude(vehicleDriver => vehicleDriver.RoutesHistoric)
@@ -57,13 +57,13 @@ namespace Licenta.DataAccess.Repositories
             {
                 foreach (var route in vehicleDriver.Driver.RoutesHistoric.Routes)
                 {
-                    var routeDb = dbContext.Routes.Where(r => r.Id == route.Id)
+                    var routeDb = DbContext.Routes.Where(r => r.Id == route.Id)
                                                   .Include(r => r.RouteEntries)
                                                   .SingleOrDefault();
 
                     foreach (var routeEntry in routeDb.RouteEntries)
                     {
-                        dbContext.RouteEntries.Where(re => re.Id == routeEntry.Id)
+                        DbContext.RouteEntries.Where(re => re.Id == routeEntry.Id)
                             .Include(re => re.Order)
                             .ThenInclude(re => re.DeliveryAddress)
                             .Include(re => re.Order)
@@ -79,7 +79,7 @@ namespace Licenta.DataAccess.Repositories
         }
         public IEnumerable<Vehicle> GetAvailableVehicles()
         {
-            return dbContext.Vehicles.Where(o => o.Status == VehicleStatus.Free).AsEnumerable();
+            return DbContext.Vehicles.Where(o => o.Status == VehicleStatus.Free).AsEnumerable();
         }
     }
 }

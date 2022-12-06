@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace Licenta.Model
 {
-    public enum RouteStatus { NotAssigned, Assigned, Partially_Completed, Completed }
+    public enum RouteStatus { NotAssigned, Assigned, PartiallyCompleted, Completed }
     public class Route : DataEntity
     {
         public ICollection<RouteEntry> RouteEntries { get; set; }
         public Vehicle Vehicle { get; private set; }
         public DateTime StartTime { get; private set; }
         public DateTime FinishTime { get; private set; }
-        public RouteStatus status { get; private set; }
+        public RouteStatus Status { get; private set; }
         public static Route Create()
         {
             var route = new Route()
@@ -26,7 +26,7 @@ namespace Licenta.Model
             {
                 Id = Guid.NewGuid(),
                 Vehicle = vehicle,
-                status = RouteStatus.NotAssigned
+                Status = RouteStatus.NotAssigned
 
             };
             return route;
@@ -34,7 +34,7 @@ namespace Licenta.Model
 
         public void SetStatus(RouteStatus status)
         {
-            this.status = status;
+            this.Status = status;
         }
         public void SetRouteEntries(ICollection<RouteEntry> routeEntries)
         {

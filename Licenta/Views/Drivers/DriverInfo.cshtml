@@ -1,10 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject UserManager<IdentityUser> userManager
+@inject UserManager<IdentityUser> UserManager
 @model Licenta.ViewModels.Drivers.EditInfoViewModel
 
 
 @{
-    var user = userManager.GetUserAsync(User).GetAwaiter().GetResult();
+    var user = UserManager.GetUserAsync(User).GetAwaiter().GetResult();
 
 }
 <form asp-controller="Drivers" asp-action="CreateEditInfoRequest" data-ajax="true">

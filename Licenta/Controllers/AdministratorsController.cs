@@ -1,12 +1,12 @@
-﻿using Licenta.ApplicationLogic.Services;
-using Licenta.ViewModels;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Licenta.AppLogic.Services;
+using Licenta.ViewModels.Administrator;
 
 namespace Licenta.Controllers
 {
@@ -79,13 +79,13 @@ namespace Licenta.Controllers
         [HttpGet]
         public async Task<IActionResult> EditUserAccount(string userId)
         {
-            var user = await UserManager.FindByIdAsync(userId.ToString());
+            var user = await UserManager.FindByIdAsync(userId);
             var model = new UserAccontEditViewModel()
             {
                 Name = user.UserName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                UserId = userId.ToString(),
+                UserId = userId,
                 Role = (await UserManager.GetRolesAsync(user)).FirstOrDefault()
             };
             return PartialView("_EditUserAccount", model);
@@ -124,13 +124,13 @@ namespace Licenta.Controllers
             var users = UserManager.Users.ToList();
             return PartialView("_TablePartial", users);
         }
-        public async Task<IActionResult> DeleteUserAccount([FromRoute] string UserId)
+        public async Task<IActionResult> DeleteUserAccount([FromRoute] string userId)
         {
             try
             {
-                var user = await UserManager.FindByIdAsync(UserId);
+                var user = await UserManager.FindByIdAsync(userId);
                 await UserManager.DeleteAsync(user);
-                EmployeeServices.DeleteEmployee(UserId);
+                EmployeeServices.DeleteEmployee(userId);
             }
             catch (Exception e)
             {

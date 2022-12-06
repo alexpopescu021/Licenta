@@ -3,9 +3,9 @@ using Licenta.Model;
 
 namespace Licenta.DataAccess.Repositories
 {
-    public class EFEmployeeRepository : IEmployeeRepository
+    public class EfEmployeeRepository : IEmployeeRepository
     {
-        public EFEmployeeRepository(ApplicationDbContext dbContext)
+        public EfEmployeeRepository(ApplicationDbContext dbContext)
         {
             DbContext = dbContext;
 

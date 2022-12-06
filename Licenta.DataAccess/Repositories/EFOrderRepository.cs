@@ -7,9 +7,9 @@ using System.Linq;
 
 namespace Licenta.DataAccess.Repositories
 {
-    public class EFOrderRepository : EFBaseRepository<Order>, IOrderRepository
+    public class EfOrderRepository : EfBaseRepository<Order>, IOrderRepository
     {
-        public EFOrderRepository(ApplicationDbContext context) : base(context)
+        public EfOrderRepository(ApplicationDbContext context) : base(context)
         {
 
         }
@@ -17,7 +17,7 @@ namespace Licenta.DataAccess.Repositories
 
         public new Order GetById(Guid orderId)
         {
-            return dbContext.Orders
+            return DbContext.Orders
                 .Include(o => o.PickUpAddress)
                 .Include(o => o.DeliveryAddress)
                 .Include(o => o.Recipient)
@@ -30,7 +30,7 @@ namespace Licenta.DataAccess.Repositories
 
         public new IEnumerable<Order> GetAll()
         {
-            return dbContext.Orders
+            return DbContext.Orders
                         .Include(o => o.PickUpAddress)
                         .Include(o => o.DeliveryAddress)
                         .Include(o => o.Sender)
@@ -43,7 +43,7 @@ namespace Licenta.DataAccess.Repositories
 
         public IEnumerable<Order> GetOrdersForCurrentCustomer(Guid senderId)
         {
-            return dbContext.Orders
+            return DbContext.Orders
                         .Where(s => s.Sender.Id == senderId)
                         .Include(o => o.PickUpAddress)
                         .Include(o => o.DeliveryAddress)
@@ -56,7 +56,7 @@ namespace Licenta.DataAccess.Repositories
         }
         public IEnumerable<Order> GetUnfinishedOrders()
         {
-            return dbContext.Orders
+            return DbContext.Orders
                         .Where(o => o.Status != OrderStatus.Delivered)
                         .Include(o => o.PickUpAddress)
                         .Include(o => o.DeliveryAddress)
@@ -69,11 +69,11 @@ namespace Licenta.DataAccess.Repositories
         }
         public bool RemoveOrdersFromCustomer(Guid customerId)
         {
-            var orders = dbContext.Orders
+            var orders = DbContext.Orders
                 .Where(o => o.Sender.Id == customerId)
                 .AsEnumerable();
 
-            if (orders.Count() == 0)
+            if (!orders.Any())
             {
                 return false;
             }
@@ -83,7 +83,7 @@ namespace Licenta.DataAccess.Repositories
                 RemoveOrder(order.Id);
             }
 
-            dbContext.SaveChanges();
+            DbContext.SaveChanges();
             return true;
         }
 
@@ -93,10 +93,10 @@ namespace Licenta.DataAccess.Repositories
 
             if (orderToRemove != null)
             {
-                dbContext.Remove(orderToRemove.Recipient.ContactDetails);
-                dbContext.Remove(orderToRemove.Recipient);
-                dbContext.Remove(orderToRemove);
-                dbContext.SaveChanges();
+                DbContext.Remove(orderToRemove.Recipient.ContactDetails);
+                DbContext.Remove(orderToRemove.Recipient);
+                DbContext.Remove(orderToRemove);
+                DbContext.SaveChanges();
 
                 return true;
             }
@@ -105,7 +105,7 @@ namespace Licenta.DataAccess.Repositories
 
         public Order GetByAwb(string awb)
         {
-            return dbContext.Orders.FirstOrDefault(o => o.AWB == awb);
+            return DbContext.Orders.FirstOrDefault(o => o.Awb == awb);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Licenta.ApplicationLogic.Services;
-using Licenta.Model;
+﻿using Licenta.Model;
 using Licenta.ViewModels.Orders;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -7,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Web.Mvc;
+using Licenta.AppLogic.Services;
+using Licenta.ViewModels.Customers;
 
 namespace Licenta.Controllers
 {
@@ -213,7 +214,7 @@ namespace Licenta.Controllers
             return Json(new { success = true, result = yourValue }, JsonRequestBehavior.AllowGet);
         }
 
-        private static readonly Random _rd = new Random();
+        private static readonly Random Rd = new Random();
         internal static string CreateAwb(int stringLength)
         {
             const string allowedChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789";
@@ -221,7 +222,7 @@ namespace Licenta.Controllers
 
             for (var i = 0; i < stringLength; i++)
             {
-                chars[i] = allowedChars[_rd.Next(0, allowedChars.Length)];
+                chars[i] = allowedChars[Rd.Next(0, allowedChars.Length)];
             }
 
             return new string(chars);

@@ -1,10 +1,10 @@
-﻿using Licenta.DataAccess.Abstractions;
-using Licenta.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Licenta.DataAccess.Abstractions;
+using Licenta.Model;
 
-namespace Licenta.ApplicationLogic.Services
+namespace Licenta.AppLogic.Services
 {
     public class DriverService
     {
@@ -43,10 +43,9 @@ namespace Licenta.ApplicationLogic.Services
         {
             driver = DriverRepository.GetDriverWithRoute(driver.Id);
 
-            if(driver.CurrentRoute.RouteEntries.Any(r => r.Order.Status == OrderStatus.Delivered) &&
-               !driver.CurrentRoute.RouteEntries.Any(r => r.Order.Status == OrderStatus.Delivered))
-                {
-                driver.CurrentRoute.SetStatus(RouteStatus.Partially_Completed);
+            if(driver.CurrentRoute.RouteEntries.Any(r => r.Order.Status == OrderStatus.Delivered) && driver.CurrentRoute.RouteEntries.All(r => r.Order.Status != OrderStatus.Delivered))
+            {
+                driver.CurrentRoute.SetStatus(RouteStatus.PartiallyCompleted);
             }
             else if(driver.CurrentRoute.RouteEntries.All(r => r.Order.Status == OrderStatus.Delivered))
             {

@@ -1,4 +1,4 @@
-using Licenta.ApplicationLogic.Services;
+using Licenta.AppLogic.Services;
 using Licenta.DataAccess;
 using Licenta.DataAccess.Abstractions;
 using Licenta.DataAccess.Repositories;
@@ -36,9 +36,9 @@ namespace Licenta
             services.AddControllersWithViews().AddNewtonsoftJson();
 
             services.AddMvc();
-            services.AddScoped<IPersistenceContext, EFPersistanceContext>();
-            services.AddScoped<ICustomerRepository, EFCustomerRepository>();
-            services.AddScoped<IOrderRepository, EFOrderRepository>();
+            services.AddScoped<IPersistenceContext, EfPersistanceContext>();
+            services.AddScoped<ICustomerRepository, EfCustomerRepository>();
+            services.AddScoped<IOrderRepository, EfOrderRepository>();
             services.AddScoped<CustomerService>();
             services.AddScoped<OrderService>();
             services.AddScoped<EmployeeServices>();

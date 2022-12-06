@@ -14,7 +14,7 @@ namespace Licenta.Model
 
         protected LocationAddress() { }
 
-        public static LocationAddress Create(string country, string city, string street, string streetNumber, string postalCode, string? tag)
+        public static LocationAddress Create(string country, string city, string street, string streetNumber, string postalCode, string tag)
         {
             var createdLocation = new LocationAddress()
             {
@@ -47,7 +47,7 @@ namespace Licenta.Model
             StreetNumber = streetNumber;
 
         }
-        public LocationAddress Update(string country, string city, string street, string streetNumber, string postalCode, string? tag)
+        public LocationAddress Update(string country, string city, string street, string streetNumber, string postalCode, string tag)
         {
             Country = country;
             City = city;
