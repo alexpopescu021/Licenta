@@ -78,7 +78,7 @@ namespace Licenta.Controllers
 
             try
             {
-                var customerToUpdate = customerService.GetCustomerById(Id);
+                customerService.GetCustomerById(Id);
                 customerService.UpdateCustomer(Guid.Parse(Id),
                                                 updatedData.Name,
                                                 updatedData.PhoneNo,
@@ -95,7 +95,7 @@ namespace Licenta.Controllers
         public IActionResult AddLocation()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            NewLocationViewModel locationModel = new NewLocationViewModel()
+            var locationModel = new NewLocationViewModel()
             {
 
                 CustomerId = userId
@@ -207,7 +207,7 @@ namespace Licenta.Controllers
         public IActionResult Remove([FromRoute] string Id)
         {
 
-            RemoveCustomerViewModel removeViewModel = new RemoveCustomerViewModel()
+            var removeViewModel = new RemoveCustomerViewModel()
             {
                 Id = Id
             };

@@ -1,10 +1,10 @@
 ﻿using Licenta.ApplicationLogic.Services;
 using Licenta.Model;
 using Licenta.ViewModels.Orders;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Web.Mvc;
 
@@ -14,11 +14,10 @@ namespace Licenta.Controllers
     {
         private readonly OrderService orderService;
         private readonly CustomerService customerService;
-        private readonly UserManager<IdentityUser> userManager;
-        public OrdersController(OrderService orderService, CustomerService customerService, UserManager<IdentityUser> _userManager)
+
+        public OrdersController(OrderService orderService, CustomerService customerService)
         {
             this.orderService = orderService;
-            userManager = _userManager;
             this.customerService = customerService;
         }
         public IActionResult Index()
@@ -42,25 +41,17 @@ namespace Licenta.Controllers
             return PartialView("_OrdersTablePartial", ordersView);
         }
 
-        private Microsoft.AspNetCore.Mvc.Rendering.SelectListItem CreateListItem(LocationAddress location)
+        private static Microsoft.AspNetCore.Mvc.Rendering.SelectListItem CreateListItem(LocationAddress location)
         {
-            string dropdownText;
-            if (location.Tag == null)
-            {
-                dropdownText = $"{ location.PostalCode }, { location.Street}";
-            }
-            else
-            {
-                dropdownText = $"{ location.Tag }";
-            }
-            Microsoft.AspNetCore.Mvc.Rendering.SelectListItem selectLocation = new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(dropdownText, location.Id.ToString());
+            var dropdownText = location.Tag == null ? $"{ location.PostalCode }, { location.Street}" : $"{ location.Tag }";
+            var selectLocation = new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(dropdownText, location.Id.ToString());
             return selectLocation;
         }
 
         private List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> GetCustomerList()
         {
             var customers = customerService.GetAllCustomers();
-            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> customerNames = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
+            var customerNames = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
 
             foreach (var customer in customers)
             {
@@ -74,22 +65,17 @@ namespace Licenta.Controllers
 
         private List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> GetLocationsList(string customerId)
         {
-            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> locationsList = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
             var locations = customerService.GetCustomerAddresses(customerId);
-            foreach (var location in locations)
-            {
-                locationsList.Add(CreateListItem(location));
-            }
 
-            return locationsList;
+            return locations.Select(CreateListItem).ToList();
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet]
         public IActionResult NewOrder(string id)
         {
-            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> pickupLocations = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
-            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> deliveryLocations = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
-            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> unchosenLocations = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
+            var pickupLocations = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
+            var deliveryLocations = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
+            var unchosenLocations = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
             string senderId = null;
             string pickupId = null;
             string deliveryId = null;
@@ -98,10 +84,10 @@ namespace Licenta.Controllers
             {
                 if (id != null)
                 {
-                    string[] splitId = id.Split(';');
+                    var splitId = id.Split(';');
                     senderId = splitId[0];
-                    string locationId = splitId[1];
-                    string locationType = splitId[3];
+                    var locationId = splitId[1];
+                    var locationType = splitId[3];
 
                     string secondLocationId = null;
                     if (locationId != splitId[2])
@@ -114,13 +100,7 @@ namespace Licenta.Controllers
                         var chosenLocation = customerService.GetLocationAddress(locationId);
                         var customer = customerService.GetCustomerById(senderId);
 
-                        foreach (var location in customer.LocationAddresses)
-                        {
-                            if (location.Id != chosenLocation.Id)
-                            {
-                                unchosenLocations.Add(CreateListItem(location));
-                            }
-                        }
+                        unchosenLocations.AddRange(from location in customer.LocationAddresses where location.Id != chosenLocation.Id select CreateListItem(location));
 
                         if (locationType.Equals(NewOrderViewModel.LocationType.Pickup.ToString()))
                         {
@@ -158,7 +138,7 @@ namespace Licenta.Controllers
                     deliveryLocations.RemoveAt(0);
                 }
 
-                NewOrderViewModel newOrderViewModel = new NewOrderViewModel()
+                var newOrderViewModel = new NewOrderViewModel()
                 {
                     CustomerList = GetCustomerList(),
                     PickupLocations = pickupLocations,
@@ -195,21 +175,15 @@ namespace Licenta.Controllers
 
                     customerService.AddLocation(bonusLocation);
 
-                    if (orderData.PickupLocationId == null)
-                    {
-                        orderData.PickupLocationId = bonusLocation.Id.ToString();
-                    }
+                    orderData.PickupLocationId ??= bonusLocation.Id.ToString();
 
-                    if (orderData.DeliveryLocationId == null)
-                    {
-                        orderData.DeliveryLocationId = bonusLocation.Id.ToString();
-                    }
+                    orderData.DeliveryLocationId ??= bonusLocation.Id.ToString();
                 }
                 
                 var recipient = orderService.CreateNewRecipient(orderData.RecipientName,
                             orderData.RecipientPhoneNo,
                             orderData.RecipientEmail);
-                var awb = CreateAWB(8);
+                var awb = CreateAwb(8);
                 orderData.Awb = awb;
                 orderService.CreateOrder(recipient,
                     sender,
@@ -217,7 +191,6 @@ namespace Licenta.Controllers
                     orderData.DeliveryLocationId,
                     orderData.Price,
                     orderData.Awb);
-                //return RedirectToAction("Index");
                 return PartialView("_NewOrderPartial", orderData);
             }
             catch (Exception e)
@@ -227,33 +200,28 @@ namespace Licenta.Controllers
         }
 
         [Microsoft.AspNetCore.Mvc.HttpPost]
-        public string GetAWB(string awb)
+        public string GetAwb(string awb)
         {
-             var response = orderService.GetByAwb(awb);
-            if(response != null)
-                return $"Your order is {response.Status}";
-            else
-            {
-                return "No order found with the specific AWB";
-            }
+            var response = orderService.GetByAwb(awb);
+            return response != null ? $"Your order is {response.Status}" : "No order found with the specific AWB";
         }
 
         [Microsoft.AspNetCore.Mvc.HttpPost]
-        public Microsoft.AspNetCore.Mvc.JsonResult ActionName(string YourValue)
+        public Microsoft.AspNetCore.Mvc.JsonResult ActionName(string yourValue)
         {
 
-            return Json(new { success = true, result = YourValue }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, result = yourValue }, JsonRequestBehavior.AllowGet);
         }
 
-        static Random rd = new Random();
-        internal static string CreateAWB(int stringLength)
+        private static readonly Random _rd = new Random();
+        internal static string CreateAwb(int stringLength)
         {
             const string allowedChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789";
-            char[] chars = new char[stringLength];
+            var chars = new char[stringLength];
 
-            for (int i = 0; i < stringLength; i++)
+            for (var i = 0; i < stringLength; i++)
             {
-                chars[i] = allowedChars[rd.Next(0, allowedChars.Length)];
+                chars[i] = allowedChars[_rd.Next(0, allowedChars.Length)];
             }
 
             return new string(chars);

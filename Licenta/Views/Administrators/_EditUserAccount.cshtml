@@ -35,18 +35,21 @@
 
             <script>
             $(document).ready(function () {
-                 @if(Model.Role == "Admin")
-                    {
-                        @:$('.Admin').append('selected');
-                    }
-                    else if(Model.Role == "Dispatcher")
-                    {
-                        @:$('.Dispatcher').append('selected');
-                    }
-                    else if(Model.Role == "Driver")
-                    {
-                        @:$('.Driver').append('selected');
-                    }
+                 @switch (Model.Role)
+                 {
+                     case "Admin":
+                         @:$('.Admin').append('selected');
+                         break;
+
+                     case "Dispatcher":
+                         @:$('.Dispatcher').append('selected');
+                         break;
+
+                     case "Driver":
+                         @:$('.Driver').append('selected');
+                         break;
+
+                 }
     });
             </script>
 

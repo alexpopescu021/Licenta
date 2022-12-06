@@ -18,14 +18,13 @@ namespace Licenta.DataAccess.Repositories
         public new Order GetById(Guid orderId)
         {
             return dbContext.Orders
-                        .Include(o => o.PickUpAddress)
-                        .Include(o => o.DeliveryAddress)
-                        .Include(o => o.Recipient)
-                        .Include(o => o.Recipient.ContactDetails)
-                        .Include(o => o.Sender)
-                        .ThenInclude(o => o.LocationAddresses)
-                        .Where(o => o.Id == orderId)
-                        .FirstOrDefault();
+                .Include(o => o.PickUpAddress)
+                .Include(o => o.DeliveryAddress)
+                .Include(o => o.Recipient)
+                .Include(o => o.Recipient.ContactDetails)
+                .Include(o => o.Sender)
+                .ThenInclude(o => o.LocationAddresses)
+                .FirstOrDefault(o => o.Id == orderId);
         }
 
 
@@ -106,7 +105,7 @@ namespace Licenta.DataAccess.Repositories
 
         public Order GetByAwb(string awb)
         {
-            return dbContext.Orders.Where(o => o.AWB == awb).FirstOrDefault();
+            return dbContext.Orders.FirstOrDefault(o => o.AWB == awb);
         }
     }
 }

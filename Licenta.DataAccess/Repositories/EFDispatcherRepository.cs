@@ -13,7 +13,7 @@ namespace Licenta.DataAccess.Repositories
 
         public Dispatcher GetByUserId(string userId)
         {
-            return dbContext.Dispatchers.Where(o => o.UserId == userId).FirstOrDefault();
+            return dbContext.Dispatchers.FirstOrDefault(o => o.UserId == userId);
         }
     }
 }

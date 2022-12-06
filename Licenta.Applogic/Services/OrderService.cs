@@ -50,7 +50,7 @@ namespace Licenta.ApplicationLogic.Services
 
         public IEnumerable<Order> GetOrdersForCurrentCustomer(string senderId)
         {
-            Guid.TryParse(senderId, out Guid customerId);
+            Guid.TryParse(senderId, out var customerId);
             return OrderRepository.GetOrdersForCurrentCustomer(customerId);
         }
 
@@ -87,10 +87,10 @@ namespace Licenta.ApplicationLogic.Services
 
         public Order CreateOrder(Recipient recipient, Customer sender, string pickupId, string deliveryId, decimal price, string awb)
         {
-            Guid.TryParse(pickupId, out Guid pickupGuid);
+            Guid.TryParse(pickupId, out var pickupGuid);
             var pickupLocation = customerRepository.GetLocationAddress(pickupGuid);
 
-            Guid.TryParse(deliveryId, out Guid deliveryGuid);
+            Guid.TryParse(deliveryId, out var deliveryGuid);
             var deliveryLocation = customerRepository.GetLocationAddress(deliveryGuid);
 
             var order = Order.Create(recipient, sender, pickupLocation, deliveryLocation, price, awb);
@@ -102,7 +102,7 @@ namespace Licenta.ApplicationLogic.Services
 
         public Order GetById(string Id)
         {
-            Guid.TryParse(Id, out Guid guid);
+            Guid.TryParse(Id, out var guid);
             return OrderRepository.GetById(guid);
         }
 
@@ -133,10 +133,10 @@ namespace Licenta.ApplicationLogic.Services
 
         public Order Update(string id, string pickupId, string deliveryId, decimal price)
         {
-            Guid.TryParse(pickupId, out Guid pickupGuid);
+            Guid.TryParse(pickupId, out var pickupGuid);
             var pickupLocation = customerRepository.GetLocationAddress(pickupGuid);
 
-            Guid.TryParse(deliveryId, out Guid deliveryGuid);
+            Guid.TryParse(deliveryId, out var deliveryGuid);
             var deliveryLocation = customerRepository.GetLocationAddress(deliveryGuid);
 
             var order = GetById(id);

@@ -21,7 +21,7 @@ namespace Licenta.DataAccess.Repositories
 
         public Vehicle GetByRegistrationNumber(string registrationNumber)
         {
-            return dbContext.Vehicles.Where(o => o.RegistrationNumber == registrationNumber).FirstOrDefault();
+            return dbContext.Vehicles.FirstOrDefault(o => o.RegistrationNumber == registrationNumber);
         }
 
 
@@ -63,12 +63,12 @@ namespace Licenta.DataAccess.Repositories
 
                     foreach (var routeEntry in routeDb.RouteEntries)
                     {
-                        var routeEntryDb = dbContext.RouteEntries.Where(re => re.Id == routeEntry.Id)
-                                                                 .Include(re => re.Order)
-                                                                 .ThenInclude(re => re.DeliveryAddress)
-                                                                 .Include(re => re.Order)
-                                                                 .ThenInclude(re => re.PickUpAddress)
-                                                                 .SingleOrDefault();
+                        dbContext.RouteEntries.Where(re => re.Id == routeEntry.Id)
+                            .Include(re => re.Order)
+                            .ThenInclude(re => re.DeliveryAddress)
+                            .Include(re => re.Order)
+                            .ThenInclude(re => re.PickUpAddress)
+                            .SingleOrDefault();
                         route.RouteEntries.Add(routeEntry);
                     }
                 }

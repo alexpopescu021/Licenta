@@ -24,7 +24,7 @@ namespace Licenta.ApplicationLogic.Services
         {
             var employee = GetEmployee(userId);
 
-            if (employee.Id != null && DriverRepository.Remove(employee.Id) == false)
+            if (!DriverRepository.Remove(employee.Id))
             {
                 DispatcherRepository.Remove(employee.Id);
             }
@@ -34,11 +34,7 @@ namespace Licenta.ApplicationLogic.Services
         public Employee GetEmployee(string userId)
         {
             _ = new Employee();
-            Employee employee = DriverRepository.GetByUserId(userId);
-            if (employee == null)
-            {
-                employee = DispatcherRepository.GetByUserId(userId);
-            }
+            var employee = DriverRepository.GetByUserId(userId) ?? (Employee)DispatcherRepository.GetByUserId(userId);
             return employee;
         }
 
@@ -46,19 +42,24 @@ namespace Licenta.ApplicationLogic.Services
         {
             var employee = GetEmployee(UserId);
 
-            if (Role == "Driver")
+            switch (Role)
             {
-                var driver = DriverRepository.GetById(employee.Id);
-                driver.SetName(name);
-                driver.SetEmail(email);
-                DriverRepository.Update(driver);
-            }
-            else if (Role == "Dispatcher")
-            {
-                var dispatcher = DispatcherRepository.GetById(employee.Id);
-                dispatcher.SetName(name);
-                dispatcher.SetEmail(email);
-                DispatcherRepository.Update(dispatcher);
+                case "Driver":
+                {
+                    var driver = DriverRepository.GetById(employee.Id);
+                    driver.SetName(name);
+                    driver.SetEmail(email);
+                    DriverRepository.Update(driver);
+                    break;
+                }
+                case "Dispatcher":
+                {
+                    var dispatcher = DispatcherRepository.GetById(employee.Id);
+                    dispatcher.SetName(name);
+                    dispatcher.SetEmail(email);
+                    DispatcherRepository.Update(dispatcher);
+                    break;
+                }
             }
         }
     }

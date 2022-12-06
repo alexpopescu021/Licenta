@@ -14,8 +14,7 @@ namespace Licenta.DataAccess.Repositories
         }
         public Driver GetByUserId(string userId)
         {
-            var driver = dbContext.Drivers.
-               Where(o => o.UserId == userId).FirstOrDefault();
+            var driver = dbContext.Drivers.FirstOrDefault(o => o.UserId == userId);
             return driver;
         }
         public Driver GetDriverWithRoute(Guid id)
@@ -24,8 +23,7 @@ namespace Licenta.DataAccess.Repositories
                 .Include(o => o.CurrentRoute)
                 .ThenInclude(o => o.RouteEntries)
                 .ThenInclude(a => a.Order)
-                .Include(o => o.RoutesHistoric)
-                .Where(o => o.Id == id).FirstOrDefault();
+                .Include(o => o.RoutesHistoric).FirstOrDefault(o => o.Id == id);
         }
         public Driver GetDriverWithRouteFromUserId(Guid id)
         {
@@ -33,8 +31,7 @@ namespace Licenta.DataAccess.Repositories
                 .Include(o => o.CurrentRoute)
                 .ThenInclude(o => o.RouteEntries)
                 .ThenInclude(a => a.Order)
-                .Include(o => o.RoutesHistoric)
-                .Where(o => o.UserId == id.ToString()).FirstOrDefault();
+                .Include(o => o.RoutesHistoric).FirstOrDefault(o => o.UserId == id.ToString());
         }
         public IEnumerable<Driver> GetDriversOnRoute(Guid routeId)
         {
@@ -61,17 +58,16 @@ namespace Licenta.DataAccess.Repositories
         public ICollection<RouteEntry> GetRouteEntries(Guid id)
         {
             var driver = GetDriverWithRoute(id);
-            ICollection<RouteEntry> routeEntries = new List<RouteEntry>();
             ICollection<RouteEntry> completeRouteEntries = new List<RouteEntry>();
             if (driver.CurrentRoute != null && driver.CurrentRoute.RouteEntries.Count > 0)
             {
-                routeEntries = driver.CurrentRoute.RouteEntries;
+                var routeEntries = driver.CurrentRoute.RouteEntries;
                 foreach (var routeEntry in routeEntries)
                 {
-                    var tempRouteEntry = dbContext.RouteEntries.Include(o => o.Order).Where(o => o.Id == routeEntry.Id).FirstOrDefault();
-                    var order = dbContext.Orders.Include(o => o.PickUpAddress).Include(o => o.DeliveryAddress).Include(o => o.Recipient).ThenInclude(o => o.ContactDetails)
-                       .Include(o => o.Sender).ThenInclude(o => o.ContactDetails).Where(o => o.Id == tempRouteEntry.Order.Id).FirstOrDefault();
-                    tempRouteEntry.SetOrder(order);
+                    var tempRouteEntry = dbContext.RouteEntries.Include(o => o.Order).FirstOrDefault(o => o.Id == routeEntry.Id);
+                    var order = dbContext.Orders.Include(o => o.PickUpAddress).Include(o => o.DeliveryAddress).Include(o => o.Recipient)
+                        .ThenInclude(o => o.ContactDetails).Include(o => o.Sender).ThenInclude(o => o.ContactDetails).FirstOrDefault(o => o.Id == tempRouteEntry.Order.Id);
+                    tempRouteEntry?.SetOrder(order);
 
                     completeRouteEntries.Add(tempRouteEntry);
                 }
@@ -100,8 +96,8 @@ namespace Licenta.DataAccess.Repositories
                 {
                     foreach (var routeEntry in driverCurrentRoute.RouteEntries)
                     {
-                        var routeEntryDb = dbContext.RouteEntries.Where(r => r.Id == routeEntry.Id)
-                                                      .SingleOrDefault();
+                        var routeEntryDb = dbContext.RouteEntries
+                            .SingleOrDefault(r => r.Id == routeEntry.Id);
                         driverCurrentRoute.RouteEntries.Add(routeEntryDb);
                     }
                 }
@@ -119,12 +115,12 @@ namespace Licenta.DataAccess.Repositories
 
                         foreach (var routeEntry in routeDb.RouteEntries)
                         {
-                            var routeEntryDb = dbContext.RouteEntries.Where(re => re.Id == routeEntry.Id)
-                                                                     .Include(re => re.Order)
-                                                                     .ThenInclude(re => re.DeliveryAddress)
-                                                                     .Include(re => re.Order)
-                                                                     .ThenInclude(re => re.PickUpAddress)
-                                                                     .SingleOrDefault();
+                            dbContext.RouteEntries.Where(re => re.Id == routeEntry.Id)
+                                .Include(re => re.Order)
+                                .ThenInclude(re => re.DeliveryAddress)
+                                .Include(re => re.Order)
+                                .ThenInclude(re => re.PickUpAddress)
+                                .SingleOrDefault();
                             route.RouteEntries.Add(routeEntry);
                         }
                     }
@@ -137,21 +133,21 @@ namespace Licenta.DataAccess.Repositories
         public RoutesHistory GetRoutesHistory(Guid id)
         {
             var driver = GetById(id);
-            var driverRoutes = dbContext.Drivers.Include(o => o.RoutesHistoric).ThenInclude(o => o.Routes)
-                .Where(o => o.Id == driver.Id).FirstOrDefault();
+            var driverRoutes = dbContext.Drivers.Include(o => o.RoutesHistoric)
+                .ThenInclude(o => o.Routes).FirstOrDefault(o => o.Id == driver.Id);
             ICollection<Route> routes = new List<Route>();
-            if (driverRoutes.RoutesHistoric.Routes.Count > 0)
+            if (driverRoutes != null && driverRoutes.RoutesHistoric.Routes.Count > 0)
             {
                 foreach (var route in driverRoutes.RoutesHistoric.Routes)
                 {
-                    var routeOrders = dbContext.Routes.Include(o => o.RouteEntries).Where(o => o.Id == route.Id).FirstOrDefault();
+                    var routeOrders = dbContext.Routes.Include(o => o.RouteEntries).FirstOrDefault(o => o.Id == route.Id);
                     ICollection<RouteEntry> routeEntries = new List<RouteEntry>();
-                    if (routeOrders.RouteEntries != null)
+                    if (routeOrders is { RouteEntries: { } })
                     {
                         foreach (var routeEntry in routeOrders.RouteEntries)
                         {
-                            var temp = dbContext.RouteEntries.Include(o => o.Order).ThenInclude(o => o.PickUpAddress).Include(o => o.Order)
-                                .ThenInclude(o => o.DeliveryAddress).Where(o => o.Id == routeEntry.Id).FirstOrDefault();
+                            var temp = dbContext.RouteEntries.Include(o => o.Order).ThenInclude(o => o.PickUpAddress)
+                                .Include(o => o.Order).ThenInclude(o => o.DeliveryAddress).FirstOrDefault(o => o.Id == routeEntry.Id);
                             routeEntries.Add(temp);
                         }
                         routeOrders.SetRouteEntries(routeEntries);
@@ -166,7 +162,7 @@ namespace Licenta.DataAccess.Repositories
 
         public Driver GetRouteWithVehicle(Guid id)
         {
-            return dbContext.Drivers.Include(o => o.CurrentRoute).ThenInclude(o => o.Vehicle).Where(o => o.Id == id).FirstOrDefault();
+            return dbContext.Drivers.Include(o => o.CurrentRoute).ThenInclude(o => o.Vehicle).FirstOrDefault(o => o.Id == id);
         }
     }
 }

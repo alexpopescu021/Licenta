@@ -25,30 +25,26 @@ namespace Licenta.DataAccess.Repositories
 
         public Customer FindByEmail(string emailToFind)
         {
-            var foundCustomer = dbContext.Customers
-                            .Where(customer =>
-                                        customer.ContactDetails.Email
-                                        .Contains(emailToFind)).FirstOrDefault();
+            var foundCustomer = dbContext.Customers.FirstOrDefault(customer => customer.ContactDetails.Email
+                .Contains(emailToFind));
 
             return foundCustomer;
         }
 
         public Customer FindByPhoneNo(string phoneNo)
         {
-            var foundCustomer = dbContext.Customers
-                            .Where(customer =>
-                                    customer.ContactDetails.PhoneNo
-                                    .Contains(phoneNo)).FirstOrDefault();
+            var foundCustomer = dbContext.Customers.FirstOrDefault(customer => customer.ContactDetails.PhoneNo
+                .Contains(phoneNo));
 
             return foundCustomer;
         }
 
         public new Customer GetById(Guid customerId)
         {
-            return dbContext.Customers.Include(c => c.ContactDetails)
-                                        .Include(c => c.LocationAddresses)
-                                        .Where(customer => customer.Id == customerId)
-                                        .FirstOrDefault();
+            return dbContext.Customers
+                .Include(c => c.ContactDetails)
+                .Include(c => c.LocationAddresses)
+                .FirstOrDefault(customer => customer.Id == customerId);
         }
 
         public new IEnumerable<Customer> GetAll()
@@ -76,43 +72,37 @@ namespace Licenta.DataAccess.Repositories
         {
             var entityToRemove = GetById(customerId);
 
-            if (entityToRemove != null)
+            if (entityToRemove == null) return false;
+            if (entityToRemove.LocationAddresses.Any())
             {
-                if (entityToRemove.LocationAddresses.Count() > 0)
+                foreach (var location in entityToRemove.LocationAddresses)
                 {
-                    foreach (LocationAddress location in entityToRemove.LocationAddresses)
-                    {
-                        dbContext.Remove(location);
-                    }
+                    dbContext.Remove(location);
                 }
-
-                dbContext.Remove(entityToRemove.ContactDetails);
-                dbContext.Remove(entityToRemove);
-                dbContext.SaveChanges();
-
-                return true;
             }
-            return false;
+
+            dbContext.Remove(entityToRemove.ContactDetails);
+            dbContext.Remove(entityToRemove);
+            dbContext.SaveChanges();
+
+            return true;
         }
 
         public LocationAddress GetLocationAddress(Guid locationId)
         {
             return dbContext.LocationAddresses
-                            .Where(c => c.Id == locationId)
-                            .FirstOrDefault();
+                .FirstOrDefault(c => c.Id == locationId);
         }
 
         public void RemoveLocation(Guid locationId)
         {
-            var address = dbContext.LocationAddresses.Where(a => a.Id == locationId).FirstOrDefault();
+            var address = dbContext.LocationAddresses.FirstOrDefault(a => a.Id == locationId);
 
             dbContext.Remove(address);
             dbContext.SaveChanges();
 
 
         }
-
-
         public IEnumerable<LocationAddress> GetLocations(Guid customerId)
         {
             throw new NotImplementedException();

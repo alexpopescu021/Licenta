@@ -6,7 +6,7 @@ namespace Licenta.Model
     {
         public static Dispatcher Create(string userId, string name, string email)
         {
-            Dispatcher dispatcher = new Dispatcher
+            var dispatcher = new Dispatcher
             {
                 Id = Guid.NewGuid(),
                 Email = email,

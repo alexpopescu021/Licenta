@@ -19,7 +19,7 @@ namespace Licenta.ApplicationLogic.Services
 
         public Vehicle GetById(string id)
         {
-            Guid vehicleId = Guid.Empty;
+            var vehicleId = Guid.Empty;
             Guid.TryParse(id, out vehicleId);
 
             return vehicleRepository?.GetById(vehicleId);
@@ -45,7 +45,7 @@ namespace Licenta.ApplicationLogic.Services
 
         public bool Remove(string id)
         {
-            Guid vehicleId = Guid.Empty;
+            var vehicleId = Guid.Empty;
             Guid.TryParse(id, out vehicleId);
 
             var result = vehicleRepository?.Remove(vehicleId);
@@ -88,7 +88,7 @@ namespace Licenta.ApplicationLogic.Services
 
         public bool IsVehicle(string vehicleId)
         {
-            Guid.TryParse(vehicleId, out Guid vehicleGuid);
+            Guid.TryParse(vehicleId, out var vehicleGuid);
             if (vehicleRepository.GetById(vehicleGuid) == null)
             {
                 return false;

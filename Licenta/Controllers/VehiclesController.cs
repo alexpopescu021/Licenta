@@ -176,26 +176,5 @@ namespace Licenta.Controllers
                 return BadRequest(e.Message);
             }
         }
-
-
-        //public IActionResult RouteDetails(string vehicleId, string routeId)
-        //{
-        //    try
-        //    {
-        //        var viewModel = new RouteDetailsViewModel
-        //        {
-        //            VehicleId = vehicleId,
-        //            RouteEntries = vehicleService.GetDetailsRoute(vehicleId, routeId)
-        //        };
-
-        //        return View(viewModel);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        logger.LogError("Failed to retrieve vehicle {@Exception}", e.Message);
-        //        logger.LogDebug("Failed to retrieve vehicle {@ExceptionMessage}", e);
-        //        return BadRequest(e.Message);
-        //    }
-        //}
     }
 }

@@ -254,7 +254,7 @@
 
        $(".awb").click(function(e){
            var awb = document.getElementById("awbInput").value;
-         $.post("@Url.Action("GetAWB","Orders")", { awb : awb.toString()} ,function(data){
+         $.post("@Url.Action("GetAwb","Orders")", { awb : awb.toString()} ,function(data){
                 $('.label').html(data);
                $('#awbModal').modal('show');
          });

@@ -47,7 +47,7 @@ namespace Licenta.Controllers
         {
             if (ModelState.IsValid)
             {
-                IdentityUser user = new IdentityUser
+                var user = new IdentityUser
                 {
                     UserName = model.Name,
                     Email = model.Email,
@@ -80,7 +80,7 @@ namespace Licenta.Controllers
         public async Task<IActionResult> EditUserAccount(string userId)
         {
             var user = await UserManager.FindByIdAsync(userId.ToString());
-            UserAccontEditViewModel model = new UserAccontEditViewModel()
+            var model = new UserAccontEditViewModel()
             {
                 Name = user.UserName,
                 Email = user.Email,

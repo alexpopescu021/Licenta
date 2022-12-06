@@ -58,8 +58,8 @@ namespace Licenta.Controllers
         [HttpGet]
         public IActionResult AssignRoute([FromRoute] string id)
         {
-            string DriverId = id;
-            AssignRouteViewModel assignRouteViewModel = new AssignRouteViewModel
+            var DriverId = id;
+            var assignRouteViewModel = new AssignRouteViewModel
             {
                 DriverId = DriverId,
                 RouteList = GetRouteList()
@@ -92,7 +92,7 @@ namespace Licenta.Controllers
         public IActionResult RemoveRouteFromDriver([FromRoute] string Id)
         {
 
-            RemoveRouteViewModel removeViewModel = new RemoveRouteViewModel()
+            var removeViewModel = new RemoveRouteViewModel()
             {
                 Id = Id
             };
@@ -111,7 +111,7 @@ namespace Licenta.Controllers
         private List<SelectListItem> GetRouteList()
         {
             var routes = routeService.GetAllRoutes();
-            List<SelectListItem> routesNames = new List<SelectListItem>();
+            var routesNames = new List<SelectListItem>();
 
             foreach (var route in routes)
             {

@@ -13,7 +13,7 @@ namespace Licenta.Model
         public DriverStatus Status { get; private set; }
         public static Driver Create(string userId, string name, string email)
         {
-            Driver driver = new Driver
+            var driver = new Driver
             {
                 Id = Guid.NewGuid(),
                 Email = email,

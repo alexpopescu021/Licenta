@@ -27,7 +27,7 @@ namespace Licenta.Controllers
             {
                 if (!User.IsInRole("Admin") && !User.IsInRole("Driver") && !User.IsInRole("Dispatcher"))
                 {
-                    bool ok = true;
+                    var ok = true;
                     var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                     var user = await userManager.FindByIdAsync(userId.ToString());
                     if (userId.Length != 0)

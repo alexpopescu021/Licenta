@@ -50,10 +50,7 @@ namespace Licenta.DataAccess.Repositories
         public void SaveChanges()
         {
             dbContext.SaveChanges();
-            if (currentTransactionScope != null)
-            {
-                currentTransactionScope.Complete();
-            }
+            currentTransactionScope?.Complete();
 
             currentTransactionScope = null;
         }

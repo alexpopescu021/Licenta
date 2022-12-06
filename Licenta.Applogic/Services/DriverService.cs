@@ -31,12 +31,12 @@ namespace Licenta.ApplicationLogic.Services
 
         public Driver GetDriverWithRoute(string driverId)
         {
-            Guid.TryParse(driverId, out Guid driverGuid);
+            Guid.TryParse(driverId, out var driverGuid);
             return DriverRepository.GetDriverWithRoute(driverGuid);
         }
         public Driver GetDriverWithRouteFromUserId(string driverId)
         {
-            Guid.TryParse(driverId, out Guid driverGuid);
+            Guid.TryParse(driverId, out var driverGuid);
             return DriverRepository.GetDriverWithRouteFromUserId(driverGuid);
         }
         public Driver EndCurrentRoute(Driver driver)

@@ -10,7 +10,7 @@ namespace Licenta.DataAccess.Repositories
     {
         protected readonly ApplicationDbContext dbContext;
 
-        public EFBaseRepository(ApplicationDbContext dbContext)
+        protected EFBaseRepository(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -30,21 +30,18 @@ namespace Licenta.DataAccess.Repositories
 
         public virtual T GetById(Guid id)
         {
-            return dbContext.Set<T>()
-                            .Where(entity => entity.Id.Equals(id))
-                            .SingleOrDefault();
+            return dbContext
+                .Set<T>()
+                .SingleOrDefault(entity => entity.Id.Equals(id));
         }
 
         public bool Remove(Guid id)
         {
             var entityToRemove = GetById(id);
-            if (entityToRemove != null)
-            {
-                dbContext.Remove<T>(entityToRemove);
-                dbContext.SaveChanges();
-                return true;
-            }
-            return false;
+            if (entityToRemove == null) return false;
+            dbContext.Remove<T>(entityToRemove);
+            dbContext.SaveChanges();
+            return true;
         }
 
         public T Update(T itemToUpdate)
