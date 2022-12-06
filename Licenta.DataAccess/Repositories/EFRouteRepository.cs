@@ -7,14 +7,14 @@ using System.Linq;
 
 namespace Licenta.DataAccess.Repositories
 {
-    internal class EFRouteRepository : EFBaseRepository<Route>, IRouteRepository
+    internal class EfRouteRepository : EfBaseRepository<Route>, IRouteRepository
     {
-        public EFRouteRepository(ApplicationDbContext context) : base(context)
+        public EfRouteRepository(ApplicationDbContext context) : base(context)
         { }
 
         public IEnumerable<RouteEntry> GetAllRouteEntries()
         {
-            return dbContext.RouteEntries
+            return DbContext.RouteEntries
                         .Include(r => r.Order)
                         .AsEnumerable();
         }
@@ -22,14 +22,14 @@ namespace Licenta.DataAccess.Repositories
 
         public Route GetRouteById(Guid routeId)
         {
-            var route = dbContext.Routes.Include(v => v.Vehicle).Include(o => o.RouteEntries).ThenInclude(o => o.Order).Where(o => o.Id == routeId).FirstOrDefault();
+            var route = DbContext.Routes.Include(v => v.Vehicle).Include(o => o.RouteEntries).ThenInclude(o => o.Order).FirstOrDefault(o => o.Id == routeId);
             ICollection<RouteEntry> routeEntries = new List<RouteEntry>();
-            if (route.RouteEntries != null)
+            if (route?.RouteEntries != null)
             {
                 foreach (var routeEntry in route.RouteEntries)
                 {
-                    var temp = dbContext.RouteEntries.Include(o => o.Order).ThenInclude(o => o.PickUpAddress).Include(o => o.Order)
-                        .ThenInclude(o => o.DeliveryAddress).Where(o => o.Id == routeEntry.Id).FirstOrDefault();
+                    var temp = DbContext.RouteEntries.Include(o => o.Order).ThenInclude(o => o.PickUpAddress)
+                        .Include(o => o.Order).ThenInclude(o => o.DeliveryAddress).FirstOrDefault(o => o.Id == routeEntry.Id);
                     routeEntries.Add(temp);
                 }
                 route.SetRouteEntries(routeEntries);
@@ -39,7 +39,7 @@ namespace Licenta.DataAccess.Repositories
 
         public new IEnumerable<Route> GetAll()
         {
-            return dbContext.Routes
+            return DbContext.Routes
                         .Include(r => r.Vehicle)
                         .Include(e => e.RouteEntries)
                         .ThenInclude(e => e.Order)
@@ -52,11 +52,11 @@ namespace Licenta.DataAccess.Repositories
 
         public RouteEntry Add(RouteEntry entry, Guid routeId)
         {
-            var route = dbContext.Routes.Include(r => r.RouteEntries).Where(e => e.Id == routeId).FirstOrDefault();
+            var route = DbContext.Routes.Include(r => r.RouteEntries).FirstOrDefault(e => e.Id == routeId);
             route.RouteEntries.Add(entry);
 
-            dbContext.RouteEntries.Add(entry);
-            dbContext.SaveChanges();
+            DbContext.RouteEntries.Add(entry);
+            DbContext.SaveChanges();
             return entry;
 
         }
@@ -64,7 +64,7 @@ namespace Licenta.DataAccess.Repositories
         public RouteEntry GetEntry(Guid id)
         {
             //var Trailer = dbContext.Trailers.Where(trailer => trailer.Id == trailerId).FirstOrDefault();
-            var entry = dbContext.RouteEntries
+            var entry = DbContext.RouteEntries
                         .Where(e => e.Id == id)
                         .Include(e => e.Order)
                         .Include(o => o.Order.PickUpAddress)
@@ -76,16 +76,15 @@ namespace Licenta.DataAccess.Repositories
         }
         public Order GetOrder(Guid guid)
         {
-            var entry = dbContext.RouteEntries
-                .Where(e => e.Id == guid)
-                .FirstOrDefault();
-            var order = dbContext.Orders.Where(o => o.Id == entry.Order.Id).FirstOrDefault();
+            var entry = DbContext.RouteEntries
+                .FirstOrDefault(e => e.Id == guid);
+            var order = DbContext.Orders.FirstOrDefault(o => o.Id == entry.Order.Id);
             return order;
         }
         public void Remove(RouteEntry entry, Guid routeId)
         {
 
-            var route = dbContext.Routes.Include(r => r.RouteEntries).Where(e => e.Id == routeId).FirstOrDefault();
+            var route = DbContext.Routes.Include(r => r.RouteEntries).FirstOrDefault(e => e.Id == routeId);
             foreach (var dbentry in route.RouteEntries)
             {
 
@@ -93,8 +92,8 @@ namespace Licenta.DataAccess.Repositories
                 {
 
                     route.RouteEntries.Remove(dbentry);
-                    dbContext.RouteEntries.Remove(dbentry);
-                    dbContext.SaveChanges();
+                    DbContext.RouteEntries.Remove(dbentry);
+                    DbContext.SaveChanges();
                     break;
                 }
 

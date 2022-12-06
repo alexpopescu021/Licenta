@@ -6,51 +6,48 @@ using System.Linq;
 
 namespace Licenta.DataAccess.Repositories
 {
-    public class EFBaseRepository<T> : IBaseRepository<T> where T : DataEntity
+    public class EfBaseRepository<T> : IBaseRepository<T> where T : DataEntity
     {
-        protected readonly ApplicationDbContext dbContext;
+        protected readonly ApplicationDbContext DbContext;
 
-        public EFBaseRepository(ApplicationDbContext dbContext)
+        protected EfBaseRepository(ApplicationDbContext dbContext)
         {
-            this.dbContext = dbContext;
+            this.DbContext = dbContext;
         }
 
         public T Add(T itemToAdd)
         {
-            var entity = dbContext.Add<T>(itemToAdd);
-            dbContext.SaveChanges();
+            var entity = DbContext.Add(itemToAdd);
+            DbContext.SaveChanges();
             return entity.Entity;
         }
 
         public virtual IEnumerable<T> GetAll()
         {
-            return dbContext.Set<T>()
+            return DbContext.Set<T>()
                             .AsEnumerable();
         }
 
         public virtual T GetById(Guid id)
         {
-            return dbContext.Set<T>()
-                            .Where(entity => entity.Id.Equals(id))
-                            .SingleOrDefault();
+            return DbContext
+                .Set<T>()
+                .SingleOrDefault(entity => entity.Id.Equals(id));
         }
 
         public bool Remove(Guid id)
         {
             var entityToRemove = GetById(id);
-            if (entityToRemove != null)
-            {
-                dbContext.Remove<T>(entityToRemove);
-                dbContext.SaveChanges();
-                return true;
-            }
-            return false;
+            if (entityToRemove == null) return false;
+            DbContext.Remove(entityToRemove);
+            DbContext.SaveChanges();
+            return true;
         }
 
         public T Update(T itemToUpdate)
         {
-            var entity = dbContext.Update<T>(itemToUpdate);
-            dbContext.SaveChanges();
+            var entity = DbContext.Update(itemToUpdate);
+            DbContext.SaveChanges();
             return entity.Entity;
         }
     }

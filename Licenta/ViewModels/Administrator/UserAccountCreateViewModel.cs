@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Licenta.ViewModels
+namespace Licenta.ViewModels.Administrator
 {
     public class UserAccountCreateViewModel
     {

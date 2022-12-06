@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 
 namespace Licenta.Model
@@ -29,7 +28,6 @@ namespace Licenta.Model
 
         public void AddLocationAddress(LocationAddress locationAddress)
         {
-            LocationAddresses.Count();
             LocationAddresses.Add(locationAddress);
         }
 

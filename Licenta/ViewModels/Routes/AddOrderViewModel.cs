@@ -16,7 +16,7 @@ namespace Licenta.ViewModels.Routes
 
         [Required(ErrorMessage = "Choosing a type is required.")]
         [Display(Name = "Type:")]
-        public OrderType type { get; set; }
+        public OrderType Type { get; set; }
         public List<SelectListItem> OrderType;
 
     }

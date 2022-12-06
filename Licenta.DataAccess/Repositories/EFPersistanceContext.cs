@@ -3,21 +3,21 @@ using System.Transactions;
 
 namespace Licenta.DataAccess.Repositories
 {
-    public class EFPersistanceContext : IPersistenceContext
+    public class EfPersistanceContext : IPersistenceContext
     {
         private readonly ApplicationDbContext dbContext;
-        private TransactionScope currentTransactionScope = null;
-        public EFPersistanceContext(ApplicationDbContext context)
+        private TransactionScope currentTransactionScope;
+        public EfPersistanceContext(ApplicationDbContext context)
         {
             dbContext = context;
-            VehicleRepository = new EFVehicleRepository(context);
-            CustomerRepository = new EFCustomerRepository(context);
-            OrderRepository = new EFOrderRepository(context);
-            RecipientRepository = new EFRecipientRepository(context);
-            RouteRepository = new EFRouteRepository(context);
-            DispatcherRepository = new EFDispatcherRepository(context);
-            EmployeeRepository = new EFEmployeeRepository(context);
-            DriverRepository = new EFDriverRepository(context);
+            VehicleRepository = new EfVehicleRepository(context);
+            CustomerRepository = new EfCustomerRepository(context);
+            OrderRepository = new EfOrderRepository(context);
+            RecipientRepository = new EfRecipientRepository(context);
+            RouteRepository = new EfRouteRepository(context);
+            DispatcherRepository = new EfDispatcherRepository(context);
+            EmployeeRepository = new EfEmployeeRepository(context);
+            DriverRepository = new EfDriverRepository(context);
         }
 
 
@@ -50,10 +50,7 @@ namespace Licenta.DataAccess.Repositories
         public void SaveChanges()
         {
             dbContext.SaveChanges();
-            if (currentTransactionScope != null)
-            {
-                currentTransactionScope.Complete();
-            }
+            currentTransactionScope?.Complete();
 
             currentTransactionScope = null;
         }

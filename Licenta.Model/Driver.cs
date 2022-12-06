@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Licenta.Model
 {
     public enum DriverStatus { Free, Driving }
     public class Driver : Employee
     {
-        public ICollection<Vehicle> VehicleHistory { get; protected set; }
-
         public RoutesHistory RoutesHistoric { get; private set; }
         public Route CurrentRoute { get; private set; }
         public DriverStatus Status { get; private set; }
         public static Driver Create(string userId, string name, string email)
         {
-            Driver driver = new Driver
+            var driver = new Driver
             {
                 Id = Guid.NewGuid(),
                 Email = email,

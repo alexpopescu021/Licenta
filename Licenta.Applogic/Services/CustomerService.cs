@@ -1,10 +1,11 @@
-﻿using Licenta.DataAccess.Abstractions;
-using Licenta.Model;
+﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Licenta.DataAccess.Abstractions;
+using Licenta.Model;
 
-namespace Licenta.ApplicationLogic.Services
+namespace Licenta.AppLogic.Services
 {
     public class CustomerService
     {
@@ -21,12 +22,12 @@ namespace Licenta.ApplicationLogic.Services
 
         public Customer GetCustomerById(string customerId)
         {
-            Guid.TryParse(customerId, out Guid guid);
-            var customer = customerRepository?.GetById(guid);
+            Guid.TryParse(customerId, out var guid);
+            var customer = customerRepository.GetById(guid);
 
             if (customer == null)
             {
-                throw new Exception();
+                throw new ArgumentNullException();
             }
 
             return customer;
@@ -54,7 +55,7 @@ namespace Licenta.ApplicationLogic.Services
 
         public LocationAddress GetLocationAddress(string locationId)
         {
-            Guid.TryParse(locationId, out Guid locationGuid);
+            Guid.TryParse(locationId, out var locationGuid);
             return customerRepository.GetLocationAddress(locationGuid);
         }
 
@@ -86,9 +87,6 @@ namespace Licenta.ApplicationLogic.Services
         public bool RemoveCustomerById(string customerId)
         {
             var customer = GetCustomerById(customerId);
-
-            if (customer == null)
-                return false;
 
             orderRepository.RemoveOrdersFromCustomer(customer.Id);
             customerRepository.RemoveCustomer(customer.Id);
@@ -122,7 +120,7 @@ namespace Licenta.ApplicationLogic.Services
 
         public bool IsCustomer(string customerId)
         {
-            Guid.TryParse(customerId, out Guid customerGuid);
+            Guid.TryParse(customerId, out var customerGuid);
             if (customerRepository.GetById(customerGuid) != null)
             {
                 return true;
@@ -133,7 +131,7 @@ namespace Licenta.ApplicationLogic.Services
 
         public bool IsLocation(string locationId)
         {
-            Guid.TryParse(locationId, out Guid locationGuid);
+            Guid.TryParse(locationId, out var locationGuid);
             if (customerRepository.GetLocationAddress(locationGuid) != null)
             {
                 return true;
@@ -144,7 +142,7 @@ namespace Licenta.ApplicationLogic.Services
 
         public void RemoveLocation(string locationId)
         {
-            Guid.TryParse(locationId, out Guid locationGuid);
+            Guid.TryParse(locationId, out var locationGuid);
             customerRepository.RemoveLocation(locationGuid);
         }
 

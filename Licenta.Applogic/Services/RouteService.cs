@@ -1,10 +1,10 @@
-﻿using Licenta.DataAccess.Abstractions;
-using Licenta.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Licenta.DataAccess.Abstractions;
+using Licenta.Model;
 
-namespace Licenta.ApplicationLogic.Services
+namespace Licenta.AppLogic.Services
 {
     public class RouteService
     {
@@ -39,7 +39,7 @@ namespace Licenta.ApplicationLogic.Services
 
         public Route AddEntry(string routeId, RouteEntry entry)
         {
-            Guid.TryParse(routeId, out Guid routepGuid);
+            Guid.TryParse(routeId, out var routepGuid);
             var route = routeRepository.GetRouteById(routepGuid);
             routeRepository.Add(entry, route.Id);
 
@@ -50,7 +50,7 @@ namespace Licenta.ApplicationLogic.Services
 
         public Route RemoveEntry(string routeId, RouteEntry entry)
         {
-            Guid.TryParse(routeId, out Guid routepGuid);
+            Guid.TryParse(routeId, out var routepGuid);
             var route = routeRepository.GetRouteById(routepGuid);
             routeRepository.Remove(entry, route.Id);
 
@@ -64,15 +64,15 @@ namespace Licenta.ApplicationLogic.Services
             return routeRepository.GetAll();
         }
 
-        public Route GetById(string Id)
+        public Route GetById(string id)
         {
-            Guid.TryParse(Id, out Guid guid);
+            Guid.TryParse(id, out var guid);
             return routeRepository.GetRouteById(guid);
         }
 
         public RouteEntry GetEntryById(string id)
         {
-            Guid.TryParse(id, out Guid guid);
+            Guid.TryParse(id, out var guid);
             return routeRepository.GetEntry(guid);
         }
 
@@ -82,8 +82,7 @@ namespace Licenta.ApplicationLogic.Services
         }
         public bool Remove(string id)
         {
-            Guid routeId = Guid.Empty;
-            Guid.TryParse(id, out routeId);
+            Guid.TryParse(id, out var routeId);
 
             var result = routeRepository?.Remove(routeId);
             if (result == true)
@@ -97,7 +96,7 @@ namespace Licenta.ApplicationLogic.Services
 
         public bool RemoveRoute(string id)
         {
-            Guid.TryParse(id, out Guid routeId);
+            Guid.TryParse(id, out var routeId);
             var route = routeRepository.GetRouteById(routeId);
 
             var drivers = driverRepository.GetDriversOnRoute(route.Id);
@@ -123,7 +122,7 @@ namespace Licenta.ApplicationLogic.Services
 
         public void DeselectRoute(string id)
         {
-            Guid.TryParse(id, out Guid routeId);
+            Guid.TryParse(id, out var routeId);
             var route = routeRepository.GetRouteById(routeId);
 
             var drivers = driverRepository.GetDriversOnRoute(route.Id);
@@ -141,7 +140,7 @@ namespace Licenta.ApplicationLogic.Services
             if(route.RouteEntries.Any(e => e.Order.Status == OrderStatus.Delivered) &&
                !route.RouteEntries.Any(e => e.Order.Status == OrderStatus.Delivered))
             {
-                route.SetStatus(RouteStatus.Partially_Completed);
+                route.SetStatus(RouteStatus.PartiallyCompleted);
             }
             else if(route.RouteEntries.Any(e => e.Order.Status == OrderStatus.Delivered))
             {

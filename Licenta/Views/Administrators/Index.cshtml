@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity;
+@using Licenta.ViewModels.Administrator
 @model IEnumerable<IdentityUser>
-@inject UserManager<IdentityUser> userManager;
+@inject UserManager<IdentityUser> UserManager;
 @{
     ViewData["Title"] = "AdministratorController";
 }
@@ -82,7 +83,7 @@
                     </button>
                 </div>
                 <div id="newAccountBody" class="modal-body">
-                    @await Html.PartialAsync("_NewUserPartial", new Licenta.ViewModels.UserAccountCreateViewModel { })
+                    @await Html.PartialAsync("_NewUserPartial", new UserAccountCreateViewModel())
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -1,23 +1,20 @@
-﻿using Licenta.ApplicationLogic.Services;
-using Licenta.Model;
+﻿using Licenta.Model;
 using Licenta.ViewModels.Customers;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
+using Licenta.AppLogic.Services;
 
 namespace Licenta.Controllers
 {
     public class CustomersController : Controller
     {
-        private readonly Microsoft.AspNetCore.Identity.UserManager<IdentityUser> userManager;
         private readonly CustomerService customerService;
 
-        public CustomersController(Microsoft.AspNetCore.Identity.UserManager<IdentityUser> _userManager, CustomerService _customerService)
+        public CustomersController(CustomerService customerService)
         {
-            userManager = _userManager;
-            customerService = _customerService;
+            this.customerService = customerService;
         }
         public IActionResult Index()
         {
@@ -43,15 +40,15 @@ namespace Licenta.Controllers
         }
 
         [HttpGet]
-        public IActionResult UpdateCustomer([FromRoute] string Id)
+        public IActionResult UpdateCustomer([FromRoute] string id)
         {
             try
             {
-                var customerToUpdate = customerService.GetCustomerById(Id);
+                var customerToUpdate = customerService.GetCustomerById(id);
 
                 var editCustomerViewModel = new UpdateCustomerViewModel()
                 {
-                    Id = Id,
+                    Id = id,
                     Name = customerToUpdate.Name,
                     PhoneNo = customerToUpdate.ContactDetails.PhoneNo,
                     Email = customerToUpdate.ContactDetails.Email
@@ -68,7 +65,7 @@ namespace Licenta.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateCustomer([FromForm] UpdateCustomerViewModel updatedData, [FromRoute] string Id)
+        public IActionResult UpdateCustomer([FromForm] UpdateCustomerViewModel updatedData, [FromRoute] string id)
         {
             if (updatedData.Name == null ||
                    updatedData.PhoneNo == null)
@@ -78,8 +75,8 @@ namespace Licenta.Controllers
 
             try
             {
-                var customerToUpdate = customerService.GetCustomerById(Id);
-                customerService.UpdateCustomer(Guid.Parse(Id),
+                customerService.GetCustomerById(id);
+                customerService.UpdateCustomer(Guid.Parse(id),
                                                 updatedData.Name,
                                                 updatedData.PhoneNo,
                                                 updatedData.Email);
@@ -95,7 +92,7 @@ namespace Licenta.Controllers
         public IActionResult AddLocation()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            NewLocationViewModel locationModel = new NewLocationViewModel()
+            var locationModel = new NewLocationViewModel()
             {
 
                 CustomerId = userId
@@ -145,15 +142,15 @@ namespace Licenta.Controllers
 
 
         [HttpGet]
-        public IActionResult EditLocation([FromRoute] string Id)
+        public IActionResult EditLocation([FromRoute] string id)
         {
             try
             {
-                var locationToUpdate = customerService.GetLocationAddress(Id);
+                var locationToUpdate = customerService.GetLocationAddress(id);
 
                 var editLocationViewModel = new EditLocationViewModel()
                 {
-                    Id = Id,
+                    Id = id,
                     Country = locationToUpdate.Country,
                     City = locationToUpdate.City,
                     Street = locationToUpdate.Street,
@@ -204,12 +201,12 @@ namespace Licenta.Controllers
 
 
         [HttpGet]
-        public IActionResult Remove([FromRoute] string Id)
+        public IActionResult Remove([FromRoute] string id)
         {
 
-            RemoveCustomerViewModel removeViewModel = new RemoveCustomerViewModel()
+            var removeViewModel = new RemoveCustomerViewModel()
             {
-                Id = Id
+                Id = id
             };
 
             return PartialView("_RemoveCustomerPartial", removeViewModel);

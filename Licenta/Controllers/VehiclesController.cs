@@ -1,8 +1,8 @@
-﻿using Licenta.ApplicationLogic.Services;
-using Licenta.ViewModels.Vehicles;
+﻿using Licenta.ViewModels.Vehicles;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using Licenta.AppLogic.Services;
 
 namespace Licenta.Controllers
 {
@@ -79,7 +79,7 @@ namespace Licenta.Controllers
                                    viewModel.Type,
                                    viewModel.RegistrationNumber,
                                    viewModel.MaximCarryWeight,
-                                   viewModel.VIN);
+                                   viewModel.Vin);
                 return PartialView("_Create", new NewVehicleViewModel());
             }
             catch (Exception e)
@@ -118,7 +118,7 @@ namespace Licenta.Controllers
                     Type = vehicleFromDb.Type,
                     RegistrationNumber = vehicleFromDb.RegistrationNumber,
                     MaximCarryWeight = vehicleFromDb.MaximCarryWeightKg,
-                    VIN = vehicleFromDb.VIN
+                    Vin = vehicleFromDb.Vin
                 };
                 return PartialView("_Update", viewModel);
             }
@@ -145,7 +145,7 @@ namespace Licenta.Controllers
                                       viewModel.Type,
                                       viewModel.RegistrationNumber,
                                       viewModel.MaximCarryWeight,
-                                      viewModel.VIN);
+                                      viewModel.Vin);
                 return PartialView("_Update", viewModel);
             }
             catch (Exception e)
@@ -176,26 +176,5 @@ namespace Licenta.Controllers
                 return BadRequest(e.Message);
             }
         }
-
-
-        //public IActionResult RouteDetails(string vehicleId, string routeId)
-        //{
-        //    try
-        //    {
-        //        var viewModel = new RouteDetailsViewModel
-        //        {
-        //            VehicleId = vehicleId,
-        //            RouteEntries = vehicleService.GetDetailsRoute(vehicleId, routeId)
-        //        };
-
-        //        return View(viewModel);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        logger.LogError("Failed to retrieve vehicle {@Exception}", e.Message);
-        //        logger.LogDebug("Failed to retrieve vehicle {@ExceptionMessage}", e);
-        //        return BadRequest(e.Message);
-        //    }
-        //}
     }
 }

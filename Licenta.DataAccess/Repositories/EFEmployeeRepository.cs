@@ -3,9 +3,9 @@ using Licenta.Model;
 
 namespace Licenta.DataAccess.Repositories
 {
-    public class EFEmployeeRepository : IEmployeeRepository
+    public class EfEmployeeRepository : IEmployeeRepository
     {
-        public EFEmployeeRepository(ApplicationDbContext dbContext)
+        public EfEmployeeRepository(ApplicationDbContext dbContext)
         {
             DbContext = dbContext;
 
@@ -15,16 +15,22 @@ namespace Licenta.DataAccess.Repositories
 
         public void AddEmployee(string userId, string name, string email, string role)
         {
-            if (role == "Driver")
+            switch (role)
             {
-                var driver = Driver.Create(userId, name, email);
-                DbContext.Drivers.Add(driver);
+                case "Driver":
+                {
+                    var driver = Driver.Create(userId, name, email);
+                    DbContext.Drivers.Add(driver);
+                    break;
+                }
+                case "Dispatcher":
+                {
+                    var dispatcher = Dispatcher.Create(userId, name, email);
+                    DbContext.Dispatchers.Add(dispatcher);
+                    break;
+                }
             }
-            else if (role == "Dispatcher")
-            {
-                var dispatcher = Dispatcher.Create(userId, name, email);
-                DbContext.Dispatchers.Add(dispatcher);
-            }
+
             DbContext.SaveChanges();
         }
 

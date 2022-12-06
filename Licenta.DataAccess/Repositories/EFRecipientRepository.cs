@@ -3,9 +3,9 @@ using Licenta.Model;
 
 namespace Licenta.DataAccess.Repositories
 {
-    public class EFRecipientRepository : EFBaseRepository<Recipient>, IRecipientRepository
+    public class EfRecipientRepository : EfBaseRepository<Recipient>, IRecipientRepository
     {
-        public EFRecipientRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public EfRecipientRepository(ApplicationDbContext dbContext) : base(dbContext)
         { }
 
 

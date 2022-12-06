@@ -1,10 +1,10 @@
-﻿using Licenta.DataAccess.Abstractions;
-using Licenta.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Licenta.DataAccess.Abstractions;
+using Licenta.Model;
 
-namespace Licenta.ApplicationLogic.Services
+namespace Licenta.AppLogic.Services
 {
     public class DriverService
     {
@@ -31,22 +31,21 @@ namespace Licenta.ApplicationLogic.Services
 
         public Driver GetDriverWithRoute(string driverId)
         {
-            Guid.TryParse(driverId, out Guid driverGuid);
+            Guid.TryParse(driverId, out var driverGuid);
             return DriverRepository.GetDriverWithRoute(driverGuid);
         }
         public Driver GetDriverWithRouteFromUserId(string driverId)
         {
-            Guid.TryParse(driverId, out Guid driverGuid);
+            Guid.TryParse(driverId, out var driverGuid);
             return DriverRepository.GetDriverWithRouteFromUserId(driverGuid);
         }
         public Driver EndCurrentRoute(Driver driver)
         {
             driver = DriverRepository.GetDriverWithRoute(driver.Id);
 
-            if(driver.CurrentRoute.RouteEntries.Any(r => r.Order.Status == OrderStatus.Delivered) &&
-               !driver.CurrentRoute.RouteEntries.Any(r => r.Order.Status == OrderStatus.Delivered))
-                {
-                driver.CurrentRoute.SetStatus(RouteStatus.Partially_Completed);
+            if(driver.CurrentRoute.RouteEntries.Any(r => r.Order.Status == OrderStatus.Delivered) && driver.CurrentRoute.RouteEntries.All(r => r.Order.Status != OrderStatus.Delivered))
+            {
+                driver.CurrentRoute.SetStatus(RouteStatus.PartiallyCompleted);
             }
             else if(driver.CurrentRoute.RouteEntries.All(r => r.Order.Status == OrderStatus.Delivered))
             {

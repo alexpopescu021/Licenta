@@ -6,11 +6,11 @@ namespace Licenta.ViewModels.Routes
 {
     public class DeleteOrderViewModel
     {
-        public string routeId { get; set; }
+        public string RouteId { get; set; }
 
         [Required(ErrorMessage = "Choosing an Order is required.")]
         [Display(Name = "Order:")]
-        public string orderId { get; set; }
+        public string OrderId { get; set; }
         public List<SelectListItem> OrderList;
     }
 }

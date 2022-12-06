@@ -1,11 +1,11 @@
-﻿using Licenta.ApplicationLogic.Services;
-using Licenta.ViewModels;
+﻿using Licenta.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Licenta.AppLogic.Services;
 
 namespace Licenta.Controllers
 {
@@ -14,11 +14,11 @@ namespace Licenta.Controllers
         private readonly ILogger<HomeController> logger;
         private readonly CustomerService customerService;
         private readonly UserManager<IdentityUser> userManager;
-        public HomeController(ILogger<HomeController> _logger, CustomerService _customerService, UserManager<IdentityUser> _userManager)
+        public HomeController(ILogger<HomeController> logger, CustomerService customerService, UserManager<IdentityUser> userManager)
         {
-            logger = _logger;
-            customerService = _customerService;
-            userManager = _userManager;
+            this.logger = logger;
+            this.customerService = customerService;
+            this.userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
@@ -27,9 +27,9 @@ namespace Licenta.Controllers
             {
                 if (!User.IsInRole("Admin") && !User.IsInRole("Driver") && !User.IsInRole("Dispatcher"))
                 {
-                    bool ok = true;
+                    var ok = true;
                     var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                    var user = await userManager.FindByIdAsync(userId.ToString());
+                    var user = await userManager.FindByIdAsync(userId);
                     if (userId.Length != 0)
                     {
                         var list = customerService.GetAllCustomers();
