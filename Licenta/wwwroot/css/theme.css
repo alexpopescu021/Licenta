@@ -1472,7 +1472,8 @@ a.text-dark:hover, a.text-dark:focus {
     color: #35373b;
     border-radius: 8px;
     box-shadow: 0 3px 12px rgb(63 73 102);
-    background-color: #50505030;
+    background-color: #505030;
+    background-color: rgba(80, 80, 48, 0.31);
 }
 
 .card-service .header {

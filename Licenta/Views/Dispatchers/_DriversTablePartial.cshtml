@@ -41,7 +41,7 @@
                                         onclick="LoadShowEntryView('@routeEntry.Id')" data-target="#showEntryModal">
 
                                     <div>
-                                        <i class="fas fa-info-circle"></i>
+                                        <em class="fas fa-info-circle"></em>
                                         @routeEntry.OrderType, Status: @routeEntry.Order.Status, Route:
                                         @routeEntry.Order.PickUpAddress.PostalCode
                                         - @routeEntry.Order.DeliveryAddress.PostalCode
@@ -62,7 +62,7 @@
                     {
                         <a data-toggle="modal" data-target="#assignRouteModal" onclick='loadAvailableRoutes("@driver.UserId")'
                            class="button-add-trailer-to-vehicle" style="color: #0366d6; cursor: pointer;">
-                            <i class="fa fa-plus-circle"></i>
+                            <em class="fa fa-plus-circle"></em>
                             <span>Add</span>
                         </a>
                     }
@@ -72,8 +72,8 @@
                         <button class="btn btn-outline-danger remove-route-button ml-3 mr-3" title="Remove Route" data-toggle="modal"
                                 onclick="LoadRemoveRouteView('@driver.CurrentRoute.Id');" data-target="#removeModal">
                             <div class="col d-flex justify-content-around">
-                                <i class="material-icons fa fa-trash"></i>
-                                <i class="material-icons fa fa-route"></i>
+                                <em class="material-icons fa fa-trash"></em>
+                                <em class="material-icons fa fa-route"></em>
                             </div>
                         </button>
                     }
